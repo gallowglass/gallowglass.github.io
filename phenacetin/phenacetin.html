@@ -1,0 +1,2114 @@
+<HTML>
+	<HEAD><TITLE>Phenacetin vibrations</TITLE>
+		<LINK REL="stylesheet" TYPE="text/css" HREF="webmo.css" />
+		<LINK REL="stylesheet" TYPE="text/css" HREF="jquery-ui.min.css" />
+		<LINK REL="stylesheet" TYPE="text/css" HREF="jquery-ui.theme.min.css" />
+		<LINK REL="stylesheet" TYPE="text/css" HREF="jquery.tablesorter.css" />
+		<SCRIPT LANGUAGE="JavaScript" SRC="javascript/jquery.js"></SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript" SRC="javascript/jquery-ui.min.js"></SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript" SRC="javascript/jquery.tablesorter.min.js"></SCRIPT>
+		<!-- Apycom DHTML Tabs -->
+		<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript1.2" SRC="javascript/apytabs.js"></SCRIPT>
+		<!-- Apycom DHTML Tabs, dhtml-menu.com -->
+	</HEAD>
+	
+	<SCRIPT LANGUAGE="JavaScript" SRC="javascript/safesubmit.js"></SCRIPT>
+	<SCRIPT LANGUAGE="JavaScript" SRC="javascript/view_job.js"></SCRIPT>
+	
+	<SCRIPT LANGUAGE="JavaScript" SRC="javascript/moledit_js/moledit_js.nocache.js"></SCRIPT>
+	
+	<SCRIPT LANGUAGE="JavaScript">
+		var format = "XYZFormat";
+		var jobNumber = 30;
+		var url_htmlBase = "./";
+		
+		function RawOutput(form) {
+			window.open('./30/output.txt');
+		}
+		
+		function CheckNotesArea() {
+			if (document.form.notes.value != "")
+				ExpandNotes();
+		}
+				
+		$(document).ready(function(){
+			togglePanel = function(event, ui) {
+					//Code to allow multiple open accordion panels
+					// The accordion believes a panel is being opened
+					if (ui.newHeader[0]) {
+						var currHeader  = ui.newHeader;
+						var currContent = currHeader.next('.ui-accordion-content');
+					// The accordion believes a panel is being closed
+					} else {
+						var currHeader  = ui.oldHeader;
+						var currContent = currHeader.next('.ui-accordion-content');
+					}
+					// Since we've changed the default behavior, this detects the actual status
+					var isPanelSelected = currHeader.attr('aria-selected') == 'true';
+
+					// Toggle the panel's header
+					currHeader.toggleClass('ui-corner-all',isPanelSelected).toggleClass('accordion-header-active ui-state-active ui-corner-top',!isPanelSelected).attr('aria-selected',((!isPanelSelected).toString()));
+					
+					// Toggle the panel's icon
+					currHeader.children('.ui-icon').toggleClass('ui-icon-triangle-1-e',isPanelSelected).toggleClass('ui-icon-triangle-1-s',!isPanelSelected);
+
+					// Toggle the panel's content
+					currContent.toggleClass('accordion-content-active',!isPanelSelected)    
+					if (isPanelSelected) { currContent.slideUp(); }  else { currContent.slideDown(); }
+
+					return false; // Cancel the default action
+			};
+				
+			$('#calculated_quantities_accordion').accordion({
+				heightStyle: "content",
+				collapsible:true,
+				beforeActivate: togglePanel
+			});
+						
+			var doExpand = true;
+			$('.accordion-expand-all')
+			.click(function(){
+				if (doExpand) {
+					$('#calculated_quantities h3.ui-accordion-header').not('[aria-selected=true]').trigger("click");
+					$('.accordion-expand-all').html('Collapse all');
+					doExpand = false;
+				} else {
+					$('#calculated_quantities h3.ui-accordion-header').not('[aria-selected=false]').trigger("click");
+					$('.accordion-expand-all').html('Expand all');
+					doExpand = true;
+				}
+			})
+			.hover(
+				function(){
+					$(this).css("text-decoration", "underline");
+				},
+				function(){
+					$(this).css("text-decoration", "none");
+				});
+				
+			//On desktop, expand the accordions to start with
+			$('.accordion-expand-all').click();
+			
+			//This is for compatability with Pressbooks, which displays the embedded View Job page in a iframe that
+			//may be initially hidden
+			if (window.innerWidth == 0) {
+				var didAppear = false;
+				$(window).resize(
+					function () {
+						if (!didAppear)
+							Translate(document.form);
+						didAppear = true;
+					}
+				);
+			}
+			
+		});
+		
+	</SCRIPT>
+	
+	<BODY ONLOAD="Translate(document.form)">
+		
+		<H1>WebMO Job Summary</H1>
+		<H2>30: phenacetin, Optimize + Vib Freq - Gaussian</H2>
+		
+		
+		
+		<FORM NAME="form">
+			
+		<FORM NAME="form" ACTION="/~webmo/cgi-bin/webmo_v20.0/view_job.cgi" METHOD="POST">
+		
+				<DIV CLASS="tframe" STYLE="width: 95%; height: 85%; min-height: 400px; ">
+			
+				<DIV ID="viewer_area" CLASS="content_area">
+					<SPAN TITLE="Show" CLASS="popup"><IMG ID="expand" SRC="./images/expand.gif" STYLE="display: none" ONCLICK="Expand()"></SPAN>
+					
+					<TABLE CLASS="content_area">
+						<TR ONCLICK="setTimeout('SwapApplets()',50)">
+							<TD COLSPAN=3 VALIGN=TOP HEIGHT=16>
+								<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript1.2" SRC="./javascript/webmo_tabs.js"></SCRIPT>
+								<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript1.2" SRC="./javascript/view_tabs.js"></SCRIPT>
+							</TD>
+						</TR>
+						<TR HEIGHT=100%>
+							<TD COLSPAN=3>
+								<!-- Viewer -->
+								<DIV ID="content1" STYLE="height: 100%">
+									<DIV ID="moledit-panel" CLASS="gwt-app" STYLE="height: 100%"
+									viewOnly="true" version="20.0.012e" minerallookupproxy="/"></DIV>
+								</DIV>
+								
+								<!-- Data grapher -->
+								<DIV ID="content2" STYLE="height: 100%">
+									<DIV ID="datagrapher-panel" CLASS="gwt-app" STYLE="height: 100%" ></DIV>
+								</DIV>
+							</TD>
+						</TR>
+						<TR><TD>
+							<CENTER>
+								<BUTTON TYPE="button" ONCLICK="RawOutput(document.form)">Raw Output</BUTTON>
+							</CENTER>
+						</TD</TR>
+					</TABLE>
+				</DIV>
+			
+			</DIV>
+			
+			<DIV ID="notes_area" STYLE="display: none">
+				<TEXTAREA NAME="notes" ROWS=10 COLS=70></TEXTAREA><BR>
+				<BUTTON TYPE="button" ONCLICK="SaveNotes(document.form)"><FONT SIZE=1>Save Notes</FONT></BUTTON>
+			</DIV>
+			
+			<INPUT TYPE="hidden" NAME="operation">
+			<INPUT TYPE="hidden" NAME="model">
+			<INPUT TYPE="hidden" NAME="jobNumber" VALUE="30">
+			<INPUT TYPE="hidden" NAME="geometry" VALUE="6%203%2e781872%20%2d0%2e782265%200%2e000002%0a8%203%2e048527%200%2e451494%20%2d0%2e000027%0a6%201%2e679659%200%2e377412%20%2d0%2e000022%0a6%200%2e936644%20%2d0%2e810168%20%2d0%2e000053%0a6%20%2d0%2e462457%20%2d0%2e778223%20%2d0%2e000052%0a6%20%2d1%2e139806%200%2e448161%20%2d0%2e000019%0a6%20%2d0%2e386654%201%2e637868%200%2e000016%0a6%201%2e000391%201%2e606754%200%2e000012%0a1%201%2e581534%202%2e530602%200%2e000040%0a1%20%2d0%2e899324%202%2e604890%200%2e000050%0a7%20%2d2%2e548038%200%2e566919%20%2d0%2e000018%0a6%20%2d3%2e508594%20%2d0%2e423790%20%2d0%2e000000%0a6%20%2d4%2e941921%200%2e086700%200%2e000023%0a1%20%2d5%2e455858%20%2d0%2e313982%20%2d0%2e885079%0a1%20%2d5%2e455635%20%2d0%2e313419%200%2e885515%0a1%20%2d5%2e033548%201%2e182479%20%2d0%2e000302%0a8%20%2d3%2e253633%20%2d1%2e626705%200%2e000049%0a1%20%2d2%2e895021%201%2e522035%20%2d0%2e000101%0a1%20%2d1%2e036412%20%2d1%2e702487%20%2d0%2e000072%0a1%201%2e432286%20%2d1%2e780836%20%2d0%2e000082%0a6%205%2e259176%20%2d0%2e441170%200%2e000058%0a1%205%2e856102%20%2d1%2e365070%200%2e000051%0a1%205%2e525541%200%2e143686%20%2d0%2e891778%0a1%205%2e525489%200%2e143642%200%2e891937%0a1%203%2e511081%20%2d1%2e372973%20%2d0%2e894279%0a1%203%2e511010%20%2d1%2e372971%200%2e894263%0a">
+			<INPUT TYPE="hidden" NAME="connections" VALUE="5%20%20%20%20%206%20%20%20%20%201%20%20%20%20%20%0a7%20%20%20%20%206%20%20%20%20%202%20%20%20%20%20%0a6%20%20%20%20%2011%20%20%20%201%20%20%20%20%20%0a5%20%20%20%20%204%20%20%20%20%202%20%20%20%20%20%0a7%20%20%20%20%208%20%20%20%20%201%20%20%20%20%20%0a12%20%20%20%2011%20%20%20%201%20%20%20%20%20%0a4%20%20%20%20%203%20%20%20%20%201%20%20%20%20%20%0a13%20%20%20%2012%20%20%20%201%20%20%20%20%20%0a17%20%20%20%2012%20%20%20%202%20%20%20%20%20%0a3%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%2021%20%20%20%201%20%20%20%20%20%0a8%20%20%20%20%203%20%20%20%20%202%20%20%20%20%20%0a5%20%20%20%20%2019%20%20%20%201%20%20%20%20%20%0a7%20%20%20%20%2010%20%20%20%201%20%20%20%20%20%0a18%20%20%20%2011%20%20%20%201%20%20%20%20%20%0a4%20%20%20%20%2020%20%20%20%201%20%20%20%20%20%0a8%20%20%20%20%209%20%20%20%20%201%20%20%20%20%20%0a13%20%20%20%2014%20%20%20%201%20%20%20%20%20%0a13%20%20%20%2015%20%20%20%201%20%20%20%20%20%0a13%20%20%20%2016%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%2025%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%2026%20%20%20%201%20%20%20%20%20%0a21%20%20%20%2022%20%20%20%201%20%20%20%20%20%0a21%20%20%20%2023%20%20%20%201%20%20%20%20%20%0a21%20%20%20%2024%20%20%20%201%20%20%20%20%20%0a%0a">
+			<INPUT TYPE="hidden" NAME="zmatrix" VALUE="1%20%20%20%20%200%20%20%20%20%200%20%20%20%20%200%20%20%20%20%20%0a2%20%20%20%20%201%20%20%20%20%200%20%20%20%20%200%20%20%20%20%20%0a3%20%20%20%20%202%20%20%20%20%201%20%20%20%20%200%20%20%20%20%20%0a4%20%20%20%20%203%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a5%20%20%20%20%204%20%20%20%20%203%20%20%20%20%202%20%20%20%20%20%0a6%20%20%20%20%205%20%20%20%20%204%20%20%20%20%203%20%20%20%20%20%0a7%20%20%20%20%206%20%20%20%20%205%20%20%20%20%204%20%20%20%20%20%0a8%20%20%20%20%207%20%20%20%20%206%20%20%20%20%205%20%20%20%20%20%0a9%20%20%20%20%208%20%20%20%20%207%20%20%20%20%206%20%20%20%20%20%0a10%20%20%20%207%20%20%20%20%206%20%20%20%20%205%20%20%20%20%20%0a11%20%20%20%206%20%20%20%20%205%20%20%20%20%204%20%20%20%20%20%0a12%20%20%20%2011%20%20%20%206%20%20%20%20%205%20%20%20%20%20%0a13%20%20%20%2012%20%20%20%2011%20%20%20%206%20%20%20%20%20%0a14%20%20%20%2013%20%20%20%2012%20%20%20%2011%20%20%20%20%0a15%20%20%20%2013%20%20%20%2012%20%20%20%2011%20%20%20%20%0a16%20%20%20%2013%20%20%20%2012%20%20%20%2011%20%20%20%20%0a17%20%20%20%2012%20%20%20%2011%20%20%20%206%20%20%20%20%20%0a18%20%20%20%2011%20%20%20%206%20%20%20%20%205%20%20%20%20%20%0a19%20%20%20%205%20%20%20%20%206%20%20%20%20%207%20%20%20%20%20%0a20%20%20%20%204%20%20%20%20%205%20%20%20%20%206%20%20%20%20%20%0a21%20%20%20%201%20%20%20%20%202%20%20%20%20%203%20%20%20%20%20%0a22%20%20%20%2021%20%20%20%201%20%20%20%20%202%20%20%20%20%20%0a23%20%20%20%2021%20%20%20%201%20%20%20%20%202%20%20%20%20%20%0a24%20%20%20%2021%20%20%20%201%20%20%20%20%202%20%20%20%20%20%0a25%20%20%20%201%20%20%20%20%202%20%20%20%20%203%20%20%20%20%20%0a26%20%20%20%201%20%20%20%20%202%20%20%20%20%203%20%20%20%20%20%0a%0a">
+			<INPUT TYPE="hidden" NAME="charges" VALUE="0%20%203%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%202%20%20%0a0%20%202%20%20%0a0%20%203%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%202%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%203%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a%0a">
+			
+			<H2 ID="h2_calculated_quantities">Calculated Quantities</H2>
+			
+			<SPAN ID="calculated_quantities">			
+			<SPAN CLASS="accordion-expand-all" STYLE="color: #FFFFFF; font-size: 0.8em">Expand all</SPAN>
+			<DIV ID="calculated_quantities_accordion">
+			
+				<H3>Overview</H3>
+				<DIV ID="overview">
+				
+				<TABLE CLASS="calculated_quantity">
+					<TR CLASS="header">
+						<TD><B>Quantity</B></TD>
+						<TD><B>Value</B></TD>
+					</TR>
+					
+					
+					
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Route</TD>
+						<TD VALIGN="TOP"> #N PBEPBE/6-311+G(2d,p) OPT FREQ Geom=Connectivity</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Stoichiometry</TD>
+						<TD VALIGN="TOP">C<sub>10</sub>H<sub>13</sub>NO<sub>2</sub></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Symmetry</TD>
+						<TD VALIGN="TOP">C1</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Basis</TD>
+						<TD VALIGN="TOP">6-311+G(2d,p)</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">RPBE-PBE Energy</TD>
+						<TD VALIGN="TOP">-593.554210459 Hartree</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">ZPE</TD>
+						<TD VALIGN="TOP">0.208841 Hartree</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Conditions</TD>
+						<TD VALIGN="TOP">298.150K, 1.00000 atm</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Internal Energy</TD>
+						<TD VALIGN="TOP">-593.331837 Hartree</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Enthalpy</TD>
+						<TD VALIGN="TOP">-593.330893 Hartree</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Free Energy</TD>
+						<TD VALIGN="TOP">-593.386671 Hartree</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">C<sub>v</sub></TD>
+						<TD VALIGN="TOP">49.952 cal/mol-K</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Entropy</TD>
+						<TD VALIGN="TOP">117.395 cal/mol-K</TD>
+					</TR>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewDipoleMoment()
+			{
+				doViewDipoleMoment("-0.5913:-2.2947:0.0001:2.3697 Debye");
+			}
+		</SCRIPT>
+		<TR CLASS="job_entry">
+			<TD VALIGN="TOP">Dipole Moment</TD>
+			<TD VALIGN="TOP">2.3697 Debye <A HREF="javascript:ViewDipoleMoment()"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+		</TR>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode1(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.02:2,-0.00,0.00,-0.01:3,-0.00,0.00,-0.07:4,-0.00,0.00,-0.18:5,-0.00,0.00,-0.19:6,-0.00,0.00,-0.09:7,-0.00,-0.00,-0.01:8,-0.00,-0.00,0.01:9,-0.00,-0.00,0.09:10,-0.00,-0.00,0.07:11,-0.00,-0.00,-0.07:12,0.00,-0.00,0.05:13,0.00,0.00,0.18:14,-0.16,-0.21,0.37:15,0.16,0.21,0.37:16,-0.00,-0.00,-0.05:17,0.00,-0.00,0.06:18,-0.00,-0.00,-0.04:19,0.00,0.00,-0.27:20,0.00,0.00,-0.25:21,-0.00,-0.00,0.21:22,-0.00,-0.00,0.24:23,0.11,0.05,0.27:24,-0.11,-0.05,0.27:25,0.11,0.04,-0.04:26,-0.11,-0.04,-0.04", 1, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode1(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.02:2,-0.00,0.00,-0.01:3,-0.00,0.00,-0.07:4,-0.00,0.00,-0.18:5,-0.00,0.00,-0.19:6,-0.00,0.00,-0.09:7,-0.00,-0.00,-0.01:8,-0.00,-0.00,0.01:9,-0.00,-0.00,0.09:10,-0.00,-0.00,0.07:11,-0.00,-0.00,-0.07:12,0.00,-0.00,0.05:13,0.00,0.00,0.18:14,-0.16,-0.21,0.37:15,0.16,0.21,0.37:16,-0.00,-0.00,-0.05:17,0.00,-0.00,0.06:18,-0.00,-0.00,-0.04:19,0.00,0.00,-0.27:20,0.00,0.00,-0.25:21,-0.00,-0.00,0.21:22,-0.00,-0.00,0.24:23,0.11,0.05,0.27:24,-0.11,-0.05,0.27:25,0.11,0.04,-0.04:26,-0.11,-0.04,-0.04", 1, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode2(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,-0.09:2,-0.00,0.00,0.12:3,-0.00,0.00,0.07:4,0.00,0.00,-0.05:5,0.00,0.00,-0.11:6,-0.00,0.00,-0.05:7,-0.00,-0.00,0.09:8,-0.00,-0.00,0.15:9,-0.00,-0.00,0.25:10,-0.00,-0.00,0.15:11,-0.00,-0.00,-0.15:12,0.00,-0.00,0.03:13,-0.00,-0.00,-0.21:14,0.10,-0.14,-0.20:15,-0.10,0.14,-0.20:16,0.00,-0.00,-0.40:17,0.00,0.00,0.33:18,-0.00,-0.00,-0.33:19,0.00,0.00,-0.19:20,0.00,0.00,-0.10:21,0.00,-0.00,-0.11:22,-0.00,-0.00,-0.26:23,-0.04,0.13,-0.03:24,0.04,-0.13,-0.03:25,-0.04,0.13,-0.16:26,0.04,-0.13,-0.16", 2, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode2(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,-0.09:2,-0.00,0.00,0.12:3,-0.00,0.00,0.07:4,0.00,0.00,-0.05:5,0.00,0.00,-0.11:6,-0.00,0.00,-0.05:7,-0.00,-0.00,0.09:8,-0.00,-0.00,0.15:9,-0.00,-0.00,0.25:10,-0.00,-0.00,0.15:11,-0.00,-0.00,-0.15:12,0.00,-0.00,0.03:13,-0.00,-0.00,-0.21:14,0.10,-0.14,-0.20:15,-0.10,0.14,-0.20:16,0.00,-0.00,-0.40:17,0.00,0.00,0.33:18,-0.00,-0.00,-0.33:19,0.00,0.00,-0.19:20,0.00,0.00,-0.10:21,0.00,-0.00,-0.11:22,-0.00,-0.00,-0.26:23,-0.04,0.13,-0.03:24,0.04,-0.13,-0.03:25,-0.04,0.13,-0.16:26,0.04,-0.13,-0.16", 2, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode3(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,-0.00:2,0.00,-0.00,-0.06:3,0.00,0.00,-0.05:4,-0.00,0.00,-0.06:5,-0.00,0.00,-0.03:6,0.00,0.00,0.01:7,0.00,0.00,0.01:8,0.00,0.00,-0.02:9,0.00,-0.00,-0.01:10,0.00,0.00,0.04:11,0.00,0.00,0.04:12,0.00,0.00,0.04:13,-0.00,-0.00,-0.04:14,0.20,0.43,-0.36:15,-0.20,-0.43,-0.36:16,0.00,0.00,0.46:17,0.00,0.00,0.06:18,0.00,0.00,0.04:19,-0.00,0.00,-0.04:20,-0.00,0.00,-0.09:21,-0.00,-0.00,0.08:22,-0.00,-0.00,0.12:23,0.05,-0.01,0.09:24,-0.05,0.01,0.09:25,0.05,-0.01,-0.01:26,-0.05,0.01,-0.01", 3, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode3(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,-0.00:2,0.00,-0.00,-0.06:3,0.00,0.00,-0.05:4,-0.00,0.00,-0.06:5,-0.00,0.00,-0.03:6,0.00,0.00,0.01:7,0.00,0.00,0.01:8,0.00,0.00,-0.02:9,0.00,-0.00,-0.01:10,0.00,0.00,0.04:11,0.00,0.00,0.04:12,0.00,0.00,0.04:13,-0.00,-0.00,-0.04:14,0.20,0.43,-0.36:15,-0.20,-0.43,-0.36:16,0.00,0.00,0.46:17,0.00,0.00,0.06:18,0.00,0.00,0.04:19,-0.00,0.00,-0.04:20,-0.00,0.00,-0.09:21,-0.00,-0.00,0.08:22,-0.00,-0.00,0.12:23,0.05,-0.01,0.09:24,-0.05,0.01,0.09:25,0.05,-0.01,-0.01:26,-0.05,0.01,-0.01", 3, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode4(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.04:2,-0.00,0.00,0.20:3,-0.00,0.00,0.08:4,-0.00,0.00,0.04:5,0.00,0.00,-0.07:6,-0.00,0.00,-0.13:7,-0.00,0.00,-0.11:8,-0.00,0.00,-0.01:9,-0.00,0.00,0.00:10,-0.00,0.00,-0.17:11,-0.00,0.00,-0.13:12,0.00,0.00,0.01:13,0.00,-0.00,0.17:14,0.01,0.37,-0.01:15,-0.01,-0.37,-0.01:16,-0.00,0.00,0.63:17,0.00,0.00,-0.02:18,-0.00,0.00,-0.07:19,0.00,0.00,-0.09:20,0.00,0.00,0.10:21,-0.00,-0.00,-0.11:22,-0.00,-0.00,-0.23:23,-0.11,0.05,-0.10:24,0.11,-0.05,-0.10:25,-0.10,0.06,0.04:26,0.10,-0.06,0.04", 4, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode4(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.04:2,-0.00,0.00,0.20:3,-0.00,0.00,0.08:4,-0.00,0.00,0.04:5,0.00,0.00,-0.07:6,-0.00,0.00,-0.13:7,-0.00,0.00,-0.11:8,-0.00,0.00,-0.01:9,-0.00,0.00,0.00:10,-0.00,0.00,-0.17:11,-0.00,0.00,-0.13:12,0.00,0.00,0.01:13,0.00,-0.00,0.17:14,0.01,0.37,-0.01:15,-0.01,-0.37,-0.01:16,-0.00,0.00,0.63:17,0.00,0.00,-0.02:18,-0.00,0.00,-0.07:19,0.00,0.00,-0.09:20,0.00,0.00,0.10:21,-0.00,-0.00,-0.11:22,-0.00,-0.00,-0.23:23,-0.11,0.05,-0.10:24,0.11,-0.05,-0.10:25,-0.10,0.06,0.04:26,0.10,-0.06,0.04", 4, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode5(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.13,0.05,0.00:2,0.00,-0.03,0.00:3,0.01,-0.10,0.00:4,0.02,-0.11,-0.00:5,0.01,-0.11,-0.00:6,0.01,-0.11,-0.00:7,0.01,-0.11,0.00:8,0.00,-0.11,0.00:9,0.00,-0.11,0.00:10,0.01,-0.11,0.00:11,0.01,-0.04,-0.00:12,-0.08,0.05,0.00:13,-0.02,0.21,0.00:14,-0.07,0.27,-0.00:15,-0.07,0.27,0.00:16,0.10,0.22,0.00:17,-0.19,0.03,0.00:18,0.09,-0.01,-0.00:19,0.00,-0.11,-0.00:20,0.03,-0.10,-0.00:21,0.09,0.27,-0.00:22,0.24,0.36,-0.00:23,-0.00,0.31,0.00:24,-0.00,0.31,-0.00:25,0.21,0.02,-0.00:26,0.21,0.02,0.00", 5, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode5(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.13,0.05,0.00:2,0.00,-0.03,0.00:3,0.01,-0.10,0.00:4,0.02,-0.11,-0.00:5,0.01,-0.11,-0.00:6,0.01,-0.11,-0.00:7,0.01,-0.11,0.00:8,0.00,-0.11,0.00:9,0.00,-0.11,0.00:10,0.01,-0.11,0.00:11,0.01,-0.04,-0.00:12,-0.08,0.05,0.00:13,-0.02,0.21,0.00:14,-0.07,0.27,-0.00:15,-0.07,0.27,0.00:16,0.10,0.22,0.00:17,-0.19,0.03,0.00:18,0.09,-0.01,-0.00:19,0.00,-0.11,-0.00:20,0.03,-0.10,-0.00:21,0.09,0.27,-0.00:22,0.24,0.36,-0.00:23,-0.00,0.31,0.00:24,-0.00,0.31,-0.00:25,0.21,0.02,-0.00:26,0.21,0.02,0.00", 5, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode6(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.19:2,-0.00,-0.00,-0.05:3,-0.00,0.00,-0.02:4,-0.00,0.00,-0.07:5,-0.00,0.00,-0.07:6,-0.00,0.00,-0.01:7,0.00,0.00,0.06:8,0.00,-0.00,0.06:9,0.00,-0.00,0.11:10,0.00,-0.00,0.13:11,-0.00,0.00,-0.01:12,0.00,-0.00,0.00:13,0.00,-0.00,-0.00:14,0.00,-0.00,-0.00:15,-0.00,0.00,-0.00:16,-0.00,-0.00,-0.00:17,0.00,0.00,0.01:18,-0.00,0.00,-0.01:19,-0.00,0.00,-0.11:20,-0.00,0.00,-0.10:21,0.00,0.00,-0.09:22,-0.00,-0.00,0.18:23,-0.10,-0.32,-0.33:24,0.10,0.32,-0.33:25,-0.09,-0.24,0.37:26,0.09,0.24,0.37", 6, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode6(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.19:2,-0.00,-0.00,-0.05:3,-0.00,0.00,-0.02:4,-0.00,0.00,-0.07:5,-0.00,0.00,-0.07:6,-0.00,0.00,-0.01:7,0.00,0.00,0.06:8,0.00,-0.00,0.06:9,0.00,-0.00,0.11:10,0.00,-0.00,0.13:11,-0.00,0.00,-0.01:12,0.00,-0.00,0.00:13,0.00,-0.00,-0.00:14,0.00,-0.00,-0.00:15,-0.00,0.00,-0.00:16,-0.00,-0.00,-0.00:17,0.00,0.00,0.01:18,-0.00,0.00,-0.01:19,-0.00,0.00,-0.11:20,-0.00,0.00,-0.10:21,0.00,0.00,-0.09:22,-0.00,-0.00,0.18:23,-0.10,-0.32,-0.33:24,0.10,0.32,-0.33:25,-0.09,-0.24,0.37:26,0.09,0.24,0.37", 6, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode7(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,0.10:2,0.00,0.00,0.26:3,0.00,0.00,-0.07:4,0.00,0.00,-0.19:5,0.00,-0.00,-0.13:6,0.00,-0.00,0.03:7,-0.00,-0.00,-0.13:8,-0.00,0.00,-0.19:9,-0.00,0.00,-0.23:10,-0.00,-0.00,-0.15:11,0.00,-0.00,0.33:12,-0.00,-0.00,0.09:13,0.00,0.00,-0.11:14,0.10,-0.19,-0.08:15,-0.10,0.19,-0.08:16,0.00,0.00,-0.35:17,-0.00,-0.00,-0.00:18,0.00,-0.00,0.34:19,0.00,-0.00,-0.12:20,0.00,0.00,-0.22:21,0.00,-0.00,-0.05:22,-0.00,-0.00,-0.29:23,-0.14,0.13,-0.01:24,0.14,-0.13,-0.01:25,-0.09,0.06,0.09:26,0.09,-0.06,0.09", 7, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode7(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,0.10:2,0.00,0.00,0.26:3,0.00,0.00,-0.07:4,0.00,0.00,-0.19:5,0.00,-0.00,-0.13:6,0.00,-0.00,0.03:7,-0.00,-0.00,-0.13:8,-0.00,0.00,-0.19:9,-0.00,0.00,-0.23:10,-0.00,-0.00,-0.15:11,0.00,-0.00,0.33:12,-0.00,-0.00,0.09:13,0.00,0.00,-0.11:14,0.10,-0.19,-0.08:15,-0.10,0.19,-0.08:16,0.00,0.00,-0.35:17,-0.00,-0.00,-0.00:18,0.00,-0.00,0.34:19,0.00,-0.00,-0.12:20,0.00,0.00,-0.22:21,0.00,-0.00,-0.05:22,-0.00,-0.00,-0.29:23,-0.14,0.13,-0.01:24,0.14,-0.13,-0.01:25,-0.09,0.06,0.09:26,0.09,-0.06,0.09", 7, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode8(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.06,-0.09,0.00:2,-0.06,-0.16,0.00:3,-0.05,-0.13,-0.00:4,-0.12,-0.08,-0.00:5,-0.12,0.05,-0.00:6,-0.03,0.10,0.00:7,0.05,0.05,-0.00:8,0.04,-0.08,-0.00:9,0.13,-0.13,-0.00:10,0.13,0.09,-0.00:11,-0.03,0.14,0.00:12,0.05,0.06,0.00:13,-0.01,-0.15,-0.00:14,0.05,-0.23,0.00:15,0.05,-0.23,-0.00:16,-0.18,-0.16,-0.00:17,0.19,0.09,-0.00:18,-0.06,0.13,0.00:19,-0.19,0.10,-0.00:20,-0.19,-0.11,-0.00:21,-0.00,0.20,-0.00:22,0.21,0.33,-0.00:23,-0.14,0.26,0.00:24,-0.14,0.26,-0.00:25,0.14,-0.12,-0.00:26,0.14,-0.12,0.00", 8, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode8(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.06,-0.09,0.00:2,-0.06,-0.16,0.00:3,-0.05,-0.13,-0.00:4,-0.12,-0.08,-0.00:5,-0.12,0.05,-0.00:6,-0.03,0.10,0.00:7,0.05,0.05,-0.00:8,0.04,-0.08,-0.00:9,0.13,-0.13,-0.00:10,0.13,0.09,-0.00:11,-0.03,0.14,0.00:12,0.05,0.06,0.00:13,-0.01,-0.15,-0.00:14,0.05,-0.23,0.00:15,0.05,-0.23,-0.00:16,-0.18,-0.16,-0.00:17,0.19,0.09,-0.00:18,-0.06,0.13,0.00:19,-0.19,0.10,-0.00:20,-0.19,-0.11,-0.00:21,-0.00,0.20,-0.00:22,0.21,0.33,-0.00:23,-0.14,0.26,0.00:24,-0.14,0.26,-0.00:25,0.14,-0.12,-0.00:26,0.14,-0.12,0.00", 8, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode9(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,-0.09:2,0.00,-0.00,0.07:3,0.00,-0.00,0.02:4,-0.00,-0.00,0.00:5,-0.00,0.00,-0.01:6,-0.00,0.00,-0.00:7,0.00,0.00,-0.02:8,0.00,-0.00,-0.01:9,0.00,-0.00,-0.01:10,0.00,0.00,-0.04:11,-0.00,0.00,0.02:12,-0.00,0.00,0.01:13,-0.00,-0.00,-0.00:14,0.01,-0.01,-0.00:15,-0.01,0.01,-0.00:16,-0.00,-0.00,-0.02:17,0.00,0.00,-0.00:18,-0.00,0.00,0.02:19,-0.00,0.00,-0.01:20,-0.00,-0.00,-0.00:21,0.00,0.00,0.01:22,-0.00,-0.00,0.59:23,0.20,-0.43,-0.21:24,-0.20,0.43,-0.21:25,0.01,0.12,-0.17:26,-0.01,-0.12,-0.17", 9, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode9(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,-0.09:2,0.00,-0.00,0.07:3,0.00,-0.00,0.02:4,-0.00,-0.00,0.00:5,-0.00,0.00,-0.01:6,-0.00,0.00,-0.00:7,0.00,0.00,-0.02:8,0.00,-0.00,-0.01:9,0.00,-0.00,-0.01:10,0.00,0.00,-0.04:11,-0.00,0.00,0.02:12,-0.00,0.00,0.01:13,-0.00,-0.00,-0.00:14,0.01,-0.01,-0.00:15,-0.01,0.01,-0.00:16,-0.00,-0.00,-0.02:17,0.00,0.00,-0.00:18,-0.00,0.00,0.02:19,-0.00,0.00,-0.01:20,-0.00,-0.00,-0.00:21,0.00,0.00,0.01:22,-0.00,-0.00,0.59:23,0.20,-0.43,-0.21:24,-0.20,0.43,-0.21:25,0.01,0.12,-0.17:26,-0.01,-0.12,-0.17", 9, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode10(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.20,0.00,0.00:2,0.12,-0.01,-0.00:3,0.09,0.01,0.00:4,0.00,0.05,0.00:5,-0.02,0.09,0.00:6,-0.07,0.07,-0.00:7,0.01,0.03,0.00:8,0.04,-0.00,0.00:9,0.01,0.01,0.00:10,0.08,0.07,0.00:11,-0.12,0.03,-0.00:12,-0.15,0.01,-0.00:13,-0.22,-0.15,0.00:14,-0.15,-0.24,0.00:15,-0.15,-0.24,-0.00:16,-0.39,-0.16,-0.00:17,-0.14,0.01,-0.00:18,-0.14,0.03,-0.00:19,0.00,0.07,-0.00:20,-0.05,0.02,0.00:21,0.24,-0.08,0.00:22,0.14,-0.15,-0.00:23,0.31,-0.12,-0.00:24,0.31,-0.12,0.00:25,0.20,-0.00,0.00:26,0.20,-0.00,-0.00", 10, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode10(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.20,0.00,0.00:2,0.12,-0.01,-0.00:3,0.09,0.01,0.00:4,0.00,0.05,0.00:5,-0.02,0.09,0.00:6,-0.07,0.07,-0.00:7,0.01,0.03,0.00:8,0.04,-0.00,0.00:9,0.01,0.01,0.00:10,0.08,0.07,0.00:11,-0.12,0.03,-0.00:12,-0.15,0.01,-0.00:13,-0.22,-0.15,0.00:14,-0.15,-0.24,0.00:15,-0.15,-0.24,-0.00:16,-0.39,-0.16,-0.00:17,-0.14,0.01,-0.00:18,-0.14,0.03,-0.00:19,0.00,0.07,-0.00:20,-0.05,0.02,0.00:21,0.24,-0.08,0.00:22,0.14,-0.15,-0.00:23,0.31,-0.12,-0.00:24,0.31,-0.12,0.00:25,0.20,-0.00,0.00:26,0.20,-0.00,-0.00", 10, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode11(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.17,0.00:2,-0.02,0.16,0.00:3,-0.02,-0.04,-0.00:4,0.03,-0.09,-0.00:5,0.00,-0.18,0.00:6,-0.04,-0.18,0.00:7,-0.07,-0.19,0.00:8,-0.10,-0.10,-0.00:9,-0.16,-0.07,-0.00:10,-0.13,-0.22,0.00:11,-0.02,0.12,0.00:12,-0.01,0.17,-0.00:13,-0.08,-0.04,0.00:14,-0.01,-0.13,0.00:15,-0.01,-0.13,-0.00:16,-0.25,-0.05,-0.00:17,0.21,0.22,-0.00:18,0.16,0.18,-0.00:19,0.07,-0.22,0.00:20,0.07,-0.07,-0.00:21,0.07,-0.09,0.00:22,-0.18,-0.25,-0.00:23,0.23,-0.17,-0.00:24,0.23,-0.17,0.00:25,-0.04,0.18,0.01:26,-0.04,0.18,-0.01", 11, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode11(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.17,0.00:2,-0.02,0.16,0.00:3,-0.02,-0.04,-0.00:4,0.03,-0.09,-0.00:5,0.00,-0.18,0.00:6,-0.04,-0.18,0.00:7,-0.07,-0.19,0.00:8,-0.10,-0.10,-0.00:9,-0.16,-0.07,-0.00:10,-0.13,-0.22,0.00:11,-0.02,0.12,0.00:12,-0.01,0.17,-0.00:13,-0.08,-0.04,0.00:14,-0.01,-0.13,0.00:15,-0.01,-0.13,-0.00:16,-0.25,-0.05,-0.00:17,0.21,0.22,-0.00:18,0.16,0.18,-0.00:19,0.07,-0.22,0.00:20,0.07,-0.07,-0.00:21,0.07,-0.09,0.00:22,-0.18,-0.25,-0.00:23,0.23,-0.17,-0.00:24,0.23,-0.17,0.00:25,-0.04,0.18,0.01:26,-0.04,0.18,-0.01", 11, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode12(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.03:2,0.00,-0.00,0.18:3,0.00,0.00,-0.26:4,0.00,0.00,-0.17:5,0.00,0.00,0.19:6,0.00,0.00,0.28:7,0.00,0.00,0.25:8,0.00,0.00,-0.25:9,0.00,0.00,-0.32:10,0.00,0.00,0.37:11,-0.00,-0.00,-0.21:12,-0.00,0.00,-0.11:13,-0.00,-0.00,0.04:14,-0.15,0.10,0.08:15,0.15,-0.10,0.08:16,-0.00,0.00,0.19:17,-0.00,0.00,0.02:18,0.00,-0.00,-0.35:19,-0.00,0.00,0.20:20,-0.00,0.00,-0.20:21,-0.00,0.00,-0.01:22,0.00,0.00,0.01:23,-0.03,-0.03,-0.04:24,0.03,0.03,-0.04:25,-0.03,0.09,-0.01:26,0.03,-0.09,-0.01", 12, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode12(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.03:2,0.00,-0.00,0.18:3,0.00,0.00,-0.26:4,0.00,0.00,-0.17:5,0.00,0.00,0.19:6,0.00,0.00,0.28:7,0.00,0.00,0.25:8,0.00,0.00,-0.25:9,0.00,0.00,-0.32:10,0.00,0.00,0.37:11,-0.00,-0.00,-0.21:12,-0.00,0.00,-0.11:13,-0.00,-0.00,0.04:14,-0.15,0.10,0.08:15,0.15,-0.10,0.08:16,-0.00,0.00,0.19:17,-0.00,0.00,0.02:18,0.00,-0.00,-0.35:19,-0.00,0.00,0.20:20,-0.00,0.00,-0.20:21,-0.00,0.00,-0.01:22,0.00,0.00,0.01:23,-0.03,-0.03,-0.04:24,0.03,0.03,-0.04:25,-0.03,0.09,-0.01:26,0.03,-0.09,-0.01", 12, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode13(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.11,0.11,0.00:2,-0.05,0.03,-0.00:3,-0.08,-0.06,-0.00:4,-0.13,-0.04,-0.00:5,-0.13,0.05,0.00:6,-0.07,0.07,0.00:7,-0.07,0.06,0.00:8,-0.07,-0.04,-0.00:9,-0.02,-0.08,-0.00:10,-0.03,0.08,0.00:11,-0.03,-0.02,-0.00:12,0.06,-0.09,-0.00:13,0.14,0.11,-0.00:14,0.04,0.25,-0.00:15,0.04,0.25,0.00:16,0.40,0.13,0.00:17,0.08,-0.09,0.00:18,-0.13,-0.06,0.00:19,-0.20,0.09,-0.00:20,-0.19,-0.07,-0.00:21,0.18,-0.07,0.00:22,-0.04,-0.22,-0.00:23,0.34,-0.15,-0.01:24,0.34,-0.15,0.01:25,0.13,0.09,0.01:26,0.13,0.09,-0.01", 13, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode13(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.11,0.11,0.00:2,-0.05,0.03,-0.00:3,-0.08,-0.06,-0.00:4,-0.13,-0.04,-0.00:5,-0.13,0.05,0.00:6,-0.07,0.07,0.00:7,-0.07,0.06,0.00:8,-0.07,-0.04,-0.00:9,-0.02,-0.08,-0.00:10,-0.03,0.08,0.00:11,-0.03,-0.02,-0.00:12,0.06,-0.09,-0.00:13,0.14,0.11,-0.00:14,0.04,0.25,-0.00:15,0.04,0.25,0.00:16,0.40,0.13,0.00:17,0.08,-0.09,0.00:18,-0.13,-0.06,0.00:19,-0.20,0.09,-0.00:20,-0.19,-0.07,-0.00:21,0.18,-0.07,0.00:22,-0.04,-0.22,-0.00:23,0.34,-0.15,-0.01:24,0.34,-0.15,0.01:25,0.13,0.09,0.01:26,0.13,0.09,-0.01", 13, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode14(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,-0.00,0.01:2,0.00,-0.00,0.01:3,-0.00,0.00,-0.02:4,-0.00,0.00,-0.24:5,-0.00,-0.00,0.24:6,-0.00,-0.00,0.02:7,-0.00,0.00,-0.20:8,-0.00,-0.00,0.21:9,-0.00,-0.00,0.42:10,-0.00,0.00,-0.43:11,-0.00,-0.00,-0.02:12,0.00,0.00,-0.02:13,0.00,0.00,0.00:14,-0.02,0.01,0.01:15,0.02,-0.01,0.01:16,-0.00,0.00,0.02:17,0.00,0.00,0.01:18,0.00,0.00,0.03:19,-0.00,-0.00,0.46:20,-0.00,0.00,-0.47:21,0.00,-0.00,-0.00:22,0.00,0.00,-0.01:23,-0.02,-0.00,-0.01:24,0.02,0.00,-0.01:25,0.01,0.00,0.01:26,-0.01,-0.00,0.01", 14, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode14(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,-0.00,0.01:2,0.00,-0.00,0.01:3,-0.00,0.00,-0.02:4,-0.00,0.00,-0.24:5,-0.00,-0.00,0.24:6,-0.00,-0.00,0.02:7,-0.00,0.00,-0.20:8,-0.00,-0.00,0.21:9,-0.00,-0.00,0.42:10,-0.00,0.00,-0.43:11,-0.00,-0.00,-0.02:12,0.00,0.00,-0.02:13,0.00,0.00,0.00:14,-0.02,0.01,0.01:15,0.02,-0.01,0.01:16,-0.00,0.00,0.02:17,0.00,0.00,0.01:18,0.00,0.00,0.03:19,-0.00,-0.00,0.46:20,-0.00,0.00,-0.47:21,0.00,-0.00,-0.00:22,0.00,0.00,-0.01:23,-0.02,-0.00,-0.01:24,0.02,0.00,-0.01:25,0.01,0.00,0.01:26,-0.01,-0.00,0.01", 14, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode15(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.09,0.20,0.00:2,-0.06,0.14,0.00:3,-0.02,-0.16,-0.00:4,-0.01,-0.18,-0.00:5,-0.01,0.04,0.00:6,0.10,0.10,-0.00:7,0.15,0.08,0.00:8,0.12,-0.13,0.00:9,0.32,-0.25,0.00:10,0.26,0.14,0.00:11,0.08,0.02,0.00:12,0.03,0.01,-0.00:13,0.01,-0.09,0.00:14,0.08,-0.20,0.01:15,0.08,-0.20,-0.01:16,-0.19,-0.11,-0.00:17,-0.17,-0.03,0.00:18,0.03,-0.00,-0.00:19,-0.17,0.13,0.00:20,-0.11,-0.23,0.00:21,-0.07,-0.01,-0.00:22,-0.26,-0.14,-0.00:23,0.06,-0.08,-0.00:24,0.06,-0.08,0.00:25,-0.14,0.21,0.01:26,-0.14,0.21,-0.01", 15, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode15(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.09,0.20,0.00:2,-0.06,0.14,0.00:3,-0.02,-0.16,-0.00:4,-0.01,-0.18,-0.00:5,-0.01,0.04,0.00:6,0.10,0.10,-0.00:7,0.15,0.08,0.00:8,0.12,-0.13,0.00:9,0.32,-0.25,0.00:10,0.26,0.14,0.00:11,0.08,0.02,0.00:12,0.03,0.01,-0.00:13,0.01,-0.09,0.00:14,0.08,-0.20,0.01:15,0.08,-0.20,-0.01:16,-0.19,-0.11,-0.00:17,-0.17,-0.03,0.00:18,0.03,-0.00,-0.00:19,-0.17,0.13,0.00:20,-0.11,-0.23,0.00:21,-0.07,-0.01,-0.00:22,-0.26,-0.14,-0.00:23,0.06,-0.08,-0.00:24,0.06,-0.08,0.00:25,-0.14,0.21,0.01:26,-0.14,0.21,-0.01", 15, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode16(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,-0.00:2,-0.00,0.00,-0.01:3,0.00,-0.00,0.06:4,-0.00,-0.00,-0.01:5,0.00,0.00,-0.01:6,0.00,0.00,0.09:7,0.00,0.00,0.00:8,0.00,-0.00,-0.02:9,0.00,-0.00,-0.18:10,0.00,0.00,-0.20:11,0.00,-0.00,-0.13:12,-0.00,0.00,0.08:13,-0.00,0.00,-0.00:14,0.13,-0.05,-0.06:15,-0.13,0.05,-0.06:16,0.00,-0.00,-0.12:17,0.00,0.00,-0.01:18,-0.00,0.00,0.89:19,-0.00,0.00,-0.13:20,-0.00,-0.00,-0.13:21,-0.00,-0.00,-0.00:22,-0.00,-0.00,-0.00:23,-0.00,0.00,-0.00:24,0.00,-0.00,-0.00:25,0.01,-0.01,0.00:26,-0.01,0.01,0.00", 16, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode16(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,-0.00:2,-0.00,0.00,-0.01:3,0.00,-0.00,0.06:4,-0.00,-0.00,-0.01:5,0.00,0.00,-0.01:6,0.00,0.00,0.09:7,0.00,0.00,0.00:8,0.00,-0.00,-0.02:9,0.00,-0.00,-0.18:10,0.00,0.00,-0.20:11,0.00,-0.00,-0.13:12,-0.00,0.00,0.08:13,-0.00,0.00,-0.00:14,0.13,-0.05,-0.06:15,-0.13,0.05,-0.06:16,0.00,-0.00,-0.12:17,0.00,0.00,-0.01:18,-0.00,0.00,0.89:19,-0.00,0.00,-0.13:20,-0.00,-0.00,-0.13:21,-0.00,-0.00,-0.00:22,-0.00,-0.00,-0.00:23,-0.00,0.00,-0.00:24,0.00,-0.00,-0.00:25,0.01,-0.01,0.00:26,-0.01,0.01,0.00", 16, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode17(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,-0.00:2,-0.00,-0.00,-0.05:3,-0.00,-0.00,0.20:4,-0.00,0.00,-0.03:5,-0.00,-0.00,-0.05:6,0.00,-0.00,0.19:7,-0.00,0.00,-0.04:8,-0.00,0.00,-0.02:9,-0.00,0.00,-0.40:10,-0.00,0.00,-0.41:11,0.00,0.00,0.02:12,0.00,0.00,-0.09:13,0.00,-0.00,0.00:14,-0.14,0.06,0.06:15,0.14,-0.06,0.06:16,-0.00,0.00,0.12:17,-0.00,0.00,0.02:18,0.00,-0.00,-0.45:19,-0.00,0.00,-0.38:20,0.00,0.00,-0.40:21,0.00,-0.00,-0.00:22,-0.00,-0.00,-0.01:23,-0.00,0.00,0.00:24,0.00,-0.00,0.00:25,0.02,-0.03,0.01:26,-0.02,0.03,0.01", 17, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode17(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,-0.00:2,-0.00,-0.00,-0.05:3,-0.00,-0.00,0.20:4,-0.00,0.00,-0.03:5,-0.00,-0.00,-0.05:6,0.00,-0.00,0.19:7,-0.00,0.00,-0.04:8,-0.00,0.00,-0.02:9,-0.00,0.00,-0.40:10,-0.00,0.00,-0.41:11,0.00,0.00,0.02:12,0.00,0.00,-0.09:13,0.00,-0.00,0.00:14,-0.14,0.06,0.06:15,0.14,-0.06,0.06:16,-0.00,0.00,0.12:17,-0.00,0.00,0.02:18,0.00,-0.00,-0.45:19,-0.00,0.00,-0.38:20,0.00,0.00,-0.40:21,0.00,-0.00,-0.00:22,-0.00,-0.00,-0.01:23,-0.00,0.00,0.00:24,0.00,-0.00,0.00:25,0.02,-0.03,0.01:26,-0.02,0.03,0.01", 17, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode18(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.06,0.02,-0.00:2,0.13,0.09,-0.00:3,0.14,-0.08,0.00:4,0.07,-0.04,-0.00:5,0.04,0.11,-0.00:6,-0.09,0.05,0.00:7,0.05,-0.03,-0.00:8,0.07,-0.16,-0.00:9,0.08,-0.16,-0.00:10,0.23,0.07,-0.00:11,-0.16,-0.02,0.00:12,-0.11,-0.11,0.00:13,-0.14,0.11,0.00:14,-0.29,0.33,-0.01:15,-0.29,0.33,0.01:16,0.24,0.14,0.00:17,0.19,-0.05,-0.00:18,-0.20,-0.04,-0.00:19,0.08,0.08,-0.00:20,-0.09,-0.12,-0.00:21,-0.11,0.01,-0.00:22,-0.02,0.08,-0.00:23,-0.18,0.05,0.01:24,-0.18,0.05,-0.01:25,-0.14,0.06,-0.00:26,-0.14,0.06,0.00", 18, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode18(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.06,0.02,-0.00:2,0.13,0.09,-0.00:3,0.14,-0.08,0.00:4,0.07,-0.04,-0.00:5,0.04,0.11,-0.00:6,-0.09,0.05,0.00:7,0.05,-0.03,-0.00:8,0.07,-0.16,-0.00:9,0.08,-0.16,-0.00:10,0.23,0.07,-0.00:11,-0.16,-0.02,0.00:12,-0.11,-0.11,0.00:13,-0.14,0.11,0.00:14,-0.29,0.33,-0.01:15,-0.29,0.33,0.01:16,0.24,0.14,0.00:17,0.19,-0.05,-0.00:18,-0.20,-0.04,-0.00:19,0.08,0.08,-0.00:20,-0.09,-0.12,-0.00:21,-0.11,0.01,-0.00:22,-0.02,0.08,-0.00:23,-0.18,0.05,0.01:24,-0.18,0.05,-0.01:25,-0.14,0.06,-0.00:26,-0.14,0.06,0.00", 18, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode19(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,0.00:2,-0.00,-0.00,-0.00:3,-0.00,0.00,0.03:4,0.00,-0.00,-0.02:5,0.00,-0.00,0.03:6,0.00,0.00,0.01:7,0.00,0.00,0.01:8,0.00,0.00,-0.01:9,0.00,0.00,-0.08:10,-0.00,0.00,-0.01:11,0.00,-0.00,-0.06:12,-0.00,0.00,0.27:13,-0.00,0.00,0.02:14,0.37,-0.13,-0.14:15,-0.37,0.13,-0.14:16,0.00,-0.00,-0.20:17,0.00,-0.00,-0.12:18,0.00,-0.00,-0.69:19,-0.00,0.00,-0.06:20,0.00,0.00,-0.16:21,0.00,0.00,-0.00:22,-0.00,-0.00,-0.00:23,-0.00,-0.00,-0.00:24,0.00,0.00,-0.00:25,0.01,-0.00,-0.00:26,-0.01,0.00,-0.00", 19, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode19(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,0.00:2,-0.00,-0.00,-0.00:3,-0.00,0.00,0.03:4,0.00,-0.00,-0.02:5,0.00,-0.00,0.03:6,0.00,0.00,0.01:7,0.00,0.00,0.01:8,0.00,0.00,-0.01:9,0.00,0.00,-0.08:10,-0.00,0.00,-0.01:11,0.00,-0.00,-0.06:12,-0.00,0.00,0.27:13,-0.00,0.00,0.02:14,0.37,-0.13,-0.14:15,-0.37,0.13,-0.14:16,0.00,-0.00,-0.20:17,0.00,-0.00,-0.12:18,0.00,-0.00,-0.69:19,-0.00,0.00,-0.06:20,0.00,0.00,-0.16:21,0.00,0.00,-0.00:22,-0.00,-0.00,-0.00:23,-0.00,-0.00,-0.00:24,0.00,0.00,-0.00:25,0.01,-0.00,-0.00:26,-0.01,0.00,-0.00", 19, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode20(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.02,-0.01,-0.00:2,-0.18,-0.11,-0.00:3,-0.13,-0.06,-0.00:4,0.22,-0.19,0.00:5,0.27,0.09,-0.00:6,0.14,0.07,-0.00:7,-0.15,0.27,-0.00:8,-0.16,0.02,0.00:9,0.03,-0.11,0.00:10,-0.19,0.25,0.00:11,0.07,-0.12,0.00:12,-0.06,-0.00,-0.00:13,-0.22,0.05,-0.00:14,-0.23,0.08,-0.00:15,-0.23,0.08,0.00:16,-0.18,0.06,0.00:17,0.10,0.03,0.00:18,0.11,-0.10,0.00:19,0.13,0.18,0.00:20,0.28,-0.16,0.00:21,0.06,-0.00,0.00:22,-0.05,-0.08,-0.00:23,0.14,-0.05,-0.01:24,0.14,-0.05,0.01:25,0.11,-0.06,0.00:26,0.11,-0.06,-0.00", 20, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode20(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.02,-0.01,-0.00:2,-0.18,-0.11,-0.00:3,-0.13,-0.06,-0.00:4,0.22,-0.19,0.00:5,0.27,0.09,-0.00:6,0.14,0.07,-0.00:7,-0.15,0.27,-0.00:8,-0.16,0.02,0.00:9,0.03,-0.11,0.00:10,-0.19,0.25,0.00:11,0.07,-0.12,0.00:12,-0.06,-0.00,-0.00:13,-0.22,0.05,-0.00:14,-0.23,0.08,-0.00:15,-0.23,0.08,0.00:16,-0.18,0.06,0.00:17,0.10,0.03,0.00:18,0.11,-0.10,0.00:19,0.13,0.18,0.00:20,0.28,-0.16,0.00:21,0.06,-0.00,0.00:22,-0.05,-0.08,-0.00:23,0.14,-0.05,-0.01:24,0.14,-0.05,0.01:25,0.11,-0.06,0.00:26,0.11,-0.06,-0.00", 20, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode21(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.01,0.09,-0.00:2,-0.14,-0.06,0.00:3,-0.10,0.06,-0.00:4,-0.13,0.06,0.00:5,-0.10,-0.16,-0.00:6,0.11,-0.06,-0.00:7,0.24,-0.03,-0.00:8,0.25,0.21,0.00:9,0.32,0.17,0.00:10,0.13,-0.09,0.00:11,0.03,-0.08,0.00:12,-0.08,-0.07,-0.00:13,-0.23,0.06,-0.00:14,-0.31,0.18,-0.01:15,-0.31,0.18,0.01:16,-0.04,0.08,0.00:17,0.12,-0.03,0.00:18,0.06,-0.07,0.00:19,-0.11,-0.15,0.00:20,0.06,0.16,0.00:21,0.04,0.01,0.00:22,-0.17,-0.13,-0.00:23,0.18,-0.07,-0.01:24,0.18,-0.07,0.01:25,0.06,0.04,0.01:26,0.06,0.04,-0.01", 21, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode21(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.01,0.09,-0.00:2,-0.14,-0.06,0.00:3,-0.10,0.06,-0.00:4,-0.13,0.06,0.00:5,-0.10,-0.16,-0.00:6,0.11,-0.06,-0.00:7,0.24,-0.03,-0.00:8,0.25,0.21,0.00:9,0.32,0.17,0.00:10,0.13,-0.09,0.00:11,0.03,-0.08,0.00:12,-0.08,-0.07,-0.00:13,-0.23,0.06,-0.00:14,-0.31,0.18,-0.01:15,-0.31,0.18,0.01:16,-0.04,0.08,0.00:17,0.12,-0.03,0.00:18,0.06,-0.07,0.00:19,-0.11,-0.15,0.00:20,0.06,0.16,0.00:21,0.04,0.01,0.00:22,-0.17,-0.13,-0.00:23,0.18,-0.07,-0.01:24,0.18,-0.07,0.01:25,0.06,0.04,0.01:26,0.06,0.04,-0.01", 21, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode22(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,-0.00,-0.00:2,0.00,0.00,0.03:3,-0.00,0.00,-0.27:4,-0.00,-0.00,0.14:5,-0.00,0.00,-0.15:6,0.00,-0.00,0.29:7,0.00,0.00,-0.16:8,0.00,-0.00,0.14:9,-0.00,-0.00,0.48:10,-0.00,0.00,-0.37:11,0.00,-0.00,-0.03:12,0.00,0.00,0.03:13,0.00,-0.00,0.00:14,0.02,-0.01,-0.01:15,-0.02,0.01,-0.01:16,0.00,-0.00,-0.00:17,-0.00,0.00,-0.01:18,0.00,-0.00,-0.17:19,-0.00,0.00,-0.36:20,-0.00,-0.00,0.47:21,0.00,-0.00,-0.00:22,0.00,0.00,0.01:23,0.01,0.00,0.01:24,-0.01,-0.00,0.01:25,-0.02,0.01,0.00:26,0.02,-0.01,0.00", 22, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode22(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,-0.00,-0.00:2,0.00,0.00,0.03:3,-0.00,0.00,-0.27:4,-0.00,-0.00,0.14:5,-0.00,0.00,-0.15:6,0.00,-0.00,0.29:7,0.00,0.00,-0.16:8,0.00,-0.00,0.14:9,-0.00,-0.00,0.48:10,-0.00,0.00,-0.37:11,0.00,-0.00,-0.03:12,0.00,0.00,0.03:13,0.00,-0.00,0.00:14,0.02,-0.01,-0.01:15,-0.02,0.01,-0.01:16,0.00,-0.00,-0.00:17,-0.00,0.00,-0.01:18,0.00,-0.00,-0.17:19,-0.00,0.00,-0.36:20,-0.00,-0.00,0.47:21,0.00,-0.00,-0.00:22,0.00,0.00,0.01:23,0.01,0.00,0.01:24,-0.01,-0.00,0.01:25,-0.02,0.01,0.00:26,0.02,-0.01,0.00", 22, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode23(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,0.01:2,-0.00,-0.00,-0.01:3,0.00,-0.00,0.02:4,0.00,-0.00,0.08:5,0.00,0.00,0.04:6,-0.00,-0.00,0.02:7,0.00,0.00,-0.09:8,0.00,0.00,-0.08:9,0.00,-0.00,0.50:10,0.00,-0.00,0.55:11,-0.00,0.00,-0.00:12,-0.00,-0.00,-0.01:13,0.00,-0.00,-0.00:14,-0.01,0.00,0.00:15,0.01,-0.00,0.00:16,0.00,0.00,0.00:17,-0.00,0.00,0.00:18,0.00,0.00,0.06:19,0.00,0.00,-0.32:20,-0.00,0.00,-0.52:21,-0.00,0.00,0.01:22,-0.00,-0.00,-0.04:23,-0.08,-0.03,-0.04:24,0.08,0.03,-0.04:25,0.08,0.06,-0.05:26,-0.08,-0.06,-0.05", 23, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode23(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,0.01:2,-0.00,-0.00,-0.01:3,0.00,-0.00,0.02:4,0.00,-0.00,0.08:5,0.00,0.00,0.04:6,-0.00,-0.00,0.02:7,0.00,0.00,-0.09:8,0.00,0.00,-0.08:9,0.00,-0.00,0.50:10,0.00,-0.00,0.55:11,-0.00,0.00,-0.00:12,-0.00,-0.00,-0.01:13,0.00,-0.00,-0.00:14,-0.01,0.00,0.00:15,0.01,-0.00,0.00:16,0.00,0.00,0.00:17,-0.00,0.00,0.00:18,0.00,0.00,0.06:19,0.00,0.00,-0.32:20,-0.00,0.00,-0.52:21,-0.00,0.00,0.01:22,-0.00,-0.00,-0.04:23,-0.08,-0.03,-0.04:24,0.08,0.03,-0.04:25,0.08,0.06,-0.05:26,-0.08,-0.06,-0.05", 23, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode24(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.03,-0.11,-0.00:2,0.18,0.17,-0.00:3,-0.00,-0.01,0.00:4,-0.14,-0.07,-0.00:5,-0.16,-0.09,-0.00:6,0.10,0.00,-0.00:7,-0.07,0.13,-0.00:8,-0.06,0.03,-0.00:9,-0.01,0.01,0.00:10,-0.17,0.08,0.00:11,0.16,-0.13,0.00:12,0.03,0.02,-0.00:13,-0.12,0.04,0.00:14,-0.08,-0.03,0.00:15,-0.08,-0.03,-0.00:16,-0.25,0.03,0.00:17,0.04,0.02,0.00:18,0.18,-0.13,-0.00:19,-0.37,0.04,0.00:20,-0.20,-0.11,-0.00:21,0.02,-0.05,-0.00:22,0.42,0.21,0.00:23,-0.25,0.11,0.03:24,-0.25,0.11,-0.03:25,-0.13,-0.01,-0.01:26,-0.13,-0.01,0.01", 24, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode24(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.03,-0.11,-0.00:2,0.18,0.17,-0.00:3,-0.00,-0.01,0.00:4,-0.14,-0.07,-0.00:5,-0.16,-0.09,-0.00:6,0.10,0.00,-0.00:7,-0.07,0.13,-0.00:8,-0.06,0.03,-0.00:9,-0.01,0.01,0.00:10,-0.17,0.08,0.00:11,0.16,-0.13,0.00:12,0.03,0.02,-0.00:13,-0.12,0.04,0.00:14,-0.08,-0.03,0.00:15,-0.08,-0.03,-0.00:16,-0.25,0.03,0.00:17,0.04,0.02,0.00:18,0.18,-0.13,-0.00:19,-0.37,0.04,0.00:20,-0.20,-0.11,-0.00:21,0.02,-0.05,-0.00:22,0.42,0.21,0.00:23,-0.25,0.11,0.03:24,-0.25,0.11,-0.03:25,-0.13,-0.01,-0.01:26,-0.13,-0.01,0.01", 24, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode25(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,-0.04:2,-0.00,-0.00,-0.01:3,0.00,-0.00,0.12:4,0.00,0.00,-0.10:5,0.00,0.00,-0.04:6,-0.00,-0.00,0.09:7,0.00,-0.00,-0.07:8,0.00,-0.00,-0.07:9,-0.00,-0.00,0.33:10,0.00,-0.00,0.40:11,-0.00,-0.00,-0.02:12,-0.00,0.00,0.01:13,0.00,-0.00,-0.00:14,-0.00,0.00,0.00:15,0.00,-0.00,0.00:16,0.00,0.00,0.00:17,-0.00,0.00,-0.00:18,0.00,0.00,-0.01:19,0.00,-0.00,0.24:20,-0.00,-0.00,0.46:21,-0.00,0.00,-0.03:22,-0.00,-0.00,0.12:23,0.26,0.10,0.12:24,-0.26,-0.10,0.12:25,-0.23,-0.18,0.15:26,0.23,0.18,0.15", 25, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode25(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,-0.04:2,-0.00,-0.00,-0.01:3,0.00,-0.00,0.12:4,0.00,0.00,-0.10:5,0.00,0.00,-0.04:6,-0.00,-0.00,0.09:7,0.00,-0.00,-0.07:8,0.00,-0.00,-0.07:9,-0.00,-0.00,0.33:10,0.00,-0.00,0.40:11,-0.00,-0.00,-0.02:12,-0.00,0.00,0.01:13,0.00,-0.00,-0.00:14,-0.00,0.00,0.00:15,0.00,-0.00,0.00:16,0.00,0.00,0.00:17,-0.00,0.00,-0.00:18,0.00,0.00,-0.01:19,0.00,-0.00,0.24:20,-0.00,-0.00,0.46:21,-0.00,0.00,-0.03:22,-0.00,-0.00,0.12:23,0.26,0.10,0.12:24,-0.26,-0.10,0.12:25,-0.23,-0.18,0.15:26,0.23,0.18,0.15", 25, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode26(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,0.05:2,0.00,0.00,-0.03:3,0.00,-0.00,0.06:4,-0.00,0.00,-0.06:5,-0.00,0.00,-0.04:6,-0.00,-0.00,0.05:7,-0.00,-0.00,-0.02:8,-0.00,-0.00,-0.02:9,-0.00,-0.00,0.08:10,0.00,-0.00,0.12:11,0.00,-0.00,-0.01:12,0.00,0.00,0.00:13,-0.00,0.00,0.00:14,-0.00,0.00,0.00:15,0.00,-0.00,0.00:16,-0.00,0.00,0.00:17,0.00,0.00,-0.00:18,0.00,-0.00,-0.02:19,-0.00,-0.00,0.26:20,-0.00,-0.00,0.40:21,-0.00,-0.00,0.05:22,-0.00,-0.00,-0.16:23,-0.36,-0.14,-0.16:24,0.36,0.14,-0.16:25,0.29,0.23,-0.20:26,-0.29,-0.23,-0.20", 26, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode26(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,0.05:2,0.00,0.00,-0.03:3,0.00,-0.00,0.06:4,-0.00,0.00,-0.06:5,-0.00,0.00,-0.04:6,-0.00,-0.00,0.05:7,-0.00,-0.00,-0.02:8,-0.00,-0.00,-0.02:9,-0.00,-0.00,0.08:10,0.00,-0.00,0.12:11,0.00,-0.00,-0.01:12,0.00,0.00,0.00:13,-0.00,0.00,0.00:14,-0.00,0.00,0.00:15,0.00,-0.00,0.00:16,-0.00,0.00,0.00:17,0.00,0.00,-0.00:18,0.00,-0.00,-0.02:19,-0.00,-0.00,0.26:20,-0.00,-0.00,0.40:21,-0.00,-0.00,0.05:22,-0.00,-0.00,-0.16:23,-0.36,-0.14,-0.16:24,0.36,0.14,-0.16:25,0.29,0.23,-0.20:26,-0.29,-0.23,-0.20", 26, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode27(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.01,0.07,-0.00:2,-0.03,-0.08,0.00:3,0.06,-0.02,-0.00:4,-0.11,0.24,0.00:5,-0.01,0.23,0.00:6,0.00,-0.00,-0.00:7,-0.01,-0.14,0.00:8,-0.05,-0.20,-0.00:9,-0.20,-0.11,-0.00:10,0.10,-0.09,-0.00:11,0.19,-0.21,0.00:12,0.05,0.04,-0.00:13,-0.08,0.07,0.00:14,0.03,-0.13,0.02:15,0.03,-0.13,-0.02:16,-0.42,0.04,-0.00:17,0.03,0.05,-0.00:18,0.23,-0.20,-0.00:19,0.07,0.19,-0.00:20,-0.30,0.14,-0.00:21,-0.04,0.04,-0.00:22,-0.30,-0.13,-0.00:23,0.13,-0.07,-0.02:24,0.13,-0.07,0.02:25,0.06,0.02,0.01:26,0.06,0.02,-0.01", 27, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode27(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.01,0.07,-0.00:2,-0.03,-0.08,0.00:3,0.06,-0.02,-0.00:4,-0.11,0.24,0.00:5,-0.01,0.23,0.00:6,0.00,-0.00,-0.00:7,-0.01,-0.14,0.00:8,-0.05,-0.20,-0.00:9,-0.20,-0.11,-0.00:10,0.10,-0.09,-0.00:11,0.19,-0.21,0.00:12,0.05,0.04,-0.00:13,-0.08,0.07,0.00:14,0.03,-0.13,0.02:15,0.03,-0.13,-0.02:16,-0.42,0.04,-0.00:17,0.03,0.05,-0.00:18,0.23,-0.20,-0.00:19,0.07,0.19,-0.00:20,-0.30,0.14,-0.00:21,-0.04,0.04,-0.00:22,-0.30,-0.13,-0.00:23,0.13,-0.07,-0.02:24,0.13,-0.07,0.02:25,0.06,0.02,0.01:26,0.06,0.02,-0.01", 27, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode28(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,-0.00:2,-0.00,0.00,-0.01:3,-0.00,-0.00,0.03:4,-0.00,0.00,-0.02:5,0.00,0.00,0.02:6,0.00,0.00,-0.03:7,0.00,-0.00,0.11:8,-0.00,0.00,-0.12:9,-0.00,-0.00,0.72:10,0.00,0.00,-0.65:11,0.00,0.00,0.01:12,0.00,-0.00,-0.00:13,-0.00,0.00,0.00:14,0.01,-0.00,-0.00:15,-0.01,0.00,-0.00:16,-0.00,-0.00,-0.00:17,-0.00,-0.00,0.00:18,-0.00,-0.00,-0.01:19,0.00,0.00,-0.16:20,-0.00,-0.00,0.09:21,0.00,-0.00,0.00:22,0.00,0.00,-0.00:23,-0.01,-0.00,-0.00:24,0.01,0.00,-0.00:25,0.00,0.00,-0.00:26,-0.00,-0.00,-0.00", 28, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode28(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,-0.00:2,-0.00,0.00,-0.01:3,-0.00,-0.00,0.03:4,-0.00,0.00,-0.02:5,0.00,0.00,0.02:6,0.00,0.00,-0.03:7,0.00,-0.00,0.11:8,-0.00,0.00,-0.12:9,-0.00,-0.00,0.72:10,0.00,0.00,-0.65:11,0.00,0.00,0.01:12,0.00,-0.00,-0.00:13,-0.00,0.00,0.00:14,0.01,-0.00,-0.00:15,-0.01,0.00,-0.00:16,-0.00,-0.00,-0.00:17,-0.00,-0.00,0.00:18,-0.00,-0.00,-0.01:19,0.00,0.00,-0.16:20,-0.00,-0.00,0.09:21,0.00,-0.00,0.00:22,0.00,0.00,-0.00:23,-0.01,-0.00,-0.00:24,0.01,0.00,-0.00:25,0.00,0.00,-0.00:26,-0.00,-0.00,-0.00", 28, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode29(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.06,-0.10,-0.00:2,-0.16,0.11,-0.00:3,-0.08,0.01,0.00:4,0.01,0.05,-0.00:5,0.06,0.09,0.00:6,0.00,0.00,0.00:7,0.07,-0.11,-0.00:8,0.01,-0.06,0.00:9,0.03,-0.08,-0.00:10,0.13,-0.08,0.00:11,0.01,0.03,-0.00:12,0.02,-0.01,-0.00:13,-0.02,0.00,0.00:14,-0.03,0.02,-0.00:15,-0.03,0.02,0.00:16,-0.01,0.00,-0.00:17,-0.00,-0.02,0.00:18,0.02,0.03,0.00:19,0.13,0.05,-0.00:20,-0.02,0.04,0.00:21,0.18,-0.08,0.00:22,0.73,0.28,0.00:23,-0.13,0.15,0.05:24,-0.13,0.15,-0.05:25,-0.24,0.00,-0.00:26,-0.24,0.00,0.00", 29, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode29(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.06,-0.10,-0.00:2,-0.16,0.11,-0.00:3,-0.08,0.01,0.00:4,0.01,0.05,-0.00:5,0.06,0.09,0.00:6,0.00,0.00,0.00:7,0.07,-0.11,-0.00:8,0.01,-0.06,0.00:9,0.03,-0.08,-0.00:10,0.13,-0.08,0.00:11,0.01,0.03,-0.00:12,0.02,-0.01,-0.00:13,-0.02,0.00,0.00:14,-0.03,0.02,-0.00:15,-0.03,0.02,0.00:16,-0.01,0.00,-0.00:17,-0.00,-0.02,0.00:18,0.02,0.03,0.00:19,0.13,0.05,-0.00:20,-0.02,0.04,0.00:21,0.18,-0.08,0.00:22,0.73,0.28,0.00:23,-0.13,0.15,0.05:24,-0.13,0.15,-0.05:25,-0.24,0.00,-0.00:26,-0.24,0.00,0.00", 29, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode30(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,-0.00:2,-0.00,0.00,0.00:3,-0.00,0.00,-0.00:4,0.00,-0.00,0.08:5,0.00,0.00,-0.13:6,-0.00,-0.00,0.03:7,0.00,-0.00,0.02:8,0.00,0.00,-0.03:9,0.00,-0.00,0.14:10,0.00,0.00,-0.12:11,-0.00,-0.00,-0.01:12,-0.00,0.00,0.01:13,0.00,-0.00,-0.00:14,-0.01,0.00,0.00:15,0.01,-0.00,0.00:16,-0.00,0.00,0.01:17,0.00,0.00,-0.00:18,-0.00,-0.00,-0.02:19,-0.00,-0.00,0.83:20,0.00,0.00,-0.49:21,0.00,-0.00,-0.00:22,0.00,0.00,0.01:23,0.02,0.01,0.01:24,-0.02,-0.01,0.01:25,-0.00,-0.01,0.01:26,0.00,0.01,0.01", 30, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode30(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,-0.00:2,-0.00,0.00,0.00:3,-0.00,0.00,-0.00:4,0.00,-0.00,0.08:5,0.00,0.00,-0.13:6,-0.00,-0.00,0.03:7,0.00,-0.00,0.02:8,0.00,0.00,-0.03:9,0.00,-0.00,0.14:10,0.00,0.00,-0.12:11,-0.00,-0.00,-0.01:12,-0.00,0.00,0.01:13,0.00,-0.00,-0.00:14,-0.01,0.00,0.00:15,0.01,-0.00,0.00:16,-0.00,0.00,0.01:17,0.00,0.00,-0.00:18,-0.00,-0.00,-0.02:19,-0.00,-0.00,0.83:20,0.00,0.00,-0.49:21,0.00,-0.00,-0.00:22,0.00,0.00,0.01:23,0.02,0.01,0.01:24,-0.02,-0.01,0.01:25,-0.00,-0.01,0.01:26,0.00,0.01,0.01", 30, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode31(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.03,0.00,0.00:2,0.03,-0.02,0.00:3,0.01,0.02,0.00:4,-0.01,0.05,0.00:5,-0.01,-0.04,-0.00:6,0.10,0.04,0.00:7,-0.03,-0.07,-0.00:8,-0.12,-0.09,-0.00:9,-0.30,0.02,0.00:10,-0.09,-0.10,0.00:11,0.15,0.36,-0.00:12,0.21,-0.09,-0.00:13,-0.22,0.02,0.00:14,-0.34,0.20,-0.02:15,-0.34,0.20,0.02:16,-0.10,0.05,-0.00:17,-0.03,-0.24,0.00:18,0.12,0.35,0.00:19,-0.00,-0.04,0.00:20,0.06,0.08,-0.00:21,-0.04,0.02,-0.00:22,-0.18,-0.07,-0.00:23,0.04,-0.04,-0.02:24,0.04,-0.04,0.02:25,0.08,-0.02,-0.00:26,0.08,-0.02,0.00", 31, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode31(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.03,0.00,0.00:2,0.03,-0.02,0.00:3,0.01,0.02,0.00:4,-0.01,0.05,0.00:5,-0.01,-0.04,-0.00:6,0.10,0.04,0.00:7,-0.03,-0.07,-0.00:8,-0.12,-0.09,-0.00:9,-0.30,0.02,0.00:10,-0.09,-0.10,0.00:11,0.15,0.36,-0.00:12,0.21,-0.09,-0.00:13,-0.22,0.02,0.00:14,-0.34,0.20,-0.02:15,-0.34,0.20,0.02:16,-0.10,0.05,-0.00:17,-0.03,-0.24,0.00:18,0.12,0.35,0.00:19,-0.00,-0.04,0.00:20,0.06,0.08,-0.00:21,-0.04,0.02,-0.00:22,-0.18,-0.07,-0.00:23,0.04,-0.04,-0.02:24,0.04,-0.04,0.02:25,0.08,-0.02,-0.00:26,0.08,-0.02,0.00", 31, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode32(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,-0.00,0.00:2,0.00,0.00,0.00:3,0.00,-0.00,-0.00:4,-0.03,0.06,0.00:5,-0.00,0.00,-0.00:6,0.05,-0.01,-0.00:7,-0.01,0.02,0.00:8,-0.03,-0.05,-0.00:9,0.01,-0.08,0.00:10,0.02,0.04,-0.00:11,0.07,-0.00,0.00:12,-0.08,0.01,-0.00:13,0.00,-0.17,0.00:14,-0.21,0.29,-0.08:15,-0.21,0.29,0.08:16,0.77,-0.11,0.00:17,-0.02,0.07,0.00:18,0.24,0.06,0.00:19,-0.01,0.01,0.00:20,-0.02,0.06,0.00:21,-0.00,0.00,-0.00:22,-0.01,-0.00,-0.00:23,0.00,-0.00,-0.00:24,0.00,-0.00,0.00:25,0.00,-0.00,0.00:26,0.00,-0.00,-0.00", 32, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode32(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,-0.00,0.00:2,0.00,0.00,0.00:3,0.00,-0.00,-0.00:4,-0.03,0.06,0.00:5,-0.00,0.00,-0.00:6,0.05,-0.01,-0.00:7,-0.01,0.02,0.00:8,-0.03,-0.05,-0.00:9,0.01,-0.08,0.00:10,0.02,0.04,-0.00:11,0.07,-0.00,0.00:12,-0.08,0.01,-0.00:13,0.00,-0.17,0.00:14,-0.21,0.29,-0.08:15,-0.21,0.29,0.08:16,0.77,-0.11,0.00:17,-0.02,0.07,0.00:18,0.24,0.06,0.00:19,-0.01,0.01,0.00:20,-0.02,0.06,0.00:21,-0.00,0.00,-0.00:22,-0.01,-0.00,-0.00:23,0.00,-0.00,-0.00:24,0.00,-0.00,0.00:25,0.00,-0.00,0.00:26,0.00,-0.00,-0.00", 32, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode33(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.01,-0.00,-0.00:2,-0.02,0.00,-0.00:3,-0.00,0.00,-0.00:4,-0.00,0.17,0.00:5,-0.01,-0.17,-0.00:6,-0.00,-0.01,-0.00:7,-0.01,0.17,0.00:8,-0.01,-0.17,-0.00:9,0.33,-0.39,-0.00:10,0.26,0.31,0.00:11,-0.03,0.00,-0.00:12,0.00,-0.01,0.00:13,0.01,0.04,-0.00:14,0.06,-0.07,0.02:15,0.06,-0.07,-0.02:16,-0.16,0.02,0.00:17,0.00,-0.01,-0.00:18,-0.09,-0.02,-0.00:19,0.27,-0.35,-0.00:20,0.30,0.33,0.00:21,0.02,-0.01,0.00:22,0.05,0.02,0.00:23,-0.00,0.01,0.00:24,-0.00,0.01,-0.00:25,-0.01,-0.01,-0.00:26,-0.01,-0.01,0.00", 33, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode33(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.01,-0.00,-0.00:2,-0.02,0.00,-0.00:3,-0.00,0.00,-0.00:4,-0.00,0.17,0.00:5,-0.01,-0.17,-0.00:6,-0.00,-0.01,-0.00:7,-0.01,0.17,0.00:8,-0.01,-0.17,-0.00:9,0.33,-0.39,-0.00:10,0.26,0.31,0.00:11,-0.03,0.00,-0.00:12,0.00,-0.01,0.00:13,0.01,0.04,-0.00:14,0.06,-0.07,0.02:15,0.06,-0.07,-0.02:16,-0.16,0.02,0.00:17,0.00,-0.01,-0.00:18,-0.09,-0.02,-0.00:19,0.27,-0.35,-0.00:20,0.30,0.33,0.00:21,0.02,-0.01,0.00:22,0.05,0.02,0.00:23,-0.00,0.01,0.00:24,-0.00,0.01,-0.00:25,-0.01,-0.01,-0.00:26,-0.01,-0.01,0.00", 33, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode34(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,0.00:2,0.00,-0.00,-0.00:3,-0.00,-0.00,-0.00:4,-0.00,-0.00,-0.00:5,0.00,0.00,0.01:6,0.00,0.00,-0.01:7,0.00,-0.00,0.00:8,-0.00,0.00,0.00:9,-0.00,0.00,-0.00:10,-0.00,-0.00,-0.01:11,0.00,0.00,-0.02:12,-0.00,0.00,0.18:13,-0.00,-0.00,-0.17:14,-0.60,0.07,0.17:15,0.60,-0.07,0.17:16,-0.00,0.00,0.37:17,0.00,0.00,-0.03:18,0.00,0.00,0.01:19,-0.00,0.00,-0.02:20,-0.00,-0.00,0.00:21,-0.00,0.00,0.00:22,-0.00,-0.00,0.00:23,-0.00,-0.00,-0.00:24,0.00,0.00,-0.00:25,-0.00,0.00,0.00:26,0.00,-0.00,0.00", 34, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode34(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,0.00:2,0.00,-0.00,-0.00:3,-0.00,-0.00,-0.00:4,-0.00,-0.00,-0.00:5,0.00,0.00,0.01:6,0.00,0.00,-0.01:7,0.00,-0.00,0.00:8,-0.00,0.00,0.00:9,-0.00,0.00,-0.00:10,-0.00,-0.00,-0.01:11,0.00,0.00,-0.02:12,-0.00,0.00,0.18:13,-0.00,-0.00,-0.17:14,-0.60,0.07,0.17:15,0.60,-0.07,0.17:16,-0.00,0.00,0.37:17,0.00,0.00,-0.03:18,0.00,0.00,0.01:19,-0.00,0.00,-0.02:20,-0.00,-0.00,0.00:21,-0.00,0.00,0.00:22,-0.00,-0.00,0.00:23,-0.00,-0.00,-0.00:24,0.00,0.00,-0.00:25,-0.00,0.00,0.00:26,0.00,-0.00,0.00", 34, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode35(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.31,-0.15,0.00:2,-0.10,0.19,-0.00:3,-0.11,0.01,-0.00:4,-0.00,0.01,0.00:5,0.02,0.04,0.00:6,0.00,0.00,0.00:7,0.06,-0.05,-0.00:8,0.00,-0.02,-0.00:9,0.13,-0.11,-0.00:10,0.11,-0.02,0.00:11,-0.01,-0.01,0.00:12,-0.01,0.00,0.00:13,0.01,0.00,-0.00:14,0.02,-0.01,0.00:15,0.02,-0.01,-0.00:16,-0.01,0.00,-0.00:17,0.00,0.01,-0.00:18,-0.02,-0.01,0.00:19,0.02,0.04,0.00:20,0.13,0.08,-0.00:21,-0.19,-0.04,-0.00:22,-0.31,-0.12,-0.00:23,-0.21,-0.11,-0.04:24,-0.21,-0.11,0.04:25,0.47,-0.14,-0.03:26,0.47,-0.14,0.03", 35, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode35(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.31,-0.15,0.00:2,-0.10,0.19,-0.00:3,-0.11,0.01,-0.00:4,-0.00,0.01,0.00:5,0.02,0.04,0.00:6,0.00,0.00,0.00:7,0.06,-0.05,-0.00:8,0.00,-0.02,-0.00:9,0.13,-0.11,-0.00:10,0.11,-0.02,0.00:11,-0.01,-0.01,0.00:12,-0.01,0.00,0.00:13,0.01,0.00,-0.00:14,0.02,-0.01,0.00:15,0.02,-0.01,-0.00:16,-0.01,0.00,-0.00:17,0.00,0.01,-0.00:18,-0.02,-0.01,0.00:19,0.02,0.04,0.00:20,0.13,0.08,-0.00:21,-0.19,-0.04,-0.00:22,-0.31,-0.12,-0.00:23,-0.21,-0.11,-0.04:24,-0.21,-0.11,0.04:25,0.47,-0.14,-0.03:26,0.47,-0.14,0.03", 35, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode36(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.09,0.18,0.00:2,0.01,-0.08,0.00:3,-0.01,-0.05,-0.00:4,-0.04,0.03,0.00:5,0.03,0.03,-0.00:6,-0.02,-0.03,-0.00:7,-0.05,0.02,0.00:8,0.04,0.04,0.00:9,0.28,-0.11,-0.00:10,-0.32,-0.12,-0.00:11,0.01,0.02,-0.00:12,0.01,-0.00,-0.00:13,-0.01,-0.00,0.00:14,-0.01,0.01,-0.00:15,-0.01,0.01,0.00:16,-0.00,0.00,0.00:17,-0.00,-0.01,0.00:18,0.05,0.03,0.00:19,0.30,-0.12,0.00:20,-0.18,-0.04,-0.00:21,-0.05,-0.15,-0.00:22,0.33,0.12,0.00:23,-0.41,0.13,0.07:24,-0.41,0.13,-0.07:25,0.09,0.16,0.02:26,0.09,0.16,-0.02", 36, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode36(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.09,0.18,0.00:2,0.01,-0.08,0.00:3,-0.01,-0.05,-0.00:4,-0.04,0.03,0.00:5,0.03,0.03,-0.00:6,-0.02,-0.03,-0.00:7,-0.05,0.02,0.00:8,0.04,0.04,0.00:9,0.28,-0.11,-0.00:10,-0.32,-0.12,-0.00:11,0.01,0.02,-0.00:12,0.01,-0.00,-0.00:13,-0.01,-0.00,0.00:14,-0.01,0.01,-0.00:15,-0.01,0.01,0.00:16,-0.00,0.00,0.00:17,-0.00,-0.01,0.00:18,0.05,0.03,0.00:19,0.30,-0.12,0.00:20,-0.18,-0.04,-0.00:21,-0.05,-0.15,-0.00:22,0.33,0.12,0.00:23,-0.41,0.13,0.07:24,-0.41,0.13,-0.07:25,0.09,0.16,0.02:26,0.09,0.16,-0.02", 36, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode37(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.03,-0.09,-0.00:2,0.01,0.05,0.00:3,-0.01,-0.02,0.00:4,-0.05,0.01,0.00:5,0.05,0.03,-0.00:6,-0.02,-0.04,-0.00:7,-0.05,0.02,0.00:8,0.05,0.03,0.00:9,0.48,-0.23,-0.00:10,-0.39,-0.16,-0.00:11,0.01,0.02,-0.00:12,0.01,-0.00,-0.00:13,-0.01,0.00,0.00:14,-0.01,0.01,0.00:15,-0.01,0.01,-0.00:16,-0.01,0.00,0.00:17,-0.00,-0.01,0.00:18,0.05,0.04,0.00:19,0.39,-0.17,0.00:20,-0.41,-0.17,-0.00:21,0.02,0.07,0.00:22,-0.17,-0.06,-0.00:23,0.19,-0.07,-0.04:24,0.19,-0.07,0.04:25,-0.05,-0.07,-0.00:26,-0.05,-0.07,0.00", 37, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode37(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.03,-0.09,-0.00:2,0.01,0.05,0.00:3,-0.01,-0.02,0.00:4,-0.05,0.01,0.00:5,0.05,0.03,-0.00:6,-0.02,-0.04,-0.00:7,-0.05,0.02,0.00:8,0.05,0.03,0.00:9,0.48,-0.23,-0.00:10,-0.39,-0.16,-0.00:11,0.01,0.02,-0.00:12,0.01,-0.00,-0.00:13,-0.01,0.00,0.00:14,-0.01,0.01,0.00:15,-0.01,0.01,-0.00:16,-0.01,0.00,0.00:17,-0.00,-0.01,0.00:18,0.05,0.04,0.00:19,0.39,-0.17,0.00:20,-0.41,-0.17,-0.00:21,0.02,0.07,0.00:22,-0.17,-0.06,-0.00:23,0.19,-0.07,-0.04:24,0.19,-0.07,0.04:25,-0.05,-0.07,-0.00:26,-0.05,-0.07,0.00", 37, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode38(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.17:2,0.00,0.00,-0.05:3,0.00,0.00,0.00:4,-0.00,-0.00,-0.00:5,-0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,-0.00,0.00,0.00:8,0.00,-0.00,0.00:9,-0.00,0.00,-0.01:10,-0.00,0.00,-0.00:11,0.00,-0.00,-0.00:12,0.00,0.00,-0.00:13,-0.00,-0.00,0.00:14,0.00,0.00,-0.00:15,-0.00,-0.00,-0.00:16,0.00,-0.00,-0.00:17,-0.00,0.00,0.00:18,-0.00,-0.00,-0.00:19,0.00,-0.00,-0.00:20,-0.00,-0.00,0.00:21,0.00,0.00,-0.11:22,0.00,-0.00,0.24:23,0.31,0.16,0.10:24,-0.31,-0.16,0.10:25,-0.07,0.54,-0.16:26,0.07,-0.54,-0.16", 38, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode38(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.17:2,0.00,0.00,-0.05:3,0.00,0.00,0.00:4,-0.00,-0.00,-0.00:5,-0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,-0.00,0.00,0.00:8,0.00,-0.00,0.00:9,-0.00,0.00,-0.01:10,-0.00,0.00,-0.00:11,0.00,-0.00,-0.00:12,0.00,0.00,-0.00:13,-0.00,-0.00,0.00:14,0.00,0.00,-0.00:15,-0.00,-0.00,-0.00:16,0.00,-0.00,-0.00:17,-0.00,0.00,0.00:18,-0.00,-0.00,-0.00:19,0.00,-0.00,-0.00:20,-0.00,-0.00,0.00:21,0.00,0.00,-0.11:22,0.00,-0.00,0.24:23,0.31,0.16,0.10:24,-0.31,-0.16,0.10:25,-0.07,0.54,-0.16:26,0.07,-0.54,-0.16", 38, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode39(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.03,-0.01,-0.00:2,-0.03,0.01,0.00:3,0.04,-0.01,-0.00:4,-0.04,-0.02,-0.00:5,0.02,-0.03,-0.00:6,-0.03,-0.01,-0.00:7,0.03,0.05,0.00:8,-0.02,0.03,0.00:9,-0.41,0.27,0.00:10,0.40,0.24,0.00:11,0.02,-0.00,0.00:12,0.01,-0.00,0.00:13,-0.00,-0.00,-0.00:14,-0.01,0.01,-0.00:15,-0.01,0.01,0.00:16,0.00,-0.00,0.00:17,-0.00,0.00,-0.00:18,0.05,0.00,-0.00:19,0.47,-0.30,-0.00:20,-0.41,-0.22,-0.00:21,-0.01,-0.00,0.00:22,-0.01,-0.00,-0.00:23,-0.01,-0.00,-0.00:24,-0.01,-0.00,0.00:25,-0.01,0.01,0.00:26,-0.01,0.01,-0.00", 39, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode39(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.03,-0.01,-0.00:2,-0.03,0.01,0.00:3,0.04,-0.01,-0.00:4,-0.04,-0.02,-0.00:5,0.02,-0.03,-0.00:6,-0.03,-0.01,-0.00:7,0.03,0.05,0.00:8,-0.02,0.03,0.00:9,-0.41,0.27,0.00:10,0.40,0.24,0.00:11,0.02,-0.00,0.00:12,0.01,-0.00,0.00:13,-0.00,-0.00,-0.00:14,-0.01,0.01,-0.00:15,-0.01,0.01,0.00:16,0.00,-0.00,0.00:17,-0.00,0.00,-0.00:18,0.05,0.00,-0.00:19,0.47,-0.30,-0.00:20,-0.41,-0.22,-0.00:21,-0.01,-0.00,0.00:22,-0.01,-0.00,-0.00:23,-0.01,-0.00,-0.00:24,-0.01,-0.00,0.00:25,-0.01,0.01,0.00:26,-0.01,0.01,-0.00", 39, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode40(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.01,-0.00:2,-0.02,0.00,-0.00:3,0.02,0.01,0.00:4,0.06,-0.04,-0.00:5,-0.04,-0.01,0.00:6,-0.18,0.03,0.00:7,-0.03,-0.02,-0.00:8,0.05,0.03,0.00:9,0.19,-0.05,-0.00:10,0.09,0.05,0.00:11,0.01,-0.10,0.00:12,0.31,0.07,-0.00:13,-0.09,-0.08,0.00:14,-0.24,0.33,-0.09:15,-0.24,0.33,0.09:16,0.05,-0.04,0.00:17,-0.05,0.07,-0.00:18,-0.51,-0.30,0.00:19,0.09,-0.10,-0.00:20,0.25,0.05,0.00:21,0.00,0.00,0.00:22,0.00,0.00,0.00:23,0.01,-0.00,-0.00:24,0.01,-0.00,0.00:25,0.00,0.00,-0.01:26,0.00,0.00,0.01", 40, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode40(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.01,-0.00:2,-0.02,0.00,-0.00:3,0.02,0.01,0.00:4,0.06,-0.04,-0.00:5,-0.04,-0.01,0.00:6,-0.18,0.03,0.00:7,-0.03,-0.02,-0.00:8,0.05,0.03,0.00:9,0.19,-0.05,-0.00:10,0.09,0.05,0.00:11,0.01,-0.10,0.00:12,0.31,0.07,-0.00:13,-0.09,-0.08,0.00:14,-0.24,0.33,-0.09:15,-0.24,0.33,0.09:16,0.05,-0.04,0.00:17,-0.05,0.07,-0.00:18,-0.51,-0.30,0.00:19,0.09,-0.10,-0.00:20,0.25,0.05,0.00:21,0.00,0.00,0.00:22,0.00,0.00,0.00:23,0.01,-0.00,-0.00:24,0.01,-0.00,0.00:25,0.00,0.00,-0.01:26,0.00,0.00,0.01", 40, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode41(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.05,-0.02,-0.00:2,-0.13,0.01,-0.00:3,0.20,-0.01,-0.00:4,-0.00,0.06,0.00:5,0.00,-0.08,-0.00:6,0.17,0.04,0.00:7,-0.01,0.04,0.00:8,0.02,-0.06,-0.00:9,-0.26,0.12,0.00:10,-0.52,-0.24,-0.00:11,-0.09,-0.01,-0.00:12,0.03,0.02,-0.00:13,0.01,-0.01,0.00:14,-0.02,0.06,-0.02:15,-0.02,0.06,0.02:16,-0.00,-0.01,-0.00:17,-0.01,0.03,-0.00:18,-0.50,-0.16,0.00:19,-0.20,0.04,-0.00:20,-0.33,-0.11,-0.00:21,-0.01,-0.01,0.00:22,0.01,0.00,-0.00:23,-0.02,-0.01,-0.01:24,-0.02,-0.01,0.01:25,-0.10,0.07,-0.00:26,-0.10,0.07,0.00", 41, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode41(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.05,-0.02,-0.00:2,-0.13,0.01,-0.00:3,0.20,-0.01,-0.00:4,-0.00,0.06,0.00:5,0.00,-0.08,-0.00:6,0.17,0.04,0.00:7,-0.01,0.04,0.00:8,0.02,-0.06,-0.00:9,-0.26,0.12,0.00:10,-0.52,-0.24,-0.00:11,-0.09,-0.01,-0.00:12,0.03,0.02,-0.00:13,0.01,-0.01,0.00:14,-0.02,0.06,-0.02:15,-0.02,0.06,0.02:16,-0.00,-0.01,-0.00:17,-0.01,0.03,-0.00:18,-0.50,-0.16,0.00:19,-0.20,0.04,-0.00:20,-0.33,-0.11,-0.00:21,-0.01,-0.01,0.00:22,0.01,0.00,-0.00:23,-0.02,-0.01,-0.01:24,-0.02,-0.01,0.01:25,-0.10,0.07,-0.00:26,-0.10,0.07,0.00", 41, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode42(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.06,-0.04,0.00:2,-0.15,0.02,-0.00:3,0.22,-0.05,-0.00:4,0.14,0.02,0.00:5,-0.12,0.02,0.00:6,-0.18,-0.13,-0.00:7,-0.05,0.08,0.00:8,0.04,0.06,0.00:9,0.23,-0.04,-0.00:10,0.05,0.16,0.00:11,0.08,0.02,0.00:12,-0.02,0.00,0.00:13,-0.01,0.01,-0.00:14,0.01,-0.06,0.02:15,0.01,-0.06,-0.02:16,0.01,0.01,0.00:17,0.01,-0.05,0.00:18,0.64,0.23,-0.00:19,-0.40,0.18,-0.00:20,-0.02,-0.07,-0.00:21,-0.01,0.00,0.00:22,-0.00,0.00,-0.00:23,-0.01,-0.03,-0.02:24,-0.01,-0.03,0.02:25,-0.14,0.08,-0.00:26,-0.14,0.08,0.00", 42, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode42(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.06,-0.04,0.00:2,-0.15,0.02,-0.00:3,0.22,-0.05,-0.00:4,0.14,0.02,0.00:5,-0.12,0.02,0.00:6,-0.18,-0.13,-0.00:7,-0.05,0.08,0.00:8,0.04,0.06,0.00:9,0.23,-0.04,-0.00:10,0.05,0.16,0.00:11,0.08,0.02,0.00:12,-0.02,0.00,0.00:13,-0.01,0.01,-0.00:14,0.01,-0.06,0.02:15,0.01,-0.06,-0.02:16,0.01,0.01,0.00:17,0.01,-0.05,0.00:18,0.64,0.23,-0.00:19,-0.40,0.18,-0.00:20,-0.02,-0.07,-0.00:21,-0.01,0.00,0.00:22,-0.00,0.00,-0.00:23,-0.01,-0.03,-0.02:24,-0.01,-0.03,0.02:25,-0.14,0.08,-0.00:26,-0.14,0.08,0.00", 42, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode43(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,-0.03:2,0.00,-0.00,-0.03:3,-0.00,0.00,-0.00:4,-0.00,-0.00,0.00:5,0.00,0.00,0.00:6,-0.00,0.00,-0.00:7,-0.00,-0.00,0.00:8,-0.00,-0.00,0.00:9,0.00,-0.00,-0.00:10,0.00,0.00,-0.00:11,0.00,-0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.00,0.00,0.00:14,0.00,-0.00,-0.00:15,-0.00,0.00,-0.00:16,0.00,0.00,0.00:17,0.00,0.00,0.00:18,-0.00,-0.00,-0.00:19,0.00,-0.00,0.00:20,0.00,0.00,-0.04:21,-0.00,-0.00,0.09:22,0.00,0.00,-0.13:23,-0.21,-0.11,-0.05:24,0.21,0.11,-0.05:25,-0.61,0.25,0.01:26,0.61,-0.25,0.01", 43, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode43(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,-0.03:2,0.00,-0.00,-0.03:3,-0.00,0.00,-0.00:4,-0.00,-0.00,0.00:5,0.00,0.00,0.00:6,-0.00,0.00,-0.00:7,-0.00,-0.00,0.00:8,-0.00,-0.00,0.00:9,0.00,-0.00,-0.00:10,0.00,0.00,-0.00:11,0.00,-0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.00,0.00,0.00:14,0.00,-0.00,-0.00:15,-0.00,0.00,-0.00:16,0.00,0.00,0.00:17,0.00,0.00,0.00:18,-0.00,-0.00,-0.00:19,0.00,-0.00,0.00:20,0.00,0.00,-0.04:21,-0.00,-0.00,0.09:22,0.00,0.00,-0.13:23,-0.21,-0.11,-0.05:24,0.21,0.11,-0.05:25,-0.61,0.25,0.01:26,0.61,-0.25,0.01", 43, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode44(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.01,-0.02,0.00:2,-0.01,0.03,-0.00:3,0.01,-0.12,-0.00:4,-0.00,-0.01,-0.00:5,-0.07,0.04,0.00:6,-0.04,0.06,0.00:7,0.03,0.03,0.00:8,0.04,-0.00,-0.00:9,-0.32,0.22,0.00:10,-0.45,-0.22,-0.00:11,0.05,-0.01,-0.00:12,-0.04,-0.02,0.00:13,0.00,0.01,-0.00:14,0.02,-0.04,0.01:15,0.02,-0.04,-0.01:16,0.02,0.00,-0.00:17,0.00,0.01,-0.00:18,0.06,-0.00,-0.00:19,0.39,-0.24,-0.00:20,0.51,0.25,0.00:21,-0.00,0.01,0.00:22,-0.00,0.01,0.00:23,0.03,-0.02,-0.01:24,0.03,-0.02,0.01:25,-0.03,0.01,-0.01:26,-0.03,0.01,0.01", 44, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode44(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.01,-0.02,0.00:2,-0.01,0.03,-0.00:3,0.01,-0.12,-0.00:4,-0.00,-0.01,-0.00:5,-0.07,0.04,0.00:6,-0.04,0.06,0.00:7,0.03,0.03,0.00:8,0.04,-0.00,-0.00:9,-0.32,0.22,0.00:10,-0.45,-0.22,-0.00:11,0.05,-0.01,-0.00:12,-0.04,-0.02,0.00:13,0.00,0.01,-0.00:14,0.02,-0.04,0.01:15,0.02,-0.04,-0.01:16,0.02,0.00,-0.00:17,0.00,0.01,-0.00:18,0.06,-0.00,-0.00:19,0.39,-0.24,-0.00:20,0.51,0.25,0.00:21,-0.00,0.01,0.00:22,-0.00,0.01,0.00:23,0.03,-0.02,-0.01:24,0.03,-0.02,0.01:25,-0.03,0.01,-0.01:26,-0.03,0.01,0.01", 44, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode45(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.05,0.01,-0.00:2,-0.05,0.01,0.00:3,0.08,0.15,0.00:4,-0.02,-0.07,-0.00:5,0.01,-0.07,-0.00:6,-0.07,0.16,0.00:7,-0.08,-0.05,-0.00:8,0.08,-0.06,-0.00:9,0.06,-0.05,-0.00:10,-0.06,-0.04,-0.00:11,0.07,-0.01,0.00:12,-0.04,-0.01,0.00:13,-0.10,0.03,0.00:14,0.40,-0.16,-0.19:15,0.40,-0.16,0.19:16,0.40,0.05,-0.00:17,0.01,-0.00,-0.00:18,0.06,-0.01,-0.00:19,0.04,-0.10,-0.00:20,-0.03,-0.09,-0.00:21,-0.02,-0.03,-0.00:22,0.14,0.07,0.00:23,0.07,0.04,0.07:24,0.07,0.04,-0.07:25,0.29,-0.11,-0.02:26,0.29,-0.11,0.02", 45, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode45(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.05,0.01,-0.00:2,-0.05,0.01,0.00:3,0.08,0.15,0.00:4,-0.02,-0.07,-0.00:5,0.01,-0.07,-0.00:6,-0.07,0.16,0.00:7,-0.08,-0.05,-0.00:8,0.08,-0.06,-0.00:9,0.06,-0.05,-0.00:10,-0.06,-0.04,-0.00:11,0.07,-0.01,0.00:12,-0.04,-0.01,0.00:13,-0.10,0.03,0.00:14,0.40,-0.16,-0.19:15,0.40,-0.16,0.19:16,0.40,0.05,-0.00:17,0.01,-0.00,-0.00:18,0.06,-0.01,-0.00:19,0.04,-0.10,-0.00:20,-0.03,-0.09,-0.00:21,-0.02,-0.03,-0.00:22,0.14,0.07,0.00:23,0.07,0.04,0.07:24,0.07,0.04,-0.07:25,0.29,-0.11,-0.02:26,0.29,-0.11,0.02", 45, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode46(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.05,-0.01,0.00:2,0.02,-0.01,-0.00:3,-0.04,-0.05,-0.00:4,0.00,0.03,0.00:5,0.00,0.03,0.00:6,0.03,-0.05,-0.00:7,0.03,0.01,0.00:8,-0.03,0.03,0.00:9,0.00,0.00,-0.00:10,0.05,0.02,0.00:11,-0.04,-0.00,-0.00:12,0.04,0.01,0.00:13,-0.12,0.02,0.00:14,0.44,-0.07,-0.27:15,0.44,-0.07,0.27:16,0.38,0.05,-0.00:17,-0.00,-0.01,-0.00:18,-0.07,-0.01,0.00:19,0.01,0.03,0.00:20,0.03,0.04,0.00:21,0.03,0.03,0.00:22,-0.18,-0.11,-0.00:23,-0.13,-0.03,-0.08:24,-0.13,-0.03,0.08:25,-0.27,0.11,0.01:26,-0.27,0.11,-0.01", 46, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode46(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.05,-0.01,0.00:2,0.02,-0.01,-0.00:3,-0.04,-0.05,-0.00:4,0.00,0.03,0.00:5,0.00,0.03,0.00:6,0.03,-0.05,-0.00:7,0.03,0.01,0.00:8,-0.03,0.03,0.00:9,0.00,0.00,-0.00:10,0.05,0.02,0.00:11,-0.04,-0.00,-0.00:12,0.04,0.01,0.00:13,-0.12,0.02,0.00:14,0.44,-0.07,-0.27:15,0.44,-0.07,0.27:16,0.38,0.05,-0.00:17,-0.00,-0.01,-0.00:18,-0.07,-0.01,0.00:19,0.01,0.03,0.00:20,0.03,0.04,0.00:21,0.03,0.03,0.00:22,-0.18,-0.11,-0.00:23,-0.13,-0.03,-0.08:24,-0.13,-0.03,0.08:25,-0.27,0.11,0.01:26,-0.27,0.11,-0.01", 46, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode47(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.07,0.02,-0.00:2,0.01,0.03,-0.00:3,-0.01,-0.10,-0.00:4,0.03,0.05,0.00:5,-0.02,0.04,0.00:6,0.03,-0.11,-0.00:7,0.04,0.05,0.00:8,-0.03,0.03,0.00:9,-0.08,0.06,0.00:10,-0.02,0.02,0.00:11,-0.05,0.00,-0.00:12,0.05,0.02,0.00:13,-0.04,0.00,0.00:14,0.14,0.01,-0.11:15,0.14,0.01,0.11:16,0.10,0.01,-0.00:17,-0.00,-0.01,0.00:18,-0.03,0.01,0.00:19,-0.06,0.06,0.00:20,-0.09,-0.00,-0.00:21,-0.09,-0.04,-0.00:22,0.40,0.27,0.00:23,0.37,0.01,0.16:24,0.37,0.01,-0.16:25,0.34,-0.16,-0.01:26,0.34,-0.16,0.01", 47, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode47(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.07,0.02,-0.00:2,0.01,0.03,-0.00:3,-0.01,-0.10,-0.00:4,0.03,0.05,0.00:5,-0.02,0.04,0.00:6,0.03,-0.11,-0.00:7,0.04,0.05,0.00:8,-0.03,0.03,0.00:9,-0.08,0.06,0.00:10,-0.02,0.02,0.00:11,-0.05,0.00,-0.00:12,0.05,0.02,0.00:13,-0.04,0.00,0.00:14,0.14,0.01,-0.11:15,0.14,0.01,0.11:16,0.10,0.01,-0.00:17,-0.00,-0.01,0.00:18,-0.03,0.01,0.00:19,-0.06,0.06,0.00:20,-0.09,-0.00,-0.00:21,-0.09,-0.04,-0.00:22,0.40,0.27,0.00:23,0.37,0.01,0.16:24,0.37,0.01,-0.16:25,0.34,-0.16,-0.01:26,0.34,-0.16,0.01", 47, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode48(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.12,0.01,-0.00:2,-0.00,0.03,-0.00:3,0.02,-0.03,-0.00:4,0.03,0.02,0.00:5,-0.02,0.01,0.00:6,0.00,-0.04,-0.00:7,0.02,0.03,0.00:8,0.00,-0.00,-0.00:9,-0.07,0.04,0.00:10,-0.07,-0.02,-0.00:11,-0.01,-0.00,-0.00:12,0.01,0.01,-0.00:13,-0.00,-0.00,0.00:14,0.01,0.02,-0.02:15,0.01,0.02,0.02:16,-0.00,-0.00,0.00:17,-0.00,-0.00,0.00:18,0.02,0.01,0.00:19,-0.03,0.01,0.00:20,-0.09,-0.04,-0.00:21,0.13,-0.00,0.00:22,-0.33,-0.29,-0.00:23,-0.39,0.13,-0.06:24,-0.39,0.13,0.06:25,0.39,-0.20,-0.02:26,0.39,-0.20,0.02", 48, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode48(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.12,0.01,-0.00:2,-0.00,0.03,-0.00:3,0.02,-0.03,-0.00:4,0.03,0.02,0.00:5,-0.02,0.01,0.00:6,0.00,-0.04,-0.00:7,0.02,0.03,0.00:8,0.00,-0.00,-0.00:9,-0.07,0.04,0.00:10,-0.07,-0.02,-0.00:11,-0.01,-0.00,-0.00:12,0.01,0.01,-0.00:13,-0.00,-0.00,0.00:14,0.01,0.02,-0.02:15,0.01,0.02,0.02:16,-0.00,-0.00,0.00:17,-0.00,-0.00,0.00:18,0.02,0.01,0.00:19,-0.03,0.01,0.00:20,-0.09,-0.04,-0.00:21,0.13,-0.00,0.00:22,-0.33,-0.29,-0.00:23,-0.39,0.13,-0.06:24,-0.39,0.13,0.06:25,0.39,-0.20,-0.02:26,0.39,-0.20,0.02", 48, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode49(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.01,0.02,0.00:2,0.00,-0.03,-0.00:3,-0.01,0.06,0.00:4,0.22,0.01,-0.00:5,-0.21,0.01,-0.00:6,0.01,0.06,0.00:7,0.16,-0.04,-0.00:8,-0.22,0.04,0.00:9,0.32,-0.31,-0.00:10,-0.07,-0.18,-0.00:11,0.09,0.01,-0.00:12,-0.07,-0.05,0.00:13,0.01,0.01,0.00:14,-0.00,-0.10,0.06:15,-0.00,-0.10,-0.06:16,0.08,0.01,-0.00:17,0.01,0.04,-0.00:18,-0.43,-0.18,-0.00:19,0.23,-0.27,-0.00:20,-0.31,-0.28,-0.00:21,-0.01,-0.01,0.00:22,0.01,0.00,-0.00:23,0.01,0.03,0.03:24,0.01,0.03,-0.03:25,-0.02,-0.05,0.05:26,-0.02,-0.05,-0.05", 49, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode49(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.01,0.02,0.00:2,0.00,-0.03,-0.00:3,-0.01,0.06,0.00:4,0.22,0.01,-0.00:5,-0.21,0.01,-0.00:6,0.01,0.06,0.00:7,0.16,-0.04,-0.00:8,-0.22,0.04,0.00:9,0.32,-0.31,-0.00:10,-0.07,-0.18,-0.00:11,0.09,0.01,-0.00:12,-0.07,-0.05,0.00:13,0.01,0.01,0.00:14,-0.00,-0.10,0.06:15,-0.00,-0.10,-0.06:16,0.08,0.01,-0.00:17,0.01,0.04,-0.00:18,-0.43,-0.18,-0.00:19,0.23,-0.27,-0.00:20,-0.31,-0.28,-0.00:21,-0.01,-0.01,0.00:22,0.01,0.00,-0.00:23,0.01,0.03,0.03:24,0.01,0.03,-0.03:25,-0.02,-0.05,0.05:26,-0.02,-0.05,-0.05", 49, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode50(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,-0.00:2,0.00,-0.00,-0.00:3,-0.00,0.00,0.00:4,0.00,-0.00,0.00:5,-0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,0.00,-0.00,0.00:8,-0.00,-0.00,-0.00:9,0.00,-0.00,-0.00:10,-0.00,-0.00,0.00:11,0.00,-0.00,0.00:12,-0.00,0.00,-0.03:13,-0.00,-0.00,-0.05:14,0.21,-0.45,0.05:15,-0.21,0.45,0.05:16,-0.00,0.00,0.71:17,0.00,-0.00,0.00:18,-0.00,-0.00,0.02:19,0.00,-0.00,0.00:20,-0.00,-0.00,0.00:21,-0.00,-0.00,-0.00:22,0.00,0.00,0.00:23,-0.00,0.00,0.00:24,0.00,-0.00,0.00:25,0.00,-0.00,-0.00:26,-0.00,0.00,-0.00", 50, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode50(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,-0.00:2,0.00,-0.00,-0.00:3,-0.00,0.00,0.00:4,0.00,-0.00,0.00:5,-0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,0.00,-0.00,0.00:8,-0.00,-0.00,-0.00:9,0.00,-0.00,-0.00:10,-0.00,-0.00,0.00:11,0.00,-0.00,0.00:12,-0.00,0.00,-0.03:13,-0.00,-0.00,-0.05:14,0.21,-0.45,0.05:15,-0.21,0.45,0.05:16,-0.00,0.00,0.71:17,0.00,-0.00,0.00:18,-0.00,-0.00,0.02:19,0.00,-0.00,0.00:20,-0.00,-0.00,0.00:21,-0.00,-0.00,-0.00:22,0.00,0.00,0.00:23,-0.00,0.00,0.00:24,0.00,-0.00,0.00:25,0.00,-0.00,-0.00:26,-0.00,0.00,-0.00", 50, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode51(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,-0.03:2,-0.00,-0.00,0.00:3,0.00,-0.00,0.00:4,0.00,0.00,0.00:5,-0.00,-0.00,0.00:6,0.00,0.00,-0.00:7,0.00,-0.00,-0.00:8,-0.00,0.00,-0.00:9,0.00,-0.00,0.00:10,0.00,0.00,0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,0.00:13,-0.00,0.00,0.00:14,-0.00,0.00,-0.00:15,0.00,-0.00,-0.00:16,0.00,0.00,-0.00:17,-0.00,0.00,-0.00:18,-0.00,-0.00,-0.00:19,0.00,-0.00,0.00:20,-0.00,-0.00,-0.00:21,-0.00,0.00,-0.04:22,-0.00,-0.00,0.70:23,-0.40,0.29,0.05:24,0.40,-0.29,0.05:25,-0.04,-0.03,0.00:26,0.04,0.03,0.00", 51, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode51(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,-0.03:2,-0.00,-0.00,0.00:3,0.00,-0.00,0.00:4,0.00,0.00,0.00:5,-0.00,-0.00,0.00:6,0.00,0.00,-0.00:7,0.00,-0.00,-0.00:8,-0.00,0.00,-0.00:9,0.00,-0.00,0.00:10,0.00,0.00,0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,0.00:13,-0.00,0.00,0.00:14,-0.00,0.00,-0.00:15,0.00,-0.00,-0.00:16,0.00,0.00,-0.00:17,-0.00,0.00,-0.00:18,-0.00,-0.00,-0.00:19,0.00,-0.00,0.00:20,-0.00,-0.00,-0.00:21,-0.00,0.00,-0.04:22,-0.00,-0.00,0.70:23,-0.40,0.29,0.05:24,0.40,-0.29,0.05:25,-0.04,-0.03,0.00:26,0.04,0.03,0.00", 51, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode52(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.00:2,0.00,0.00,-0.00:3,-0.00,-0.02,-0.00:4,-0.01,0.01,0.00:5,0.02,-0.00,-0.00:6,-0.00,-0.02,0.00:7,-0.01,0.00,-0.00:8,0.01,0.01,0.00:9,-0.01,0.02,0.00:10,0.02,0.02,0.00:11,-0.01,-0.00,0.00:12,0.05,0.00,-0.00:13,-0.03,0.06,-0.00:14,-0.22,-0.45,0.33:15,-0.22,-0.45,-0.33:16,0.51,0.08,0.00:17,-0.01,0.02,0.00:18,-0.08,-0.03,-0.00:19,-0.03,0.03,0.00:20,0.00,0.02,0.00:21,0.00,0.00,0.00:22,0.00,0.00,-0.00:23,-0.00,-0.01,-0.01:24,-0.00,-0.01,0.01:25,0.01,0.00,-0.00:26,0.01,0.00,0.00", 52, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode52(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.00:2,0.00,0.00,-0.00:3,-0.00,-0.02,-0.00:4,-0.01,0.01,0.00:5,0.02,-0.00,-0.00:6,-0.00,-0.02,0.00:7,-0.01,0.00,-0.00:8,0.01,0.01,0.00:9,-0.01,0.02,0.00:10,0.02,0.02,0.00:11,-0.01,-0.00,0.00:12,0.05,0.00,-0.00:13,-0.03,0.06,-0.00:14,-0.22,-0.45,0.33:15,-0.22,-0.45,-0.33:16,0.51,0.08,0.00:17,-0.01,0.02,0.00:18,-0.08,-0.03,-0.00:19,-0.03,0.03,0.00:20,0.00,0.02,0.00:21,0.00,0.00,0.00:22,0.00,0.00,-0.00:23,-0.00,-0.01,-0.01:24,-0.00,-0.01,0.01:25,0.01,0.00,-0.00:26,0.01,0.00,0.00", 52, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode53(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.04,0.01,0.00:2,-0.00,0.01,-0.00:3,-0.01,-0.00,-0.00:4,-0.00,0.00,-0.00:5,0.01,-0.00,-0.00:6,-0.01,0.00,-0.00:7,-0.00,0.00,0.00:8,0.01,-0.01,-0.00:9,-0.02,0.02,0.00:10,-0.02,-0.00,-0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,0.00:13,-0.00,0.00,0.00:14,-0.00,-0.00,0.00:15,-0.00,-0.00,-0.00:16,0.01,0.00,-0.00:17,-0.00,-0.00,0.00:18,0.02,0.01,-0.00:19,-0.01,0.01,-0.00:20,0.01,0.01,0.00:21,-0.01,-0.04,-0.00:22,-0.24,-0.18,0.00:23,0.12,0.45,0.35:24,0.12,0.45,-0.35:25,-0.17,-0.22,0.20:26,-0.17,-0.22,-0.20", 53, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode53(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.04,0.01,0.00:2,-0.00,0.01,-0.00:3,-0.01,-0.00,-0.00:4,-0.00,0.00,-0.00:5,0.01,-0.00,-0.00:6,-0.01,0.00,-0.00:7,-0.00,0.00,0.00:8,0.01,-0.01,-0.00:9,-0.02,0.02,0.00:10,-0.02,-0.00,-0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,0.00:13,-0.00,0.00,0.00:14,-0.00,-0.00,0.00:15,-0.00,-0.00,-0.00:16,0.01,0.00,-0.00:17,-0.00,-0.00,0.00:18,0.02,0.01,-0.00:19,-0.01,0.01,-0.00:20,0.01,0.01,0.00:21,-0.01,-0.04,-0.00:22,-0.24,-0.18,0.00:23,0.12,0.45,0.35:24,0.12,0.45,-0.35:25,-0.17,-0.22,0.20:26,-0.17,-0.22,-0.20", 53, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode54(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.03,-0.07,-0.00:2,-0.00,-0.01,0.00:3,0.02,-0.00,-0.00:4,-0.02,-0.01,-0.00:5,-0.01,0.02,0.00:6,0.03,-0.00,0.00:7,-0.01,-0.01,-0.00:8,-0.02,0.02,0.00:9,0.07,-0.04,-0.00:10,0.07,0.02,0.00:11,-0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.00,0.00,-0.00:14,0.00,-0.00,0.00:15,0.00,-0.00,-0.00:16,0.00,0.00,0.00:17,0.00,0.00,-0.00:18,-0.02,-0.01,0.00:19,0.06,-0.02,0.00:20,0.06,0.03,-0.00:21,0.00,-0.02,-0.00:22,-0.13,-0.11,-0.00:23,0.07,0.24,0.19:24,0.07,0.24,-0.19:25,0.14,0.46,-0.37:26,0.14,0.46,0.37", 54, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode54(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.03,-0.07,-0.00:2,-0.00,-0.01,0.00:3,0.02,-0.00,-0.00:4,-0.02,-0.01,-0.00:5,-0.01,0.02,0.00:6,0.03,-0.00,0.00:7,-0.01,-0.01,-0.00:8,-0.02,0.02,0.00:9,0.07,-0.04,-0.00:10,0.07,0.02,0.00:11,-0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.00,0.00,-0.00:14,0.00,-0.00,0.00:15,0.00,-0.00,-0.00:16,0.00,0.00,0.00:17,0.00,0.00,-0.00:18,-0.02,-0.01,0.00:19,0.06,-0.02,0.00:20,0.06,0.03,-0.00:21,0.00,-0.02,-0.00:22,-0.13,-0.11,-0.00:23,0.07,0.24,0.19:24,0.07,0.24,-0.19:25,0.14,0.46,-0.37:26,0.14,0.46,0.37", 54, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode55(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.02,-0.02,0.00:2,0.03,-0.02,0.00:3,-0.13,0.11,0.00:4,0.09,0.02,0.00:5,0.00,-0.05,-0.00:6,-0.09,0.03,-0.00:7,0.14,0.08,0.00:8,0.03,-0.12,-0.00:9,-0.29,0.06,0.00:10,-0.44,-0.21,-0.00:11,-0.08,-0.06,0.00:12,0.08,0.04,0.00:13,-0.01,-0.00,0.00:14,-0.04,-0.00,0.02:15,-0.04,-0.00,-0.02:16,0.03,0.00,-0.00:17,-0.01,-0.02,0.00:18,0.55,0.18,-0.00:19,-0.12,0.01,-0.00:20,-0.30,-0.18,-0.00:21,-0.01,-0.00,-0.00:22,-0.01,-0.00,-0.00:23,0.02,0.02,0.02:24,0.02,0.02,-0.02:25,-0.03,0.17,-0.10:26,-0.03,0.17,0.10", 55, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode55(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.02,-0.02,0.00:2,0.03,-0.02,0.00:3,-0.13,0.11,0.00:4,0.09,0.02,0.00:5,0.00,-0.05,-0.00:6,-0.09,0.03,-0.00:7,0.14,0.08,0.00:8,0.03,-0.12,-0.00:9,-0.29,0.06,0.00:10,-0.44,-0.21,-0.00:11,-0.08,-0.06,0.00:12,0.08,0.04,0.00:13,-0.01,-0.00,0.00:14,-0.04,-0.00,0.02:15,-0.04,-0.00,-0.02:16,0.03,0.00,-0.00:17,-0.01,-0.02,0.00:18,0.55,0.18,-0.00:19,-0.12,0.01,-0.00:20,-0.30,-0.18,-0.00:21,-0.01,-0.00,-0.00:22,-0.01,-0.00,-0.00:23,0.02,0.02,0.02:24,0.02,0.02,-0.02:25,-0.03,0.17,-0.10:26,-0.03,0.17,0.10", 55, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode56(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,-0.02,0.00:2,0.02,0.01,0.00:3,-0.11,-0.09,-0.00:4,0.05,0.10,0.00:5,0.11,-0.08,-0.00:6,-0.16,-0.02,0.00:7,-0.01,0.03,0.00:8,0.08,-0.01,-0.00:9,-0.19,0.16,0.00:10,-0.10,-0.00,0.00:11,0.17,0.06,-0.00:12,-0.10,-0.05,-0.00:13,0.01,-0.00,-0.00:14,0.06,0.01,-0.03:15,0.06,0.01,0.03:16,-0.03,-0.01,0.00:17,0.01,0.02,-0.00:18,-0.63,-0.22,0.00:19,-0.40,0.22,0.00:20,-0.29,-0.06,-0.00:21,-0.00,0.00,-0.00:22,-0.03,-0.02,-0.00:23,0.02,0.03,0.02:24,0.02,0.03,-0.02:25,-0.00,0.12,-0.09:26,-0.00,0.12,0.09", 56, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode56(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,-0.02,0.00:2,0.02,0.01,0.00:3,-0.11,-0.09,-0.00:4,0.05,0.10,0.00:5,0.11,-0.08,-0.00:6,-0.16,-0.02,0.00:7,-0.01,0.03,0.00:8,0.08,-0.01,-0.00:9,-0.19,0.16,0.00:10,-0.10,-0.00,0.00:11,0.17,0.06,-0.00:12,-0.10,-0.05,-0.00:13,0.01,-0.00,-0.00:14,0.06,0.01,-0.03:15,0.06,0.01,0.03:16,-0.03,-0.01,0.00:17,0.01,0.02,-0.00:18,-0.63,-0.22,0.00:19,-0.40,0.22,0.00:20,-0.29,-0.06,-0.00:21,-0.00,0.00,-0.00:22,-0.03,-0.02,-0.00:23,0.02,0.03,0.02:24,0.02,0.03,-0.02:25,-0.00,0.12,-0.09:26,-0.00,0.12,0.09", 56, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode57(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.02,-0.01,0.00:2,0.02,0.03,0.00:3,-0.04,-0.30,-0.00:4,0.12,0.18,0.00:5,0.04,-0.18,-0.00:6,0.03,0.35,0.00:7,-0.10,-0.18,-0.00:8,-0.05,0.17,0.00:9,0.19,0.03,-0.00:10,0.24,-0.01,-0.00:11,-0.08,-0.08,0.00:12,0.04,0.04,0.00:13,-0.00,-0.00,0.00:14,-0.03,0.02,0.00:15,-0.03,0.02,-0.00:16,-0.01,-0.01,-0.00:17,-0.00,-0.02,0.00:18,0.59,0.17,-0.00:19,-0.16,-0.09,-0.00:20,-0.30,-0.02,-0.00:21,0.00,0.00,0.00:22,-0.02,-0.01,-0.00:23,-0.00,0.01,-0.00:24,-0.00,0.01,0.00:25,0.02,-0.00,-0.01:26,0.02,-0.00,0.01", 57, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode57(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.02,-0.01,0.00:2,0.02,0.03,0.00:3,-0.04,-0.30,-0.00:4,0.12,0.18,0.00:5,0.04,-0.18,-0.00:6,0.03,0.35,0.00:7,-0.10,-0.18,-0.00:8,-0.05,0.17,0.00:9,0.19,0.03,-0.00:10,0.24,-0.01,-0.00:11,-0.08,-0.08,0.00:12,0.04,0.04,0.00:13,-0.00,-0.00,0.00:14,-0.03,0.02,0.00:15,-0.03,0.02,-0.00:16,-0.01,-0.01,-0.00:17,-0.00,-0.02,0.00:18,0.59,0.17,-0.00:19,-0.16,-0.09,-0.00:20,-0.30,-0.02,-0.00:21,0.00,0.00,0.00:22,-0.02,-0.01,-0.00:23,-0.00,0.01,-0.00:24,-0.00,0.01,0.00:25,0.02,-0.00,-0.01:26,0.02,-0.00,0.01", 57, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode58(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.02,-0.01,0.00:2,0.02,-0.00,-0.00:3,-0.20,0.04,0.00:4,0.26,0.05,0.00:5,-0.28,0.11,0.00:6,0.21,-0.06,-0.00:7,-0.32,-0.05,-0.00:8,0.33,-0.11,-0.00:9,-0.26,0.27,0.00:10,0.27,0.26,0.00:11,-0.02,0.02,-0.00:12,-0.02,-0.01,-0.00:13,0.01,0.00,0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,-0.01,-0.00,0.00:17,0.00,0.00,-0.00:18,-0.08,-0.01,0.00:19,0.27,-0.22,-0.00:20,-0.23,-0.20,-0.00:21,-0.00,0.00,-0.00:22,-0.01,-0.01,-0.00:23,0.01,0.00,0.00:24,0.01,0.00,-0.00:25,-0.05,0.06,-0.03:26,-0.05,0.06,0.03", 58, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode58(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.02,-0.01,0.00:2,0.02,-0.00,-0.00:3,-0.20,0.04,0.00:4,0.26,0.05,0.00:5,-0.28,0.11,0.00:6,0.21,-0.06,-0.00:7,-0.32,-0.05,-0.00:8,0.33,-0.11,-0.00:9,-0.26,0.27,0.00:10,0.27,0.26,0.00:11,-0.02,0.02,-0.00:12,-0.02,-0.01,-0.00:13,0.01,0.00,0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,-0.01,-0.00,0.00:17,0.00,0.00,-0.00:18,-0.08,-0.01,0.00:19,0.27,-0.22,-0.00:20,-0.23,-0.20,-0.00:21,-0.00,0.00,-0.00:22,-0.01,-0.01,-0.00:23,0.01,0.00,0.00:24,0.01,0.00,-0.00:25,-0.05,0.06,-0.03:26,-0.05,0.06,0.03", 58, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode59(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,0.00:2,0.01,-0.00,-0.00:3,-0.01,0.00,0.00:4,0.01,-0.01,-0.00:5,-0.01,0.01,0.00:6,-0.02,0.01,0.00:7,0.01,-0.00,-0.00:8,-0.00,-0.00,-0.00:9,0.00,-0.01,-0.00:10,-0.01,-0.02,0.00:11,0.05,-0.06,0.00:12,-0.16,0.64,-0.00:13,0.02,-0.05,0.00:14,-0.10,-0.01,0.06:15,-0.10,-0.01,-0.06:16,0.24,-0.01,-0.00:17,0.09,-0.39,0.00:18,-0.48,-0.23,-0.00:19,0.13,-0.08,-0.00:20,0.02,-0.00,0.00:21,0.00,-0.00,0.00:22,0.00,0.00,0.00:23,-0.00,0.00,0.00:24,-0.00,0.00,-0.00:25,0.00,-0.00,0.01:26,0.00,-0.00,-0.01", 59, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode59(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,0.00:2,0.01,-0.00,-0.00:3,-0.01,0.00,0.00:4,0.01,-0.01,-0.00:5,-0.01,0.01,0.00:6,-0.02,0.01,0.00:7,0.01,-0.00,-0.00:8,-0.00,-0.00,-0.00:9,0.00,-0.01,-0.00:10,-0.01,-0.02,0.00:11,0.05,-0.06,0.00:12,-0.16,0.64,-0.00:13,0.02,-0.05,0.00:14,-0.10,-0.01,0.06:15,-0.10,-0.01,-0.06:16,0.24,-0.01,-0.00:17,0.09,-0.39,0.00:18,-0.48,-0.23,-0.00:19,0.13,-0.08,-0.00:20,0.02,-0.00,0.00:21,0.00,-0.00,0.00:22,0.00,0.00,0.00:23,-0.00,0.00,0.00:24,-0.00,0.00,-0.00:25,0.00,-0.00,0.01:26,0.00,-0.00,-0.01", 59, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode60(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.03,-0.06,-0.00:2,0.00,-0.00,0.00:3,-0.00,-0.00,-0.00:4,-0.00,0.00,0.00:5,-0.00,0.00,-0.00:6,-0.00,-0.00,-0.00:7,0.00,-0.00,-0.00:8,0.00,-0.00,-0.00:9,-0.00,-0.00,-0.00:10,-0.00,0.00,0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,0.00:13,0.00,0.00,-0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,-0.00,0.00,-0.00:17,-0.00,0.00,-0.00:18,-0.00,-0.00,0.00:19,0.00,0.00,0.00:20,0.01,-0.02,-0.00:21,-0.00,0.01,0.00:22,0.02,-0.04,-0.00:23,-0.00,-0.01,0.02:24,-0.00,-0.01,-0.02:25,0.17,0.36,0.58:26,0.17,0.36,-0.58", 60, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode60(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.03,-0.06,-0.00:2,0.00,-0.00,0.00:3,-0.00,-0.00,-0.00:4,-0.00,0.00,0.00:5,-0.00,0.00,-0.00:6,-0.00,-0.00,-0.00:7,0.00,-0.00,-0.00:8,0.00,-0.00,-0.00:9,-0.00,-0.00,-0.00:10,-0.00,0.00,0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,0.00:13,0.00,0.00,-0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,-0.00,0.00,-0.00:17,-0.00,0.00,-0.00:18,-0.00,-0.00,0.00:19,0.00,0.00,0.00:20,0.01,-0.02,-0.00:21,-0.00,0.01,0.00:22,0.02,-0.04,-0.00:23,-0.00,-0.01,0.02:24,-0.00,-0.01,-0.02:25,0.17,0.36,0.58:26,0.17,0.36,-0.58", 60, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode61(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,-0.09:2,-0.00,0.00,0.00:3,0.00,0.00,0.00:4,0.00,-0.00,0.00:5,0.00,-0.00,-0.00:6,-0.00,0.00,-0.00:7,-0.00,0.00,-0.00:8,-0.00,0.00,-0.00:9,-0.00,-0.00,-0.00:10,0.00,-0.00,-0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,-0.00:13,-0.00,0.00,0.00:14,-0.00,-0.00,-0.00:15,0.00,0.00,-0.00:16,0.00,-0.00,-0.00:17,0.00,-0.00,0.00:18,0.00,0.00,0.00:19,-0.00,-0.00,0.00:20,-0.00,0.00,0.00:21,-0.00,-0.00,0.01:22,0.00,-0.00,0.00:23,0.02,0.05,-0.08:24,-0.02,-0.05,-0.08:25,0.18,0.37,0.56:26,-0.18,-0.37,0.56", 61, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode61(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,-0.09:2,-0.00,0.00,0.00:3,0.00,0.00,0.00:4,0.00,-0.00,0.00:5,0.00,-0.00,-0.00:6,-0.00,0.00,-0.00:7,-0.00,0.00,-0.00:8,-0.00,0.00,-0.00:9,-0.00,-0.00,-0.00:10,0.00,-0.00,-0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,-0.00:13,-0.00,0.00,0.00:14,-0.00,-0.00,-0.00:15,0.00,0.00,-0.00:16,0.00,-0.00,-0.00:17,0.00,-0.00,0.00:18,0.00,0.00,0.00:19,-0.00,-0.00,0.00:20,-0.00,0.00,0.00:21,-0.00,-0.00,0.01:22,0.00,-0.00,0.00:23,0.02,0.05,-0.08:24,-0.02,-0.05,-0.08:25,0.18,0.37,0.56:26,-0.18,-0.37,0.56", 61, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode62(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,-0.00:2,0.00,0.00,-0.00:3,-0.00,-0.00,0.00:4,0.00,0.00,0.00:5,-0.00,0.00,-0.00:6,0.00,0.00,-0.00:7,-0.00,0.00,0.00:8,0.00,0.00,0.00:9,-0.00,-0.00,-0.00:10,0.00,-0.00,-0.00:11,-0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.04,-0.02,-0.00:14,-0.23,-0.20,-0.42:15,-0.23,-0.20,0.42:16,-0.04,0.67,-0.00:17,0.00,0.00,0.00:18,0.00,-0.00,0.00:19,-0.00,-0.00,-0.00:20,-0.00,0.00,0.00:21,0.00,0.00,0.00:22,-0.02,0.03,0.00:23,-0.01,-0.02,0.03:24,-0.01,-0.02,-0.03:25,-0.00,-0.00,-0.00:26,-0.00,-0.00,0.00", 62, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode62(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,-0.00:2,0.00,0.00,-0.00:3,-0.00,-0.00,0.00:4,0.00,0.00,0.00:5,-0.00,0.00,-0.00:6,0.00,0.00,-0.00:7,-0.00,0.00,0.00:8,0.00,0.00,0.00:9,-0.00,-0.00,-0.00:10,0.00,-0.00,-0.00:11,-0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.04,-0.02,-0.00:14,-0.23,-0.20,-0.42:15,-0.23,-0.20,0.42:16,-0.04,0.67,-0.00:17,0.00,0.00,0.00:18,0.00,-0.00,0.00:19,-0.00,-0.00,-0.00:20,-0.00,0.00,0.00:21,0.00,0.00,0.00:22,-0.02,0.03,0.00:23,-0.01,-0.02,0.03:24,-0.01,-0.02,-0.03:25,-0.00,-0.00,-0.00:26,-0.00,-0.00,0.00", 62, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode63(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,-0.00:2,0.00,0.00,-0.00:3,-0.00,-0.00,0.00:4,0.00,-0.00,-0.00:5,-0.00,-0.00,-0.00:6,-0.00,0.00,0.00:7,0.00,-0.00,-0.00:8,0.00,-0.00,-0.00:9,0.00,0.00,0.00:10,-0.00,0.00,0.00:11,0.00,0.00,-0.00:12,0.00,-0.00,0.00:13,-0.00,0.00,0.00:14,0.02,0.01,0.03:15,0.02,0.01,-0.03:16,0.00,-0.05,0.00:17,0.00,-0.00,-0.00:18,-0.00,0.00,-0.00:19,-0.00,-0.00,0.00:20,-0.00,0.00,0.00:21,0.05,0.01,0.00:22,-0.31,0.49,0.00:23,-0.13,-0.30,0.47:24,-0.13,-0.30,-0.47:25,0.00,-0.00,-0.00:26,0.00,-0.00,0.00", 63, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode63(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,-0.00:2,0.00,0.00,-0.00:3,-0.00,-0.00,0.00:4,0.00,-0.00,-0.00:5,-0.00,-0.00,-0.00:6,-0.00,0.00,0.00:7,0.00,-0.00,-0.00:8,0.00,-0.00,-0.00:9,0.00,0.00,0.00:10,-0.00,0.00,0.00:11,0.00,0.00,-0.00:12,0.00,-0.00,0.00:13,-0.00,0.00,0.00:14,0.02,0.01,0.03:15,0.02,0.01,-0.03:16,0.00,-0.05,0.00:17,0.00,-0.00,-0.00:18,-0.00,0.00,-0.00:19,-0.00,-0.00,0.00:20,-0.00,0.00,0.00:21,0.05,0.01,0.00:22,-0.31,0.49,0.00:23,-0.13,-0.30,0.47:24,-0.13,-0.30,-0.47:25,0.00,-0.00,-0.00:26,0.00,-0.00,0.00", 63, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode64(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.01,0.00:2,-0.00,0.00,-0.00:3,-0.00,0.00,-0.00:4,-0.00,0.00,0.00:5,-0.00,0.00,0.00:6,-0.00,-0.00,0.00:7,0.00,-0.00,-0.00:8,0.00,0.00,0.00:9,-0.00,-0.00,-0.00:10,-0.00,0.00,0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.00,0.00,-0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,0.00,-0.00,0.00:17,-0.00,0.00,0.00:18,-0.00,-0.00,-0.00:19,0.00,0.00,0.00:20,0.00,-0.00,-0.00:21,0.02,-0.09,0.00:22,-0.44,0.67,0.00:23,0.10,0.20,-0.34:24,0.10,0.20,0.34:25,0.01,0.02,0.03:26,0.01,0.02,-0.03", 64, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode64(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.01,0.00:2,-0.00,0.00,-0.00:3,-0.00,0.00,-0.00:4,-0.00,0.00,0.00:5,-0.00,0.00,0.00:6,-0.00,-0.00,0.00:7,0.00,-0.00,-0.00:8,0.00,0.00,0.00:9,-0.00,-0.00,-0.00:10,-0.00,0.00,0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,0.00,0.00,-0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,0.00,-0.00,0.00:17,-0.00,0.00,0.00:18,-0.00,-0.00,-0.00:19,0.00,0.00,0.00:20,0.00,-0.00,-0.00:21,0.02,-0.09,0.00:22,-0.44,0.67,0.00:23,0.10,0.20,-0.34:24,0.10,0.20,0.34:25,0.01,0.02,0.03:26,0.01,0.02,-0.03", 64, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode65(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,-0.00,-0.01:2,-0.00,0.00,0.00:3,-0.00,0.00,0.00:4,-0.00,0.00,0.00:5,0.00,-0.00,-0.00:6,0.00,0.00,-0.00:7,-0.00,0.00,-0.00:8,-0.00,-0.00,-0.00:9,0.00,0.00,-0.00:10,0.00,-0.00,-0.00:11,0.00,0.00,0.00:12,-0.00,-0.00,0.00:13,-0.00,-0.00,0.00:14,-0.00,-0.00,-0.00:15,0.00,0.00,-0.00:16,-0.00,0.00,0.00:17,0.00,0.00,0.00:18,0.00,-0.00,-0.00:19,-0.00,0.00,0.00:20,0.00,-0.00,0.00:21,0.00,-0.00,-0.09:22,-0.00,0.00,-0.02:23,-0.17,-0.38,0.56:24,0.17,0.38,0.56:25,0.03,0.05,0.08:26,-0.03,-0.05,0.08", 65, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode65(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,-0.00,-0.01:2,-0.00,0.00,0.00:3,-0.00,0.00,0.00:4,-0.00,0.00,0.00:5,0.00,-0.00,-0.00:6,0.00,0.00,-0.00:7,-0.00,0.00,-0.00:8,-0.00,-0.00,-0.00:9,0.00,0.00,-0.00:10,0.00,-0.00,-0.00:11,0.00,0.00,0.00:12,-0.00,-0.00,0.00:13,-0.00,-0.00,0.00:14,-0.00,-0.00,-0.00:15,0.00,0.00,-0.00:16,-0.00,0.00,0.00:17,0.00,0.00,0.00:18,0.00,-0.00,-0.00:19,-0.00,0.00,0.00:20,0.00,-0.00,0.00:21,0.00,-0.00,-0.09:22,-0.00,0.00,-0.02:23,-0.17,-0.38,0.56:24,0.17,0.38,0.56:25,0.03,0.05,0.08:26,-0.03,-0.05,0.08", 65, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode66(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.00:2,-0.00,0.00,-0.00:3,0.00,-0.00,-0.00:4,-0.00,0.00,0.00:5,0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,-0.00,0.00,-0.00:8,-0.00,-0.00,0.00:9,0.00,0.00,0.00:10,0.00,-0.00,-0.00:11,0.00,0.00,0.00:12,-0.00,-0.00,0.00:13,-0.03,-0.09,0.00:14,0.21,0.16,0.39:15,0.22,0.16,-0.40:16,-0.06,0.73,-0.00:17,0.00,0.00,-0.00:18,0.01,-0.00,0.00:19,-0.00,0.00,-0.00:20,-0.00,-0.00,0.00:21,0.00,-0.00,0.00:22,-0.00,0.00,0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,0.00,0.00,0.00:26,0.00,0.00,-0.00", 66, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode66(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.00:2,-0.00,0.00,-0.00:3,0.00,-0.00,-0.00:4,-0.00,0.00,0.00:5,0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,-0.00,0.00,-0.00:8,-0.00,-0.00,0.00:9,0.00,0.00,0.00:10,0.00,-0.00,-0.00:11,0.00,0.00,0.00:12,-0.00,-0.00,0.00:13,-0.03,-0.09,0.00:14,0.21,0.16,0.39:15,0.22,0.16,-0.40:16,-0.06,0.73,-0.00:17,0.00,0.00,-0.00:18,0.01,-0.00,0.00:19,-0.00,0.00,-0.00:20,-0.00,-0.00,0.00:21,0.00,-0.00,0.00:22,-0.00,0.00,0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,0.00,0.00,0.00:26,0.00,0.00,-0.00", 66, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode67(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,-0.00:2,-0.00,0.00,0.00:3,0.00,-0.00,-0.00:4,-0.00,0.00,-0.00:5,-0.00,-0.00,0.00:6,0.00,0.00,-0.00:7,-0.00,0.00,0.00:8,-0.00,-0.00,-0.00:9,0.00,0.00,-0.00:10,0.00,-0.00,-0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,-0.00,-0.00,-0.09:14,0.34,0.27,0.56:15,-0.33,-0.26,0.56:16,-0.00,0.01,-0.02:17,0.00,0.00,0.00:18,0.00,-0.00,-0.00:19,-0.00,0.00,0.00:20,-0.00,-0.00,-0.00:21,0.00,-0.00,-0.00:22,-0.00,0.00,-0.00:23,-0.00,-0.00,0.00:24,0.00,0.00,0.00:25,0.00,0.00,0.00:26,-0.00,-0.00,0.00", 67, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode67(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,-0.00:2,-0.00,0.00,0.00:3,0.00,-0.00,-0.00:4,-0.00,0.00,-0.00:5,-0.00,-0.00,0.00:6,0.00,0.00,-0.00:7,-0.00,0.00,0.00:8,-0.00,-0.00,-0.00:9,0.00,0.00,-0.00:10,0.00,-0.00,-0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,-0.00:13,-0.00,-0.00,-0.09:14,0.34,0.27,0.56:15,-0.33,-0.26,0.56:16,-0.00,0.01,-0.02:17,0.00,0.00,0.00:18,0.00,-0.00,-0.00:19,-0.00,0.00,0.00:20,-0.00,-0.00,-0.00:21,0.00,-0.00,-0.00:22,-0.00,0.00,-0.00:23,-0.00,-0.00,0.00:24,0.00,0.00,0.00:25,0.00,0.00,0.00:26,-0.00,-0.00,0.00", 67, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode68(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,0.00,-0.00:2,0.00,-0.00,-0.00:3,0.00,0.00,0.00:4,0.00,-0.00,-0.00:5,-0.00,0.00,0.00:6,0.00,0.00,0.00:7,0.04,-0.07,-0.00:8,0.01,0.01,0.00:9,-0.09,-0.16,-0.00:10,-0.45,0.87,0.00:11,0.00,-0.00,0.00:12,-0.00,0.00,-0.00:13,-0.00,-0.00,-0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,-0.00,0.01,-0.00:17,0.00,0.00,-0.00:18,-0.01,0.00,-0.00:19,-0.00,-0.01,-0.00:20,-0.01,0.02,0.00:21,-0.00,0.00,-0.00:22,0.00,-0.00,-0.00:23,-0.00,-0.00,0.00:24,-0.00,-0.00,-0.00:25,-0.00,-0.00,-0.00:26,-0.00,-0.00,0.00", 68, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode68(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,0.00,-0.00:2,0.00,-0.00,-0.00:3,0.00,0.00,0.00:4,0.00,-0.00,-0.00:5,-0.00,0.00,0.00:6,0.00,0.00,0.00:7,0.04,-0.07,-0.00:8,0.01,0.01,0.00:9,-0.09,-0.16,-0.00:10,-0.45,0.87,0.00:11,0.00,-0.00,0.00:12,-0.00,0.00,-0.00:13,-0.00,-0.00,-0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,-0.00,0.01,-0.00:17,0.00,0.00,-0.00:18,-0.01,0.00,-0.00:19,-0.00,-0.01,-0.00:20,-0.01,0.02,0.00:21,-0.00,0.00,-0.00:22,0.00,-0.00,-0.00:23,-0.00,-0.00,0.00:24,-0.00,-0.00,-0.00:25,-0.00,-0.00,-0.00:26,-0.00,-0.00,0.00", 68, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode69(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,0.00,-0.00:2,0.00,-0.00,-0.00:3,-0.00,0.00,0.00:4,-0.00,0.00,0.00:5,-0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,0.01,-0.01,-0.00:8,-0.05,-0.07,-0.00:9,0.51,0.83,0.00:10,-0.09,0.16,0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,-0.00:13,0.00,-0.00,0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,-0.00,0.00,-0.00:17,-0.00,-0.00,0.00:18,-0.00,0.00,-0.00:19,0.01,0.02,0.00:20,0.02,-0.04,-0.00:21,-0.00,-0.00,-0.00:22,0.00,0.00,0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,-0.00,0.00,0.00:26,-0.00,0.00,-0.00", 69, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode69(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,0.00,-0.00:2,0.00,-0.00,-0.00:3,-0.00,0.00,0.00:4,-0.00,0.00,0.00:5,-0.00,-0.00,-0.00:6,0.00,0.00,0.00:7,0.01,-0.01,-0.00:8,-0.05,-0.07,-0.00:9,0.51,0.83,0.00:10,-0.09,0.16,0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,-0.00:13,0.00,-0.00,0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,-0.00,0.00,-0.00:17,-0.00,-0.00,0.00:18,-0.00,0.00,-0.00:19,0.01,0.02,0.00:20,0.02,-0.04,-0.00:21,-0.00,-0.00,-0.00:22,0.00,0.00,0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,-0.00,0.00,0.00:26,-0.00,0.00,-0.00", 69, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode70(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.00:2,-0.00,-0.00,-0.00:3,0.00,0.00,0.00:4,0.04,-0.08,-0.00:5,0.01,0.01,0.00:6,-0.00,0.00,0.00:7,-0.00,0.00,0.00:8,-0.00,-0.00,-0.00:9,0.03,0.04,0.00:10,0.01,-0.01,-0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,0.00:13,-0.00,0.00,-0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,-0.00,-0.00,0.00:17,0.00,0.00,-0.00:18,0.00,-0.00,0.00:19,-0.10,-0.17,-0.00:20,-0.44,0.87,0.00:21,-0.00,-0.00,-0.00:22,-0.00,0.00,-0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,0.00,0.01,0.01:26,0.00,0.01,-0.01", 70, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode70(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.00:2,-0.00,-0.00,-0.00:3,0.00,0.00,0.00:4,0.04,-0.08,-0.00:5,0.01,0.01,0.00:6,-0.00,0.00,0.00:7,-0.00,0.00,0.00:8,-0.00,-0.00,-0.00:9,0.03,0.04,0.00:10,0.01,-0.01,-0.00:11,0.00,0.00,-0.00:12,-0.00,-0.00,0.00:13,-0.00,0.00,-0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,-0.00,-0.00,0.00:17,0.00,0.00,-0.00:18,0.00,-0.00,0.00:19,-0.10,-0.17,-0.00:20,-0.44,0.87,0.00:21,-0.00,-0.00,-0.00:22,-0.00,0.00,-0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,0.00,0.01,0.01:26,0.00,0.01,-0.01", 70, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode71(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,-0.00,-0.00,0.00:2,-0.00,-0.00,0.00:3,0.00,0.00,0.00:4,0.01,-0.02,-0.00:5,-0.04,-0.07,-0.00:6,-0.00,0.00,0.00:7,0.00,0.00,0.00:8,0.00,0.00,0.00:9,-0.01,-0.01,-0.00:10,-0.00,0.00,0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,-0.00:13,0.00,-0.00,0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,0.00,0.00,-0.00:17,-0.00,-0.00,0.00:18,0.00,0.00,-0.00:19,0.50,0.84,0.00:20,-0.09,0.18,0.00:21,-0.00,-0.00,-0.00:22,-0.00,0.00,-0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,0.00,0.00,0.00:26,0.00,0.00,-0.00", 71, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode71(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,-0.00,-0.00,0.00:2,-0.00,-0.00,0.00:3,0.00,0.00,0.00:4,0.01,-0.02,-0.00:5,-0.04,-0.07,-0.00:6,-0.00,0.00,0.00:7,0.00,0.00,0.00:8,0.00,0.00,0.00:9,-0.01,-0.01,-0.00:10,-0.00,0.00,0.00:11,-0.00,-0.00,0.00:12,0.00,0.00,-0.00:13,0.00,-0.00,0.00:14,-0.00,-0.00,-0.00:15,-0.00,-0.00,0.00:16,0.00,0.00,-0.00:17,-0.00,-0.00,0.00:18,0.00,0.00,-0.00:19,0.50,0.84,0.00:20,-0.09,0.18,0.00:21,-0.00,-0.00,-0.00:22,-0.00,0.00,-0.00:23,0.00,0.00,-0.00:24,0.00,0.00,0.00:25,0.00,0.00,0.00:26,0.00,0.00,-0.00", 71, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewVibrationalMode72(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doViewVibrationalMode("1,0.00,-0.00,0.00:2,-0.00,-0.00,0.00:3,-0.00,0.00,-0.00:4,0.00,-0.00,0.00:5,-0.00,0.00,0.00:6,-0.00,-0.00,0.00:7,-0.00,0.00,-0.00:8,0.00,0.00,-0.00:9,-0.00,-0.00,0.00:10,0.00,-0.00,0.00:11,0.02,-0.07,0.00:12,0.00,-0.00,0.00:13,0.00,-0.00,0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,0.00,0.01,-0.00:17,-0.00,0.00,-0.00:18,-0.34,0.94,-0.00:19,-0.00,-0.00,-0.00:20,0.00,0.00,0.00:21,0.00,0.00,0.00:22,-0.00,0.00,0.00:23,0.00,-0.00,0.00:24,0.00,-0.00,-0.00:25,0.00,0.00,0.00:26,0.00,0.00,-0.00", 72, freq, form.VibModeScaleFactor.value * 1.0);
+			}
+			function AnimateVibrationalMode72(form, freq)
+			{
+				if (verifyDouble(form.VibModeScaleFactor.value, 'Normal Mode Amplitude'))
+					doAnimateVibrationalMode("1,0.00,-0.00,0.00:2,-0.00,-0.00,0.00:3,-0.00,0.00,-0.00:4,0.00,-0.00,0.00:5,-0.00,0.00,0.00:6,-0.00,-0.00,0.00:7,-0.00,0.00,-0.00:8,0.00,0.00,-0.00:9,-0.00,-0.00,0.00:10,0.00,-0.00,0.00:11,0.02,-0.07,0.00:12,0.00,-0.00,0.00:13,0.00,-0.00,0.00:14,0.00,0.00,0.00:15,0.00,0.00,-0.00:16,0.00,0.01,-0.00:17,-0.00,0.00,-0.00:18,-0.34,0.94,-0.00:19,-0.00,-0.00,-0.00:20,0.00,0.00,0.00:21,0.00,0.00,0.00:22,-0.00,0.00,0.00:23,0.00,-0.00,0.00:24,0.00,-0.00,-0.00:25,0.00,0.00,0.00:26,0.00,0.00,-0.00", 72, freq, form.VibModeScaleFactor.value * 1.0, Math.round(form.VibModeAnimationSpeed.value));
+			}
+		</SCRIPT>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Server</TD>
+						<TD VALIGN="TOP">webmo.lhup.edu (16455)</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">CPU time</TD>
+						<TD VALIGN="TOP">9262 sec</TD>
+					</TR>
+					
+				</TABLE>
+				
+				</DIV>
+
+	<H3>Geometry Sequence Energies</H3>
+	<DIV ID='geometry_sequence'>
+	
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewGeometrySequenceEnergies()
+			{
+				doViewGeometrySequenceEnergies("0,-593.552401018:1,-593.554151048:2,-593.554197585:3,-593.554209448:4,-593.554210459:5,-593.554210459:6,-593.554210459");
+			}
+			function DownloadGeometrySequenceEnergies()
+			{
+				document.form.operation.value = "DownloadGeometrySequenceEnergies";
+				document.form.target = "_self";
+				document.form.submit();
+			}
+			function AnimateGeometrySequence(form)
+			{
+				if (form.geometry_sequence.value == '')
+				{
+					alert('No geometry data to animate!');
+					return;
+				}				
+				doAnimateGeometrySequence(form.geometry_sequence.value, form.GeometryAnimationLoop.selectedIndex, Math.round(form.GeometryAnimationSpeed.value));
+			}
+		</SCRIPT>
+		<INPUT TYPE="hidden" NAME="geometry_sequence" VALUE="!Step: 0 (E=-593.552401018)
+6 3.758176 -0.774657 -0.000011
+8 3.025386 0.438126 -0.000084
+6 1.669731 0.364890 -0.000065
+6 0.927681 -0.812724 -0.000141
+6 -0.463430 -0.776206 -0.000111
+6 -1.132171 0.442871 -0.000008
+6 -0.381401 1.622457 0.000064
+6 0.997154 1.586969 0.000024
+1 1.578026 2.502649 0.000055
+1 -0.886131 2.585545 0.000163
+7 -2.532258 0.566746 0.000053
+6 -3.482781 -0.416502 0.000039
+6 -4.908282 0.091275 -0.000041
+1 -5.417539 -0.306933 -0.879746
+1 -5.417405 -0.306198 0.880069
+1 -4.998319 1.179637 -0.000513
+8 -3.237348 -1.608022 0.000158
+1 -2.877740 1.512437 -0.000309
+1 -1.032057 -1.694808 -0.000167
+1 1.416028 -1.779140 -0.000228
+6 5.226468 -0.422612 0.000131
+1 5.832056 -1.332279 0.000052
+1 5.483768 0.162825 -0.885242
+1 5.483676 0.162582 0.885694
+1 3.495225 -1.364472 -0.887760
+1 3.495042 -1.364466 0.887688
+
+!Step: 1 (E=-593.554151048)
+6 3.791366 -0.777923 -0.000015
+8 3.050313 0.445943 -0.000068
+6 1.683914 0.374122 -0.000050
+6 0.939793 -0.813562 -0.000109
+6 -0.460461 -0.782445 -0.000088
+6 -1.140724 0.442846 -0.000008
+6 -0.386471 1.633018 0.000055
+6 1.001129 1.602886 0.000027
+1 1.581605 2.527341 0.000065
+1 -0.898721 2.600279 0.000135
+7 -2.549936 0.563712 0.000027
+6 -3.515498 -0.422066 0.000030
+6 -4.948350 0.097583 -0.000039
+1 -5.464597 -0.300548 -0.884678
+1 -5.464433 -0.299832 0.885019
+1 -5.037026 1.193551 -0.000474
+8 -3.271769 -1.625601 0.000135
+1 -2.893735 1.519613 -0.000248
+1 -1.030026 -1.709154 -0.000129
+1 1.435212 -1.784562 -0.000178
+6 5.268914 -0.431977 0.000104
+1 5.872054 -1.351416 0.000034
+1 5.532291 0.154972 -0.891167
+1 5.532208 0.154774 0.891530
+1 3.527424 -1.374310 -0.893062
+1 3.527274 -1.374315 0.892984
+
+!Step: 2 (E=-593.554197585)
+6 3.776179 -0.783162 -0.000009
+8 3.047281 0.450402 -0.000054
+6 1.679761 0.379838 -0.000038
+6 0.935614 -0.807544 -0.000084
+6 -0.463713 -0.774708 -0.000070
+6 -1.140114 0.452110 -0.000011
+6 -0.386156 1.641914 0.000041
+6 1.000956 1.610088 0.000022
+1 1.582758 2.533872 0.000058
+1 -0.898001 2.609606 0.000103
+7 -2.548321 0.569273 0.000008
+6 -3.504595 -0.425534 0.000016
+6 -4.941262 0.079219 -0.000017
+1 -5.453035 -0.324284 -0.885320
+1 -5.452850 -0.323620 0.885700
+1 -5.039158 1.174758 -0.000408
+8 -3.243738 -1.626832 0.000101
+1 -2.897798 1.523741 -0.000190
+1 -1.037387 -1.699648 -0.000099
+1 1.430857 -1.778828 -0.000136
+6 5.254916 -0.446125 0.000084
+1 5.848711 -1.371997 0.000040
+1 5.523303 0.138295 -0.891819
+1 5.523231 0.138165 0.892095
+1 3.504936 -1.375058 -0.894092
+1 3.504817 -1.375059 0.894036
+
+!Step: 3 (E=-593.554209448)
+6 3.781002 -0.781892 -0.000003
+8 3.048528 0.451369 -0.000042
+6 1.680091 0.377416 -0.000029
+6 0.937121 -0.810367 -0.000064
+6 -0.461992 -0.778744 -0.000055
+6 -1.139420 0.447597 -0.000011
+6 -0.386369 1.637433 0.000029
+6 1.000610 1.606691 0.000016
+1 1.581512 2.530816 0.000047
+1 -0.899128 2.604492 0.000075
+7 -2.547652 0.566659 -0.000002
+6 -3.508597 -0.423881 0.000015
+6 -4.941549 0.088125 -0.000005
+1 -5.455617 -0.312254 -0.885315
+1 -5.455427 -0.311641 0.885698
+1 -5.032022 1.184129 -0.000363
+8 -3.254815 -1.627067 0.000070
+1 -2.894424 1.522015 -0.000139
+1 -1.035506 -1.703361 -0.000076
+1 1.432991 -1.781011 -0.000103
+6 5.258430 -0.440826 0.000066
+1 5.854624 -1.365223 0.000045
+1 5.525123 0.144044 -0.891854
+1 5.525064 0.143968 0.892053
+1 3.510401 -1.373167 -0.894292
+1 3.510311 -1.373161 0.894262
+
+!Step: 4 (E=-593.554210459)
+6 3.781872 -0.782265 0.000002
+8 3.048527 0.451494 -0.000027
+6 1.679659 0.377412 -0.000022
+6 0.936644 -0.810168 -0.000053
+6 -0.462457 -0.778223 -0.000052
+6 -1.139806 0.448161 -0.000019
+6 -0.386654 1.637868 0.000016
+6 1.000391 1.606754 0.000012
+1 1.581534 2.530602 0.000040
+1 -0.899324 2.604890 0.000050
+7 -2.548038 0.566919 -0.000018
+6 -3.508594 -0.423790 -0.000000
+6 -4.941921 0.086700 0.000023
+1 -5.455858 -0.313982 -0.885079
+1 -5.455635 -0.313419 0.885515
+1 -5.033548 1.182479 -0.000302
+8 -3.253633 -1.626705 0.000049
+1 -2.895021 1.522035 -0.000101
+1 -1.036412 -1.702487 -0.000072
+1 1.432286 -1.780836 -0.000082
+6 5.259176 -0.441170 0.000058
+1 5.856102 -1.365070 0.000051
+1 5.525541 0.143686 -0.891778
+1 5.525489 0.143642 0.891937
+1 3.511081 -1.372973 -0.894279
+1 3.511010 -1.372971 0.894263
+
+!Step: 5 (E=-593.554210459)
+6 3.781872 -0.782265 0.000002
+8 3.048527 0.451494 -0.000027
+6 1.679659 0.377412 -0.000022
+6 0.936644 -0.810168 -0.000053
+6 -0.462457 -0.778223 -0.000052
+6 -1.139806 0.448161 -0.000019
+6 -0.386654 1.637868 0.000016
+6 1.000391 1.606754 0.000012
+1 1.581534 2.530602 0.000040
+1 -0.899324 2.604890 0.000050
+7 -2.548038 0.566919 -0.000018
+6 -3.508594 -0.423790 -0.000000
+6 -4.941921 0.086700 0.000023
+1 -5.455858 -0.313982 -0.885079
+1 -5.455635 -0.313419 0.885515
+1 -5.033548 1.182479 -0.000302
+8 -3.253633 -1.626705 0.000049
+1 -2.895021 1.522035 -0.000101
+1 -1.036412 -1.702487 -0.000072
+1 1.432286 -1.780836 -0.000082
+6 5.259176 -0.441170 0.000058
+1 5.856102 -1.365070 0.000051
+1 5.525541 0.143686 -0.891778
+1 5.525489 0.143642 0.891937
+1 3.511081 -1.372973 -0.894279
+1 3.511010 -1.372971 0.894263
+
+!Step: 6 (E=-593.554210459)
+6 3.781872 -0.782265 0.000002
+8 3.048527 0.451494 -0.000027
+6 1.679659 0.377412 -0.000022
+6 0.936644 -0.810168 -0.000053
+6 -0.462457 -0.778223 -0.000052
+6 -1.139806 0.448161 -0.000019
+6 -0.386654 1.637868 0.000016
+6 1.000391 1.606754 0.000012
+1 1.581534 2.530602 0.000040
+1 -0.899324 2.604890 0.000050
+7 -2.548038 0.566919 -0.000018
+6 -3.508594 -0.423790 -0.000000
+6 -4.941921 0.086700 0.000023
+1 -5.455858 -0.313982 -0.885079
+1 -5.455635 -0.313419 0.885515
+1 -5.033548 1.182479 -0.000302
+8 -3.253633 -1.626705 0.000049
+1 -2.895021 1.522035 -0.000101
+1 -1.036412 -1.702487 -0.000072
+1 1.432286 -1.780836 -0.000082
+6 5.259176 -0.441170 0.000058
+1 5.856102 -1.365070 0.000051
+1 5.525541 0.143686 -0.891778
+1 5.525489 0.143642 0.891937
+1 3.511081 -1.372973 -0.894279
+1 3.511010 -1.372971 0.894263
+
+">
+		
+				<TABLE CLASS="calculated_quantity">
+					<TR CLASS="header">
+						<TD><B>Step</B></TD>
+						<TD><B>Energy</B></TD>
+						<TD><A HREF="javascript:ViewGeometrySequenceEnergies()"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A>&nbsp;
+						<A HREF="javascript:DownloadGeometrySequenceEnergies()"><SPAN CLASS="popup" TITLE="Download"><IMG SRC="./images/download.gif" BORDER=0></SPAN></A>
+						<A HREF="javascript:AnimateGeometrySequence(document.form)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>0</TD>
+						<TD>-593.552401018</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>1</TD>
+						<TD>-593.554151048</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>2</TD>
+						<TD>-593.554197585</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>3</TD>
+						<TD>-593.554209448</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>4</TD>
+						<TD>-593.554210459</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>5</TD>
+						<TD>-593.554210459</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>6</TD>
+						<TD>-593.554210459</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>Animation speed</TD>
+						<TD><INPUT TYPE="input" NAME="GeometryAnimationSpeed" SIZE=3 VALUE="5"></TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>Loop</TD>
+						<TD>
+							<SELECT NAME="GeometryAnimationLoop">
+								<OPTION VALUE="0" SELECTED>None
+								<OPTION VALUE="1">Loop
+								<OPTION VALUE="2">Cycle
+							</SELECT>
+						</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+				</TABLE>
+			</DIV>
+	<H3>Rotational Constants</H3>
+	<DIV ID='rotational_constants'>
+	
+				<TABLE CLASS="calculated_quantity">
+					<TR CLASS="header">
+						<TD><B>Constant</B></TD>
+						<TD><B>Frequency (GHz)</B></TD>
+						<TD><B>Frequency (cm<sup>-1</sup>)</B></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>a</TD>
+						<TD>2.83942</TD>
+						<TD>0.09471285632</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>b</TD>
+						<TD>0.30520</TD>
+						<TD>0.01018037619</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>c</TD>
+						<TD>0.27703</TD>
+						<TD>0.00924072613</TD>
+					</TR>									
+				</TABLE>
+			</DIV>
+	<H3>Vibrational Modes</H3>
+	<DIV ID='vibrational_modes'>
+	
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewIRSpectrum(form)
+			{
+				if (verifyDouble(form.IRPeakWidth.value, 'Peak Width'))
+					doViewIRSpectrum(form.ir_spectrum_string.value, form.IRPeakWidth.value * 1.0);
+			}
+			function ViewRamanSpectrum(form)
+			{
+				if (verifyDouble(form.IRPeakWidth.value, 'Peak Width'))
+					doViewRamanSpectrum(form.raman_spectrum_string.value, form.IRPeakWidth.value * 1.0);
+			}
+			$(function() {
+  				$("#vibrational_modes_table").tablesorter();
+			});
+		</SCRIPT>
+		<INPUT TYPE="hidden" NAME="ir_spectrum_string" VALUE="1,A,38.7599,0.3114:2,A,46.4173,11.2335:3,A,55.8455,0.2221:4,A,88.94,0.0002:5,A,103.9942,4.5050:6,A,111.6841,0.9208:7,A,182.9795,0.4331:8,A,184.1401,2.2720:9,A,243.6875,0.4178:10,A,267.8115,1.1913:11,A,321.1687,2.4250:12,A,367.2034,0.7713:13,A,380.6456,0.4483:14,A,408.8994,0.0411:15,A,437.1592,1.7944:16,A,499.0025,20.8295:17,A,504.6982,41.0359:18,A,530.9452,21.3081:19,A,607.0841,8.5872:20,A,623.3286,5.0091:21,A,632.9575,0.0390:22,A,701.1516,0.0003:23,A,772.3395,1.5188:24,A,774.2277,12.9444:25,A,795.5466,48.3689:26,A,814.4331,10.3169:27,A,837.937,0.3476:28,A,892.8647,0.0016:29,A,910.5543,25.1823:30,A,919.6313,2.5142:31,A,938.7148,2.4449:32,A,973.8806,18.0507:33,A,996.062,1.5625:34,A,1004.1938,4.6260:35,A,1039.1614,85.1942:36,A,1100.3185,5.1260:37,A,1106.8857,23.1338:38,A,1134.1865,2.8920:39,A,1155.4939,27.1124:40,A,1202.1309,89.7978:41,A,1222.3356,358.6549:42,A,1241.6411,91.9342:43,A,1255.6375,0.5198:44,A,1287.0616,11.9070:45,A,1337.1979,10.8141:46,A,1342.5084,43.1092:47,A,1347.7237,13.2099:48,A,1369.6702,19.5237:49,A,1400.967,63.3240:50,A,1416.8489,7.8351:51,A,1433.0059,7.9584:52,A,1436.7548,10.4643:53,A,1448.5892,6.9022:54,A,1463.4756,39.9037:55,A,1492.4791,14.7288:56,A,1498.4122,559.2321:57,A,1581.0964,6.2387:58,A,1609.7699,22.3874:59,A,1681.9488,246.4767:60,A,2923.8551,31.8301:61,A,2960.0176,27.2867:62,A,2978.6042,15.8853:63,A,2979.1156,19.4265:64,A,3052.9119,16.8917:65,A,3056.1447,21.2489:66,A,3056.161,14.7680:67,A,3058.2088,2.9702:68,A,3080.4914,16.3945:69,A,3123.4725,4.3157:70,A,3132.6581,6.9750:71,A,3161.0414,7.1426:72,A,3533.5502,14.0448">
+		<INPUT TYPE="hidden" NAME="raman_spectrum_string" VALUE="1,A,38.7599,:2,A,46.4173,:3,A,55.8455,:4,A,88.94,:5,A,103.9942,:6,A,111.6841,:7,A,182.9795,:8,A,184.1401,:9,A,243.6875,:10,A,267.8115,:11,A,321.1687,:12,A,367.2034,:13,A,380.6456,:14,A,408.8994,:15,A,437.1592,:16,A,499.0025,:17,A,504.6982,:18,A,530.9452,:19,A,607.0841,:20,A,623.3286,:21,A,632.9575,:22,A,701.1516,:23,A,772.3395,:24,A,774.2277,:25,A,795.5466,:26,A,814.4331,:27,A,837.937,:28,A,892.8647,:29,A,910.5543,:30,A,919.6313,:31,A,938.7148,:32,A,973.8806,:33,A,996.062,:34,A,1004.1938,:35,A,1039.1614,:36,A,1100.3185,:37,A,1106.8857,:38,A,1134.1865,:39,A,1155.4939,:40,A,1202.1309,:41,A,1222.3356,:42,A,1241.6411,:43,A,1255.6375,:44,A,1287.0616,:45,A,1337.1979,:46,A,1342.5084,:47,A,1347.7237,:48,A,1369.6702,:49,A,1400.967,:50,A,1416.8489,:51,A,1433.0059,:52,A,1436.7548,:53,A,1448.5892,:54,A,1463.4756,:55,A,1492.4791,:56,A,1498.4122,:57,A,1581.0964,:58,A,1609.7699,:59,A,1681.9488,:60,A,2923.8551,:61,A,2960.0176,:62,A,2978.6042,:63,A,2979.1156,:64,A,3052.9119,:65,A,3056.1447,:66,A,3056.161,:67,A,3058.2088,:68,A,3080.4914,:69,A,3123.4725,:70,A,3132.6581,:71,A,3161.0414,:72,A,3533.5502,">
+				<TABLE ID="vibrational_modes_table" CLASS="tablesorter calculated_quantity" >
+					<THEAD>
+					<TR CLASS="header">
+						<TH><B>Mode</B></TH>
+						<TH><B>Symmetry</B></TH>
+						<TH><B>Frequency (cm<sup>-1</sup>)</B></TH>
+						<TH><B>IR (Raman) Intensity</B></TH>
+						<TH COLSPAN=2 data-sorter="false"><B>Actions</B></TH>
+					</TH>
+					</THEAD>
+					<TBODY>
+					<TR CLASS="job_entry">
+						<TD>1</TD>
+						<TD>A</TD>
+						<TD>38.7599</TD>
+						<TD>0.3114</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode1(document.form,38.76)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode1(document.form,38.76)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>2</TD>
+						<TD>A</TD>
+						<TD>46.4173</TD>
+						<TD>11.2335</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode2(document.form,46.42)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode2(document.form,46.42)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>3</TD>
+						<TD>A</TD>
+						<TD>55.8455</TD>
+						<TD>0.2221</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode3(document.form,55.85)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode3(document.form,55.85)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>4</TD>
+						<TD>A</TD>
+						<TD>88.9400</TD>
+						<TD>0.0002</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode4(document.form,88.94)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode4(document.form,88.94)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>5</TD>
+						<TD>A</TD>
+						<TD>103.9942</TD>
+						<TD>4.5050</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode5(document.form,103.99)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode5(document.form,103.99)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>6</TD>
+						<TD>A</TD>
+						<TD>111.6841</TD>
+						<TD>0.9208</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode6(document.form,111.68)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode6(document.form,111.68)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>7</TD>
+						<TD>A</TD>
+						<TD>182.9795</TD>
+						<TD>0.4331</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode7(document.form,182.98)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode7(document.form,182.98)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>8</TD>
+						<TD>A</TD>
+						<TD>184.1401</TD>
+						<TD>2.2720</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode8(document.form,184.14)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode8(document.form,184.14)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>9</TD>
+						<TD>A</TD>
+						<TD>243.6875</TD>
+						<TD>0.4178</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode9(document.form,243.69)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode9(document.form,243.69)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>10</TD>
+						<TD>A</TD>
+						<TD>267.8115</TD>
+						<TD>1.1913</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode10(document.form,267.81)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode10(document.form,267.81)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>11</TD>
+						<TD>A</TD>
+						<TD>321.1687</TD>
+						<TD>2.4250</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode11(document.form,321.17)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode11(document.form,321.17)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>12</TD>
+						<TD>A</TD>
+						<TD>367.2034</TD>
+						<TD>0.7713</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode12(document.form,367.20)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode12(document.form,367.20)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>13</TD>
+						<TD>A</TD>
+						<TD>380.6456</TD>
+						<TD>0.4483</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode13(document.form,380.65)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode13(document.form,380.65)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>14</TD>
+						<TD>A</TD>
+						<TD>408.8994</TD>
+						<TD>0.0411</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode14(document.form,408.90)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode14(document.form,408.90)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>15</TD>
+						<TD>A</TD>
+						<TD>437.1592</TD>
+						<TD>1.7944</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode15(document.form,437.16)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode15(document.form,437.16)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>16</TD>
+						<TD>A</TD>
+						<TD>499.0025</TD>
+						<TD>20.8295</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode16(document.form,499.00)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode16(document.form,499.00)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>17</TD>
+						<TD>A</TD>
+						<TD>504.6982</TD>
+						<TD>41.0359</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode17(document.form,504.70)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode17(document.form,504.70)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>18</TD>
+						<TD>A</TD>
+						<TD>530.9452</TD>
+						<TD>21.3081</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode18(document.form,530.95)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode18(document.form,530.95)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>19</TD>
+						<TD>A</TD>
+						<TD>607.0841</TD>
+						<TD>8.5872</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode19(document.form,607.08)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode19(document.form,607.08)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>20</TD>
+						<TD>A</TD>
+						<TD>623.3286</TD>
+						<TD>5.0091</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode20(document.form,623.33)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode20(document.form,623.33)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>21</TD>
+						<TD>A</TD>
+						<TD>632.9575</TD>
+						<TD>0.0390</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode21(document.form,632.96)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode21(document.form,632.96)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>22</TD>
+						<TD>A</TD>
+						<TD>701.1516</TD>
+						<TD>0.0003</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode22(document.form,701.15)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode22(document.form,701.15)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>23</TD>
+						<TD>A</TD>
+						<TD>772.3395</TD>
+						<TD>1.5188</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode23(document.form,772.34)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode23(document.form,772.34)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>24</TD>
+						<TD>A</TD>
+						<TD>774.2277</TD>
+						<TD>12.9444</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode24(document.form,774.23)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode24(document.form,774.23)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>25</TD>
+						<TD>A</TD>
+						<TD>795.5466</TD>
+						<TD>48.3689</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode25(document.form,795.55)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode25(document.form,795.55)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>26</TD>
+						<TD>A</TD>
+						<TD>814.4331</TD>
+						<TD>10.3169</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode26(document.form,814.43)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode26(document.form,814.43)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>27</TD>
+						<TD>A</TD>
+						<TD>837.9370</TD>
+						<TD>0.3476</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode27(document.form,837.94)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode27(document.form,837.94)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>28</TD>
+						<TD>A</TD>
+						<TD>892.8647</TD>
+						<TD>0.0016</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode28(document.form,892.86)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode28(document.form,892.86)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>29</TD>
+						<TD>A</TD>
+						<TD>910.5543</TD>
+						<TD>25.1823</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode29(document.form,910.55)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode29(document.form,910.55)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>30</TD>
+						<TD>A</TD>
+						<TD>919.6313</TD>
+						<TD>2.5142</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode30(document.form,919.63)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode30(document.form,919.63)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>31</TD>
+						<TD>A</TD>
+						<TD>938.7148</TD>
+						<TD>2.4449</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode31(document.form,938.71)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode31(document.form,938.71)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>32</TD>
+						<TD>A</TD>
+						<TD>973.8806</TD>
+						<TD>18.0507</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode32(document.form,973.88)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode32(document.form,973.88)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>33</TD>
+						<TD>A</TD>
+						<TD>996.0620</TD>
+						<TD>1.5625</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode33(document.form,996.06)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode33(document.form,996.06)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>34</TD>
+						<TD>A</TD>
+						<TD>1004.1938</TD>
+						<TD>4.6260</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode34(document.form,1004.19)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode34(document.form,1004.19)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>35</TD>
+						<TD>A</TD>
+						<TD>1039.1614</TD>
+						<TD>85.1942</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode35(document.form,1039.16)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode35(document.form,1039.16)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>36</TD>
+						<TD>A</TD>
+						<TD>1100.3185</TD>
+						<TD>5.1260</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode36(document.form,1100.32)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode36(document.form,1100.32)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>37</TD>
+						<TD>A</TD>
+						<TD>1106.8857</TD>
+						<TD>23.1338</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode37(document.form,1106.89)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode37(document.form,1106.89)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>38</TD>
+						<TD>A</TD>
+						<TD>1134.1865</TD>
+						<TD>2.8920</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode38(document.form,1134.19)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode38(document.form,1134.19)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>39</TD>
+						<TD>A</TD>
+						<TD>1155.4939</TD>
+						<TD>27.1124</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode39(document.form,1155.49)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode39(document.form,1155.49)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>40</TD>
+						<TD>A</TD>
+						<TD>1202.1309</TD>
+						<TD>89.7978</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode40(document.form,1202.13)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode40(document.form,1202.13)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>41</TD>
+						<TD>A</TD>
+						<TD>1222.3356</TD>
+						<TD>358.6549</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode41(document.form,1222.34)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode41(document.form,1222.34)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>42</TD>
+						<TD>A</TD>
+						<TD>1241.6411</TD>
+						<TD>91.9342</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode42(document.form,1241.64)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode42(document.form,1241.64)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>43</TD>
+						<TD>A</TD>
+						<TD>1255.6375</TD>
+						<TD>0.5198</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode43(document.form,1255.64)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode43(document.form,1255.64)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>44</TD>
+						<TD>A</TD>
+						<TD>1287.0616</TD>
+						<TD>11.9070</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode44(document.form,1287.06)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode44(document.form,1287.06)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>45</TD>
+						<TD>A</TD>
+						<TD>1337.1979</TD>
+						<TD>10.8141</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode45(document.form,1337.20)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode45(document.form,1337.20)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>46</TD>
+						<TD>A</TD>
+						<TD>1342.5084</TD>
+						<TD>43.1092</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode46(document.form,1342.51)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode46(document.form,1342.51)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>47</TD>
+						<TD>A</TD>
+						<TD>1347.7237</TD>
+						<TD>13.2099</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode47(document.form,1347.72)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode47(document.form,1347.72)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>48</TD>
+						<TD>A</TD>
+						<TD>1369.6702</TD>
+						<TD>19.5237</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode48(document.form,1369.67)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode48(document.form,1369.67)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>49</TD>
+						<TD>A</TD>
+						<TD>1400.9670</TD>
+						<TD>63.3240</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode49(document.form,1400.97)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode49(document.form,1400.97)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>50</TD>
+						<TD>A</TD>
+						<TD>1416.8489</TD>
+						<TD>7.8351</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode50(document.form,1416.85)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode50(document.form,1416.85)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>51</TD>
+						<TD>A</TD>
+						<TD>1433.0059</TD>
+						<TD>7.9584</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode51(document.form,1433.01)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode51(document.form,1433.01)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>52</TD>
+						<TD>A</TD>
+						<TD>1436.7548</TD>
+						<TD>10.4643</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode52(document.form,1436.75)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode52(document.form,1436.75)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>53</TD>
+						<TD>A</TD>
+						<TD>1448.5892</TD>
+						<TD>6.9022</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode53(document.form,1448.59)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode53(document.form,1448.59)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>54</TD>
+						<TD>A</TD>
+						<TD>1463.4756</TD>
+						<TD>39.9037</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode54(document.form,1463.48)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode54(document.form,1463.48)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>55</TD>
+						<TD>A</TD>
+						<TD>1492.4791</TD>
+						<TD>14.7288</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode55(document.form,1492.48)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode55(document.form,1492.48)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>56</TD>
+						<TD>A</TD>
+						<TD>1498.4122</TD>
+						<TD>559.2321</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode56(document.form,1498.41)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode56(document.form,1498.41)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>57</TD>
+						<TD>A</TD>
+						<TD>1581.0964</TD>
+						<TD>6.2387</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode57(document.form,1581.10)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode57(document.form,1581.10)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>58</TD>
+						<TD>A</TD>
+						<TD>1609.7699</TD>
+						<TD>22.3874</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode58(document.form,1609.77)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode58(document.form,1609.77)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>59</TD>
+						<TD>A</TD>
+						<TD>1681.9488</TD>
+						<TD>246.4767</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode59(document.form,1681.95)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode59(document.form,1681.95)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>60</TD>
+						<TD>A</TD>
+						<TD>2923.8551</TD>
+						<TD>31.8301</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode60(document.form,2923.86)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode60(document.form,2923.86)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>61</TD>
+						<TD>A</TD>
+						<TD>2960.0176</TD>
+						<TD>27.2867</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode61(document.form,2960.02)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode61(document.form,2960.02)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>62</TD>
+						<TD>A</TD>
+						<TD>2978.6042</TD>
+						<TD>15.8853</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode62(document.form,2978.60)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode62(document.form,2978.60)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>63</TD>
+						<TD>A</TD>
+						<TD>2979.1156</TD>
+						<TD>19.4265</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode63(document.form,2979.12)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode63(document.form,2979.12)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>64</TD>
+						<TD>A</TD>
+						<TD>3052.9119</TD>
+						<TD>16.8917</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode64(document.form,3052.91)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode64(document.form,3052.91)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>65</TD>
+						<TD>A</TD>
+						<TD>3056.1447</TD>
+						<TD>21.2489</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode65(document.form,3056.14)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode65(document.form,3056.14)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>66</TD>
+						<TD>A</TD>
+						<TD>3056.1610</TD>
+						<TD>14.7680</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode66(document.form,3056.16)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode66(document.form,3056.16)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>67</TD>
+						<TD>A</TD>
+						<TD>3058.2088</TD>
+						<TD>2.9702</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode67(document.form,3058.21)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode67(document.form,3058.21)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>68</TD>
+						<TD>A</TD>
+						<TD>3080.4914</TD>
+						<TD>16.3945</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode68(document.form,3080.49)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode68(document.form,3080.49)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>69</TD>
+						<TD>A</TD>
+						<TD>3123.4725</TD>
+						<TD>4.3157</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode69(document.form,3123.47)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode69(document.form,3123.47)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>70</TD>
+						<TD>A</TD>
+						<TD>3132.6581</TD>
+						<TD>6.9750</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode70(document.form,3132.66)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode70(document.form,3132.66)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>71</TD>
+						<TD>A</TD>
+						<TD>3161.0414</TD>
+						<TD>7.1426</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode71(document.form,3161.04)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode71(document.form,3161.04)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>72</TD>
+						<TD>A</TD>
+						<TD>3533.5502</TD>
+						<TD>14.0448</TD>
+						<TD><A HREF="javascript:ViewVibrationalMode72(document.form,3533.55)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD><A HREF="javascript:AnimateVibrationalMode72(document.form,3533.55)"><SPAN CLASS="popup" TITLE="Animate"><IMG SRC="./images/animate.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					</TBODY>
+					<TFOOT>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=4>Frequency Scale Factor</TD>
+						<TD COLSPAN=2><INPUT TYPE="text" NAME="VibFreqScaleFactor" SIZE=5 VALUE="1.0"><A HREF="javascript:RescaleFrequencies(document.form)"><SPAN CLASS="popup" TITLE="Rescale frequencies"><IMG SRC="./images/edit.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=4>Normal Mode Amplitude</TD>
+						<TD COLSPAN=2><INPUT TYPE="text" NAME="VibModeScaleFactor" SIZE=3 VALUE="1.0"></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=4>Animation Speed</TD>
+						<TD COLSPAN=2><INPUT TYPE="text" NAME="VibModeAnimationSpeed" SIZE=3 VALUE="50"></TD>
+					</TR>					
+					<TR CLASS="job_entry">
+						<TD COLSPAN=4>IR Spectrum</TD>
+						<TD><A HREF="javascript:ViewIRSpectrum(document.form)"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=4>Peak Width (cm<sup>-1</sup>)</TD>
+						<TD COLSPAN=2><INPUT TYPE="text" NAME="IRPeakWidth" SIZE=3 VALUE="40"></TD>
+					</TR>
+				</TFOOT>
+				</TABLE>
+			</DIV>
+	<H3>Quote</H3>
+	<DIV ID='quote'>
+	 THE WHOLE OF SCIENCE IS NOTHING MORE THAN A REFINEMENT OF EVERYDAY THINKING.                                                              -- A. EINSTEIN
+	</DIV>
+				
+			</DIV>
+			</SPAN>
+
+
+			</FORM>
+				
+		<SCRIPT LANGUAGE="JavaScript">
+			CheckNotesArea();
+			
+			<!-- Overloaded Javascript functions -->
+			function DownloadCoordinateScan1D() {
+				window.open('./30/scan30.csv');
+			}
+			function DownloadCoordinateScan2D() {
+				window.open('./30/scan30.csv');
+			}
+			function DownloadGeometrySequenceEnergies() {
+				window.open('./30/sequence_energies30.csv');
+			}
+			function SaveMolecularOrbital(mo) {
+				window.open('./30/job30_mo1.mo');
+			}
+			function SaveSurface(type) {
+				window.open('./30/job30_mo1.mo');
+			}
+			function SaveNBO(mo_index,type) {
+				window.open('./30/job30_' + type + '1.mo');
+			}
+			function doViewMolecularOrbital(jobNumber, mo_index) {
+				document.getElementById("moledit-panel").setAttribute("orbitalSrc", "./30/job30_mo1.mo");
+				document.moledit.setWavefunction(jobNumber, "mo", mo_index);
+				DisplayApplet(0);
+			}
+			function doViewSurface(jobNumber, type) {
+				document.getElementById("moledit-panel").setAttribute("orbitalSrc", "./30/job30_mo1.mo");
+				document.moledit.setWavefunction(jobNumber, type, 0);
+				DisplayApplet(0);
+			}
+			function doViewNBO(jobNumber, type, mo_index) {
+				document.getElementById("moledit-panel").setAttribute("orbitalSrc", "./30/job30_" + type + "1.mo");
+				document.moledit.setWavefunction(jobNumber, type, mo_index);
+				DisplayApplet(0);
+			}
+		</SCRIPT>
+
+	</BODY>
+</HTML>

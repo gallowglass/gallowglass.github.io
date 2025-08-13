@@ -1,0 +1,59 @@
+/* Global settings */
+body		{font-family: arial, helvetica, sans-serif; background-color: #014E82}
+
+a:link, body .ui-widget-content a:link		{color: blue; text-decoration: none}
+a:visited, body .ui-widget-content a:visited	{color: blue; text-decoration: none}
+a:hover, body .ui-widget-content a:hover		{color: blue; text-decoration: underline}
+a:active, body .ui-widget-content a:active	{color: blue; text-decoration: underline}
+
+.tframe{background-color: #F3F3F3; padding: 0px; border-collapse: collapse; border-style: ridge; border-width: 2px}
+table.tbody	{background-color: #F3F3F3}
+table.calculated_quantity {border-spacing: 0px; background-color: #F3F3F3; padding: 0px; border-collapse: collapse; border-style: ridge; border-width: 2px}
+table.calculated_quantity td {padding: 6px}
+h1,h2,h3	{color: #FFFFFF}
+
+h2.admin_failure, h2.failure	{color: #FF0000}
+h2.admin_success, h2.success	{color: #009900}
+
+.success,.enabled			{color: #009900}
+.failure,.disabled			{color: #FF0000}
+.running					{color: #FFD612}
+
+/* Job manger, build pages */
+select.job_filter	{font-size: 12px}
+ul.image_list		{list-style-type: none; margin-left: 10px; padding-left: 0px; margin-top: 10px; margin-bottom: 10px}
+ul.bullet_list		{list-style-type: disc; list-style-position: inside; margin-left: 0px; padding-left: 0px; margin-top: 10px; margin-bottom: 10px}
+tr.job_entry		{font-size: 12px}
+tr.header			{font-size: 12px; background-color: #5c99dc; color: #F3F3F3}
+tr.menu_header		{font-size: 12px; background-color: #CCCCCC}
+div.info_area		{float: left; height: 100%; background-color: #d1e2fe; width: 110px; font-size: 12px; padding-left: 4px}
+table.info_area		{background-color: transparent; width: 100px}
+tr.info_area		{font-size: 12px}
+td.info_area		{background-color: #d1e2fe}
+p.info_text			{font-size: 10px; margin-top: 10px; margin-bottom: 10px}
+div.content_area		{overflow: hidden; height: 100%}
+table.content_area	{width: 100%; height: 100%}
+
+/* Button groups */
+span.button_group {padding: 0px 5px}
+
+/* Section and drag and drop items */
+tr.job_entry-selected		{background-color: #ffef8f; cursor: pointer}
+div.tool_tip		{font-size: 12px; background-color: white; opacity: 0.7; border-style: solid; border-width: 1px; padding: 5px}
+li.drop_hover	{font-weight: bold}
+
+/* Tab styles */
+.page {
+  border-left: solid 1px #919B9C;
+  border-right: solid 1px #919B9C;
+  border-bottom: solid 1px #919B9C;
+  background-Color: #F3F3F3;
+}
+.tabpage {
+ font-size: 12px; background-Color: #F3F3F3; font-weight: bold
+}
+
+/* styles related to gwt */
+.gwt-app {
+  -webkit-user-select: none; /*fixes problems with double click select causing loss of focus from app to page */
+}
