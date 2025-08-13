@@ -1,3 +1,4 @@
 KMR web
 
-Phenacetin IR
+[Phenacetin IR](phenacetin/phenacetin.html)
+
