@@ -1,0 +1,637 @@
+<HTML>
+	<HEAD><TITLE>WebMO Job Summary - 3620</TITLE>
+		<LINK REL="stylesheet" TYPE="text/css" HREF="webmo.css" />
+		<LINK REL="stylesheet" TYPE="text/css" HREF="jquery-ui.min.css" />
+		<LINK REL="stylesheet" TYPE="text/css" HREF="jquery-ui.theme.min.css" />
+		<LINK REL="stylesheet" TYPE="text/css" HREF="jquery.tablesorter.css" />
+		<SCRIPT LANGUAGE="JavaScript" SRC="javascript/jquery.js"></SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript" SRC="javascript/jquery-ui.min.js"></SCRIPT>
+		<SCRIPT LANGUAGE="JavaScript" SRC="javascript/jquery.tablesorter.min.js"></SCRIPT>
+		<!-- Apycom DHTML Tabs -->
+		<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript1.2" SRC="javascript/apytabs.js"></SCRIPT>
+		<!-- Apycom DHTML Tabs, dhtml-menu.com -->
+	</HEAD>
+	
+	<SCRIPT LANGUAGE="JavaScript" SRC="javascript/view_job.js"></SCRIPT>
+	
+	<SCRIPT LANGUAGE="JavaScript" SRC="javascript/moledit_js/moledit_js.nocache.js"></SCRIPT>
+	
+	<SCRIPT LANGUAGE="JavaScript">
+		var format = "XYZFormat";
+		var jobNumber = 3620;
+		var url_htmlBase = "./";
+		
+		function RawOutput(form) {
+			window.open('./3620/output.txt');
+		}
+		
+		function CheckNotesArea() {
+			if (document.form.notes.value != "")
+				ExpandNotes();
+		}
+				
+		$(document).ready(function(){
+			togglePanel = function(event, ui) {
+					//Code to allow multiple open accordion panels
+					// The accordion believes a panel is being opened
+					if (ui.newHeader[0]) {
+						var currHeader  = ui.newHeader;
+						var currContent = currHeader.next('.ui-accordion-content');
+					// The accordion believes a panel is being closed
+					} else {
+						var currHeader  = ui.oldHeader;
+						var currContent = currHeader.next('.ui-accordion-content');
+					}
+					// Since we've changed the default behavior, this detects the actual status
+					var isPanelSelected = currHeader.attr('aria-selected') == 'true';
+
+					// Toggle the panel's header
+					currHeader.toggleClass('ui-corner-all',isPanelSelected).toggleClass('accordion-header-active ui-state-active ui-corner-top',!isPanelSelected).attr('aria-selected',((!isPanelSelected).toString()));
+					
+					// Toggle the panel's icon
+					currHeader.children('.ui-icon').toggleClass('ui-icon-triangle-1-e',isPanelSelected).toggleClass('ui-icon-triangle-1-s',!isPanelSelected);
+
+					// Toggle the panel's content
+					currContent.toggleClass('accordion-content-active',!isPanelSelected)    
+					if (isPanelSelected) { currContent.slideUp(); }  else { currContent.slideDown(); }
+
+					return false; // Cancel the default action
+			};
+				
+			$('#calculated_quantities_accordion').accordion({
+				heightStyle: "content",
+				collapsible:true,
+				beforeActivate: togglePanel
+			});
+						
+			var doExpand = true;
+			$('.accordion-expand-all')
+			.click(function(){
+				if (doExpand) {
+					$('#calculated_quantities h3.ui-accordion-header').not('[aria-selected=true]').trigger("click");
+					$('.accordion-expand-all').html('Collapse all');
+					doExpand = false;
+				} else {
+					$('#calculated_quantities h3.ui-accordion-header').not('[aria-selected=false]').trigger("click");
+					$('.accordion-expand-all').html('Expand all');
+					doExpand = true;
+				}
+			})
+			.hover(
+				function(){
+					$(this).css("text-decoration", "underline");
+				},
+				function(){
+					$(this).css("text-decoration", "none");
+				});
+				
+			//On desktop, expand the accordions to start with
+			$('.accordion-expand-all').click();
+			
+			//This is for compatability with Pressbooks, which displays the embedded View Job page in a iframe that
+			//may be initially hidden
+			if (window.innerWidth == 0) {
+				var didAppear = false;
+				$(window).resize(
+					function () {
+						if (!didAppear)
+							Translate(document.form);
+						didAppear = true;
+					}
+				);
+			}
+			
+			//Check for 'onload' query parameter
+			const urlParams = new URLSearchParams(window.location.search);
+			const onLoadParam = urlParams.get('onLoad');
+			if (onLoadParam != null) {
+				setTimeout(function() {
+					eval(onLoadParam);
+				}, 1000);
+			}
+			
+		});
+		
+	</SCRIPT>
+	
+	<BODY ONLOAD="Translate(document.form)">
+		
+		<H1>WebMO Job Summary</H1>
+		<H2>3620: TMS PBE0/acc  NMR, NMR - Gaussian</H2>
+		
+		
+		
+		<FORM NAME="form">
+			
+		<FORM NAME="form" ACTION="/~webmo/cgi-bin/webmo_v23/view_job.cgi" METHOD="POST">
+		
+				<DIV CLASS="tframe" STYLE="width: 95%; height: 85%; min-height: 400px; ">
+			
+				<DIV ID="viewer_area" CLASS="content_area">
+					<SPAN TITLE="Show" CLASS="popup"><IMG ID="expand" SRC="./images/expand.gif" STYLE="display: none" ONCLICK="Expand()"></SPAN>
+					
+					<TABLE CLASS="content_area">
+						<TR ONCLICK="setTimeout('SwapApplets()',50)">
+							<TD COLSPAN=3 VALIGN=TOP HEIGHT=16>
+								<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript1.2" SRC="./javascript/webmo_tabs.js"></SCRIPT>
+								<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript1.2" SRC="./javascript/view_tabs.js"></SCRIPT>
+							</TD>
+						</TR>
+						<TR HEIGHT=100%>
+							<TD COLSPAN=3>
+								<!-- Viewer -->
+								<DIV ID="content1" STYLE="height: 100%">
+									<DIV ID="moledit-panel" CLASS="gwt-app" STYLE="height: 100%"
+									viewOnly="true" version="23.0.016e" minerallookupproxy="/"></DIV>
+								</DIV>
+								
+								<!-- Data grapher -->
+								<DIV ID="content2" STYLE="height: 100%">
+									<DIV ID="datagrapher-panel" CLASS="gwt-app" STYLE="height: 100%" ></DIV>
+								</DIV>
+							</TD>
+						</TR>
+						<TR><TD>
+							<CENTER>
+								<BUTTON TYPE="button" ONCLICK="RawOutput(document.form)">Raw Output</BUTTON>
+							</CENTER>
+						</TD</TR>
+					</TABLE>
+				</DIV>
+			
+			</DIV>
+			
+			<DIV ID="notes_area" STYLE="display: none">
+				<TEXTAREA NAME="notes" ROWS=10 COLS=70></TEXTAREA><BR>
+				<BUTTON TYPE="button" ONCLICK="SaveNotes(document.form)"><FONT SIZE=1>Save Notes</FONT></BUTTON>
+			</DIV>
+			
+			<INPUT TYPE="hidden" NAME="operation">
+			<INPUT TYPE="hidden" NAME="model">
+			<INPUT TYPE="hidden" NAME="jobNumber" VALUE="3620">
+			<INPUT TYPE="hidden" NAME="geometry" VALUE="6%20%2d1%2e091391%20%2d1%2e091391%201%2e091391%0a14%200%2e000000%200%2e000000%200%2e000000%0a6%201%2e091391%201%2e091391%201%2e091391%0a1%201%2e740139%200%2e482913%201%2e740139%0a1%201%2e740139%201%2e740139%200%2e482913%0a1%200%2e482913%201%2e740139%201%2e740139%0a6%201%2e091391%20%2d1%2e091391%20%2d1%2e091391%0a1%200%2e482913%20%2d1%2e740139%20%2d1%2e740139%0a1%201%2e740139%20%2d0%2e482913%20%2d1%2e740139%0a1%201%2e740139%20%2d1%2e740139%20%2d0%2e482913%0a6%20%2d1%2e091391%201%2e091391%20%2d1%2e091391%0a1%20%2d1%2e740139%201%2e740139%20%2d0%2e482913%0a1%20%2d0%2e482913%201%2e740139%20%2d1%2e740139%0a1%20%2d1%2e740139%200%2e482913%20%2d1%2e740139%0a1%20%2d1%2e740139%20%2d0%2e482913%201%2e740139%0a1%20%2d1%2e740139%20%2d1%2e740139%200%2e482913%0a1%20%2d0%2e482913%20%2d1%2e740139%201%2e740139%0a">
+			<INPUT TYPE="hidden" NAME="connections" VALUE="1%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a2%20%20%20%20%203%20%20%20%20%201%20%20%20%20%20%0a2%20%20%20%20%207%20%20%20%20%201%20%20%20%20%20%0a2%20%20%20%20%2011%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%2015%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%2016%20%20%20%201%20%20%20%20%20%0a1%20%20%20%20%2017%20%20%20%201%20%20%20%20%20%0a3%20%20%20%20%204%20%20%20%20%201%20%20%20%20%20%0a3%20%20%20%20%205%20%20%20%20%201%20%20%20%20%20%0a3%20%20%20%20%206%20%20%20%20%201%20%20%20%20%20%0a7%20%20%20%20%208%20%20%20%20%201%20%20%20%20%20%0a7%20%20%20%20%209%20%20%20%20%201%20%20%20%20%20%0a7%20%20%20%20%2010%20%20%20%201%20%20%20%20%20%0a11%20%20%20%2012%20%20%20%201%20%20%20%20%20%0a11%20%20%20%2013%20%20%20%201%20%20%20%20%20%0a11%20%20%20%2014%20%20%20%201%20%20%20%20%20%0a%0a">
+			<INPUT TYPE="hidden" NAME="zmatrix" VALUE="1%20%20%20%20%200%20%20%20%20%200%20%20%20%20%200%20%20%20%20%20%0a2%20%20%20%20%201%20%20%20%20%200%20%20%20%20%200%20%20%20%20%20%0a3%20%20%20%20%202%20%20%20%20%201%20%20%20%20%200%20%20%20%20%20%0a4%20%20%20%20%203%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a5%20%20%20%20%203%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a6%20%20%20%20%203%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a7%20%20%20%20%202%20%20%20%20%201%20%20%20%20%203%20%20%20%20%20%0a8%20%20%20%20%207%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a9%20%20%20%20%207%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a10%20%20%20%207%20%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a11%20%20%20%202%20%20%20%20%201%20%20%20%20%203%20%20%20%20%20%0a12%20%20%20%2011%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a13%20%20%20%2011%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a14%20%20%20%2011%20%20%20%202%20%20%20%20%201%20%20%20%20%20%0a15%20%20%20%201%20%20%20%20%202%20%20%20%20%203%20%20%20%20%20%0a16%20%20%20%201%20%20%20%20%202%20%20%20%20%203%20%20%20%20%20%0a17%20%20%20%201%20%20%20%20%202%20%20%20%20%203%20%20%20%20%20%0a%0a">
+			<INPUT TYPE="hidden" NAME="charges" VALUE="0%20%203%20%20%0a0%20%203%20%20%0a0%20%203%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%203%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%203%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a0%20%200%20%20%0a%0a">
+			
+			<H2 ID="h2_calculated_quantities">Calculated Quantities</H2>
+			
+			<SPAN ID="calculated_quantities">			
+			<SPAN CLASS="accordion-expand-all" STYLE="color: #FFFFFF; font-size: 0.8em">Expand all</SPAN>
+			<DIV ID="calculated_quantities_accordion">
+			
+				<H3>Overview</H3>
+				<DIV ID="overview">
+				
+				<TABLE CLASS="calculated_quantity">
+					<TR CLASS="header">
+						<TD><B>Quantity</B></TD>
+						<TD><B>Value</B></TD>
+					</TR>
+					
+					
+					
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Route</TD>
+						<TD VALIGN="TOP"> #N PBE1PBE/6-311+G(2d,p) NMR SCRF=(PCM,Solvent=chloroform) Geom=Connectivity</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Method</TD>
+						<TD VALIGN="TOP">PBE1PBE</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Stoichiometry</TD>
+						<TD VALIGN="TOP">C<sub>4</sub>H<sub>12</sub>Si</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Symmetry</TD>
+						<TD VALIGN="TOP">TD</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Basis</TD>
+						<TD VALIGN="TOP">6-311+G(2d,p)</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">RPBE1PBE Energy</TD>
+						<TD VALIGN="TOP">-448.919799055 Hartree</TD>
+					</TR>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewDipoleMoment()
+			{
+				doViewDipoleMoment("0:0:0:0.0000 Debye");
+			}
+		</SCRIPT>
+		<TR CLASS="job_entry">
+			<TD VALIGN="TOP">Dipole Moment</TD>
+			<TD VALIGN="TOP">0.0000 Debye <A HREF="javascript:ViewDipoleMoment()"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+		</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">Server</TD>
+						<TD VALIGN="TOP">webmo.lhup.edu (162459)</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD VALIGN="TOP">CPU time</TD>
+						<TD VALIGN="TOP">75.6 sec</TD>
+					</TR>
+					
+				</TABLE>
+				
+				</DIV>
+
+	<H3>Rotational Constants</H3>
+	<DIV ID='rotational_constants'>
+	
+				<TABLE CLASS="calculated_quantity">
+					<TR CLASS="header">
+						<TD><B>Constant</B></TD>
+						<TD><B>Frequency (GHz)</B></TD>
+						<TD><B>Frequency (cm<sup>-1</sup>)</B></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>a</TD>
+						<TD>3.0618344</TD>
+						<TD>0.10213180213</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>b</TD>
+						<TD>3.0618344</TD>
+						<TD>0.10213180213</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>c</TD>
+						<TD>3.0618344</TD>
+						<TD>0.10213180213</TD>
+					</TR>									
+				</TABLE>
+			</DIV>
+	<H3>Partial Charges</H3>
+	<DIV ID='partial_charges'>
+		<SCRIPT LANGUAGE="JavaScript">
+			function ViewPartialCharge_mulliken()
+			{
+				doViewPartialCharge("1,C,-0.719761:2,Si,0.991068:3,C,-0.719761:4,H,0.157331:5,H,0.157331:6,H,0.157331:7,C,-0.719761:8,H,0.157331:9,H,0.157331:10,H,0.157331:11,C,-0.719761:12,H,0.157331:13,H,0.157331:14,H,0.157331:15,H,0.157331:16,H,0.157331:17,H,0.157331");
+			}
+			$(function() {
+  				$("#partial_charge_table").tablesorter();
+			});
+		</SCRIPT>
+				<TABLE ID="partial_charge_table" CLASS="tablesorter calculated_quantity">
+					<THEAD>
+					<TR CLASS="header">
+						<TH><B>Atom</B></TH>
+						<TH><B>Symbol</B></TH>
+						<TH><B>Charge</B></TH>
+						<TH data-sorter="false"><A HREF="javascript:ViewPartialCharge_mulliken()"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TH>
+					</TR>
+					</THEAD>
+					<TBODY>
+					<TR CLASS="job_entry">
+						<TD>1</TD>
+						<TD>C</TD>
+						<TD>-0.719761</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>2</TD>
+						<TD>Si</TD>
+						<TD>0.991068</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>3</TD>
+						<TD>C</TD>
+						<TD>-0.719761</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>4</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>5</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>6</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>7</TD>
+						<TD>C</TD>
+						<TD>-0.719761</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>8</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>9</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>10</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>11</TD>
+						<TD>C</TD>
+						<TD>-0.719761</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>12</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>13</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>14</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>15</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>16</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>17</TD>
+						<TD>H</TD>
+						<TD>0.157331</TD>
+						<TD>&nbsp;</TD>
+					</TR>
+				</TBODY>
+				</TABLE>
+		</DIV>
+	<H3>Absolute NMR Shifts</H3>
+	<DIV ID='nmr_shifts'>
+	
+		<SCRIPT LANGUAGE="JavaScript">
+			function OnChangeNMRSimulate()
+			{
+				var enable = document.form.NMRSimulate.checked;
+				document.form.NMRField.disabled = !enable;
+				document.form.NMRCoupling.disabled = !enable;
+			}
+			
+			function ViewNMRSpectrum(form, type)
+			{
+				var relative = false;
+				var simulate = false;
+				if (type == "C" && form.nmr_is_relative_c.value == "true" )
+					relative = true;
+				else if (type == "H" && form.nmr_is_relative_h.value == "true")
+					relative = true;
+				if (type == "H" && form.NMRSimulate.checked)
+					simulate = true;
+				else
+					simulate = false;
+				if (verifyDouble(form.NMRPeakWidth.value, 'Peak Width')) {
+					if (!simulate)
+						doViewNMRSpectrum(form.nmr_spectrum_string.value, type, form.NMRPeakWidth.value * 1.0, relative);
+					else {
+						if (form.nmr_splitting_string)
+							doViewH1NMRSpectrumWithCouplings(form.nmr_spectrum_string.value, form.NMRPeakWidth.value * 1.0, form.NMRField.value * 1.0, form.nmr_splitting_string.value, relative);
+						else
+							doViewH1NMRSpectrum(form.nmr_spectrum_string.value, form.NMRPeakWidth.value * 1.0, form.NMRField.value * 1.0, form.NMRCoupling.value * 1.0, relative);
+					}
+				}
+			}
+			$(function() {
+  				$("#nmr_spectrum_table").tablesorter();
+			});
+		</SCRIPT>
+		<INPUT TYPE="hidden" NAME="nmr_spectrum_string" VALUE="1,C,186.9653,8.2153:2,Si,343.8342,0.0000:3,C,186.9653,8.2153:4,H,31.5216,9.3710:5,H,31.5216,9.3710:6,H,31.5216,9.3710:7,C,186.9653,8.2153:8,H,31.5216,9.3710:9,H,31.5216,9.3710:10,H,31.5216,9.3710:11,C,186.9653,8.2153:12,H,31.5216,9.3710:13,H,31.5216,9.3710:14,H,31.5216,9.3710:15,H,31.5216,9.3710:16,H,31.5216,9.3710:17,H,31.5216,9.3710">
+		<INPUT TYPE="hidden" NAME="nmr_is_relative_h" VALUE="">
+		<INPUT TYPE="hidden" NAME="nmr_is_relative_c" VALUE="">
+				<TABLE ID="nmr_spectrum_table" CLASS="tablesorter calculated_quantity">
+					<THEAD>
+					<TR CLASS="header">
+						<TH><B>Atom</B></TH>
+						<TH><B>Symbol</B></TH>
+						<TH><B>Isotropic</B></TH>
+						<TH><B>Anisotropy</B></TH>
+					</TR>
+					</THEAD>
+					<TBODY>
+					<TR CLASS="job_entry">
+						<TD>1</TD>
+						<TD>C</TD>
+						<TD>186.9653</TD>
+						<TD>8.2153</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>2</TD>
+						<TD>Si</TD>
+						<TD>343.8342</TD>
+						<TD>0.0000</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>3</TD>
+						<TD>C</TD>
+						<TD>186.9653</TD>
+						<TD>8.2153</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>4</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>5</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>6</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>7</TD>
+						<TD>C</TD>
+						<TD>186.9653</TD>
+						<TD>8.2153</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>8</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>9</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>10</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>11</TD>
+						<TD>C</TD>
+						<TD>186.9653</TD>
+						<TD>8.2153</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>12</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>13</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>14</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>15</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>16</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD>17</TD>
+						<TD>H</TD>
+						<TD>31.5216</TD>
+						<TD>9.3710</TD>
+					</TR>
+					</TBODY>
+					<TFOOT>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=4>*Denotes shift relative to TMS</TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3>TMS shielding (C)</TD>
+						<TD><INPUT TYPE="text" NAME="NMRShiftFactorC" SIZE=5 VALUE=""><A HREF="javascript:ShiftNMR(document.form)"><SPAN CLASS="popup" TITLE="Shift NMR spectrum"><IMG SRC="./images/edit.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3>TMS shielding (H)</TD>
+						<TD><INPUT TYPE="text" NAME="NMRShiftFactorH" SIZE=5 VALUE=""><A HREF="javascript:ShiftNMR(document.form)"><SPAN CLASS="popup" TITLE="Shift NMR spectrum"><IMG SRC="./images/edit.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3><SUP>1</SUP>H NMR Spectrum</TD>
+						<TD><A HREF="javascript:ViewNMRSpectrum(document.form, 'H')"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3><SUP>13</SUP>C NMR Spectrum</TD>
+						<TD><A HREF="javascript:ViewNMRSpectrum(document.form, 'C')"><SPAN CLASS="popup" TITLE="View"><IMG SRC="./images/view.gif" BORDER=0></SPAN></A></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3>Peak Width (ppm)</TD>
+						<TD><INPUT TYPE="text" NAME="NMRPeakWidth" SIZE=4 VALUE="0.001"></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3>Simulate proton splitting</TD>
+						<TD><INPUT TYPE="checkbox" NAME="NMRSimulate" CHECKED ONCHANGE="javascript:OnChangeNMRSimulate()"></TD>
+					</TR>
+					<TR CLASS="job_entry">
+						<TD COLSPAN=3>NMR Field</TD>
+						<TD><INPUT TYPE="text" NAME="NMRField" VALUE="400"> MHz</TD>
+					</TR>
+					<TR CLASS="job_entry" ID="NMRCouplingRow">
+						<TD COLSPAN=3>Proton-proton coupling</TD>
+						<TD><INPUT TYPE="text" NAME="NMRCoupling" VALUE="7"> Hz</TD>
+					</TR>
+					</TFOOT>
+				</TABLE>
+			</DIV>
+	<H3>Quote</H3>
+	<DIV ID='quote'>
+	 NOTHING MAKES A PERSON MORE PRODUCTIVE THAN THE LAST MINUTE.
+	</DIV>
+				
+			</DIV>
+			</SPAN>
+
+
+			</FORM>
+				
+		<SCRIPT LANGUAGE="JavaScript">
+			CheckNotesArea();
+			
+			<!-- Overloaded Javascript functions -->
+			function DownloadCoordinateScan1D() {
+				window.open('./3620/scan3620.csv');
+			}
+			function DownloadCoordinateScan2D() {
+				window.open('./3620/scan3620.csv');
+			}
+			function DownloadGeometrySequenceEnergies() {
+				window.open('./3620/sequence_energies3620.csv');
+			}
+			function SaveMolecularOrbital(mo) {
+				window.open('./3620/job3620_mo1.mo');
+			}
+			function SaveSurface(type) {
+				window.open('./3620/job3620_mo1.mo');
+			}
+			function SaveNBO(mo_index,type) {
+				window.open('./3620/job3620_' + type + '1.mo');
+			}
+			function doViewMolecularOrbital(jobNumber, mo_index) {
+				document.getElementById("moledit-panel").setAttribute("orbitalSrc", "./3620/job3620_mo1.mo");
+				document.moledit.setWavefunction(jobNumber, "mo", mo_index);
+				DisplayApplet(0);
+			}
+			function doViewSurface(jobNumber, type) {
+				document.getElementById("moledit-panel").setAttribute("orbitalSrc", "./3620/job3620_mo1.mo");
+				document.moledit.setWavefunction(jobNumber, type, 0);
+				DisplayApplet(0);
+			}
+			function doViewNBO(jobNumber, type, mo_index) {
+				document.getElementById("moledit-panel").setAttribute("orbitalSrc", "./3620/job3620_" + type + "1.mo");
+				document.moledit.setWavefunction(jobNumber, type, mo_index);
+				DisplayApplet(0);
+			}
+		</SCRIPT>
+
+	</BODY>
+</HTML>
