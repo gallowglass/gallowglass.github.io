@@ -1,0 +1,104 @@
+function SubmitJob(form,preview) {
+	document.moledit.setModel(form.model.value);
+	var response =JSON.parse(document.moledit.getProperties());
+		
+	document.form.dimOpt.value = response.dimOpt;
+	document.form.dimScanned.value = response.dimScanned;
+	document.form.scanStart.value = response.scanStart;
+	document.form.scanStop.value = response.scanStop;
+	document.form.scanSteps.value = response.scanSteps;
+	document.form.scanStart2.value = response.scanStart2;
+	document.form.scanStop2.value = response.scanStop2;
+	document.form.scanSteps2.value = response.scanSteps2;
+	
+	if (form.cartesianCoordinates.checked && form.nlayer.value == 1)
+		getGeometry("XYZFormat", "", form.geometry, false);
+	else if (form.nlayer.value > 1) {
+		form.cartesianCoordinates.checked = true;
+		getGeometry("XYZFormat", "sortAtomsByLayer=true", form.geometry, false);
+	}
+	else
+		getGeometry("NWChemFormat", "", form.geometry, false);
+	
+	getGeometry("XYZFormat", "writeUnitCell=true", form.cartesian, false);
+	getGeometry("ConnectionFormat", "", form.connections, false);
+	getGeometry("ZMatrixFormat", "", form.zmatrix, false);
+	getGeometry("ChargeFormat", "", form.charges, false);
+	getFragments(form.fragments);
+	
+	DoSubmitJob(form, preview);	
+}
+
+function OnChangeTemplateId(form)
+{
+	var temp = form.templateId.options[form.templateId.selectedIndex].text;
+	if (temp.substring(0, 5) == "Other")
+	{
+		var text = window.prompt("Enter calculation", "ENERGY");
+
+		form.calculation.value = text;
+		form.templateId.options[form.templateId.selectedIndex].text = "Other (" + text + ")";
+	}
+	hideUnusedVariables();
+}
+
+function OnChangeTheory(form)
+{
+	if (form.theory.selectedIndex == form.theory.length - 1)
+	{
+		var text = window.prompt("Enter theory", "RHF");
+
+		form.theory.options[form.theory.selectedIndex].value = text;
+		form.theory.options[form.theory.selectedIndex].text = "Other (" + text + ")";
+	}
+	if (form.theory.options[form.theory.selectedIndex].value == 'dft')
+		form.functional.disabled = false;
+	else
+		form.functional.disabled = true;
+}
+
+function OnChangeMethodB(form)
+{
+	if (form.methodB.selectedIndex == form.methodB.length - 1)
+	{
+		var text = window.prompt("Enter method", "scf/3-21G");
+
+		form.methodB.options[form.methodB.selectedIndex].value = text;
+		form.methodB.options[form.methodB.selectedIndex].text = "Other (" + text + ")";
+	}
+}
+
+function OnChangeFunctional(form)
+{
+	if (form.functional.selectedIndex == form.functional.length - 1)
+	{
+		var text = window.prompt("Enter functional", "B3LYP");
+
+		form.functional.options[form.functional.selectedIndex].value = text;
+		form.functional.options[form.functional.selectedIndex].text = "Other (" + text + ")";
+	}
+}
+
+function OnChangeBasis(form)
+{
+	if (form.basisSet.selectedIndex == form.basisSet.length - 1)
+	{
+		var text = window.prompt("Enter Basis", "");
+
+		form.basisSet.options[form.basisSet.selectedIndex].value = text;
+		form.basisSet.options[form.basisSet.selectedIndex].text = "Other (" + text + ")";
+	}
+}
+
+function init_nwchem_options(form)
+{
+	//remove ONIOM-related options if nlayer < 2
+	if (form.nlayer.value < 2) {
+		for (var i = 0; i < templateVariablesUsed.length; i++) {
+			const index = templateVariablesUsed[i].indexOf("methodB");
+			if (index >= 0)
+				templateVariablesUsed[i].splice(index, 1);
+		}
+	}
+	hideUnusedVariables();
+}
